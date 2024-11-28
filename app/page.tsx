@@ -1,10 +1,14 @@
+import NavBar from "./components/NavBar";
+import UpperSection from "./section/UpperSection";
 
 
 export default function Home() {
   return (
-  <>
-    <h1 className="text-4xl text-primary">Portfolio here</h1>
+  <section>
+   <NavBar/>
+    <UpperSection/>
+
   
-  </>
+  </section>
   );
 }

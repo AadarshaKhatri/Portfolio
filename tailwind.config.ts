@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -11,6 +12,9 @@ export default {
       colors: {
        "primary":"#25BAEB",
       },
+    },
+    fontFamily: {
+      comicNeue: ["'Comic Neue'", "sans-serif"],
     },
   },
   plugins: [],
