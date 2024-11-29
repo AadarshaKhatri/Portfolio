@@ -1,8 +1,13 @@
+import FeedCards from "../components/FeedCards"
 
 
 const Feeds = () => {
   return (
-    <div>Feeds</div>
+    <section>
+      <FeedCards/>
+      <FeedCards/>
+    </section>
+   
   )
 }
 

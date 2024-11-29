@@ -1,6 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import Feeds from "./Feeds"
+import About from "./About"
+import Experience from "./Experience"
+import Works from "./Works"
 
 
 const Feedtabs = () => {
@@ -14,7 +18,7 @@ const Feedtabs = () => {
       <div className="w-full flex flex-col">
 
         {/* Tabs */}
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between pb-5">
 
           <div
               onClick={() => handletabs('Feeds')}
@@ -41,26 +45,32 @@ const Feedtabs = () => {
             </div>
 
             <div
-              onClick={() => handletabs('Projects')}
+              onClick={() => handletabs('Works')}
               className={`font-semibold cursor-pointer py-2 px-4 text-lg transition-all duration-100 
-                ${activeTabs === 'Projects' ? 'text-white border-b-4 border-primary': 'text-gray-500'}`}
+                ${activeTabs === 'Works' ? 'text-white border-b-4 border-primary': 'text-gray-500'}`}
             >
-              Projects 
+              Works 
             </div>
         </div>
+        
 
-        {/* <div className="w-full p-4">
-        {activeTab === 'overview' ? (
-          <div>
-            <OverView/>
-            
-          </div>
-        ) : (
-          <div>
-            <Tracking/>
-            </div>
-        )}
-      </div> */}
+        {/* Sections */}
+        <div className="w-full">
+        {
+          activeTabs === "Feeds" && <Feeds/>
+        }
+           {
+          activeTabs === "About" && <About/>
+        }
+
+        {
+          activeTabs === "Experience" && <Experience/>
+        }
+
+        {
+          activeTabs === "Works" && <Works/>
+        }
+      </div>
 
       </div>
     </section>
