@@ -2,6 +2,7 @@ import Image from "next/image";
 import { CiLocationOn } from "react-icons/ci";
 import { IoSchoolOutline } from "react-icons/io5";
 import { PiBalloon } from "react-icons/pi";
+import Feedtabs from "./Feedtabs";
 
 const UpperSection = () => {
   const BioInfo = [
@@ -128,6 +129,12 @@ const UpperSection = () => {
 
           </div>
         </div>
+
+
+        <div className="mt-10">
+          <Feedtabs/>
+        </div>
+
 
 
       </div>
