@@ -2,7 +2,7 @@ import Image from "next/image"
 
 const FeedCards = () => {
   return (
-    <section className="py-5">
+    <section className="p-5 hover:bg-white/10 rounded-lg">
     <div className="container mx-auto px-2">
      <div className="flex flex-row gap-1">
             <div className="w-[50px]">

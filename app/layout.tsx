@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 
-
-import { Inter } from 'next/font/google'
+import { Inter} from 'next/font/google'
 import "./globals.css";
-import { twMerge } from 'tailwind-merge';
-
-const inter = Inter({subsets:["latin"]});
 
 
+
+const comic = Inter({subsets:["latin"],weight:["400"]});
 export const metadata: Metadata = {
   title: "Aadarsha Khatri | Portfolio",
   description: "Portfolio",
@@ -24,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={twMerge(inter.className, 'antialiased bg-[#01071D]')}
+        className={`${comic.className} antialiased bg-[#01071D]`}
       >
         {children}
       </body>
