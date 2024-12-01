@@ -1,10 +1,23 @@
+import ProjectCard from "../components/ProjectCard"
 
 
 const Works = () => {
   return (
-    <div>
-      <h1 className="text-white">This is Works Page</h1>
-    </div>
+    <section>
+      <div className="container mx-auto px-6 md:px-0">
+
+
+        <div className="flex">
+
+          {/* Card */}
+          <ProjectCard/>
+
+          
+        </div>
+
+      </div>
+
+    </section>
   )
 }
 

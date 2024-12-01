@@ -10,10 +10,13 @@ const Experience = () => {
       Location: "ChimpVine - Hybrid",
       TimeLine: "Aug 2024 - Present",
       Description: [
-        "Performed competitor analysis, user persona creation, and user interviews.",
+        "Designed the UIs for Computer Vision Games",
+        "Developed a responsive landing page with parallax effect",
         "Designed high-fidelity prototypes and developed approved designs using React.",
-        "Learned React JS, Wireframing, Ideation, and User Research."
-      ]
+       
+      ],
+      skills:["Next JS","React JS","Redux","API Integration", "Figma", "Bootstrap"]
+      
     },
     {
       JobTitle: "UI/UX Designer Intern",
@@ -23,8 +26,9 @@ const Experience = () => {
       Description: [
         "Contributed to UI design of Play Store products including BetterSchool and Codynn.",
         "Designed UI from scratch for various apps in Figma, such as question banks, exercise, and programming apps.",
-        "Learned Design Documentation, UX Design, Prototyping, Design Thinking, and Time Management."
-      ]
+      
+      ],
+      skills:["Design Documentation","UX Research","UX Design" , "Ideation","Figma"]
     },
     {
       JobTitle: "Python and C Instructor (Community Hours)",
@@ -34,7 +38,8 @@ const Experience = () => {
       Description: [
         "Led Python and C programming classes for grades 8, 9, and 10 as part of community service.",
         "Fostered a passion for computer science among students."
-      ]
+      ],
+      skills:["Python","C","Management"]
     },
       {
       JobTitle: "Video Editor Intern",
@@ -43,8 +48,9 @@ const Experience = () => {
       TimeLine: "June 2023 - July 2023",
       Description: [
         "Edited videos for various social media platforms, including shorts, podcasts, and musical videos.",
-        "Learned Video Editing and Premier Pro."
-      ]
+       
+      ],
+      skills:["Premier Pro","Video Editing"]
     },
   ];
   
@@ -94,6 +100,7 @@ const Experience = () => {
                 location={currentElement.Location}
                 timeline={currentElement.TimeLine}
                 description={currentElement.Description}
+                skills={currentElement.skills}
                 />
               ))
             }

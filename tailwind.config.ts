@@ -16,5 +16,8 @@ export default {
       comicNeue: ["'Comic Neue", "serif"], 
     },
   },
-  plugins: [],
+  plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require('tailwind-scrollbar')({ preferredStrategy: 'pseudoelements' }),
+  ],
 } satisfies Config;
