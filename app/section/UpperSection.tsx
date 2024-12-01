@@ -81,7 +81,7 @@ const UpperSection = () => {
 
             {/* Info/Bio */}
             <p className="text-white mt-4">
-              Creating meaningful projects for actual clients, not just adding to the project count for portfolios.🌻
+              Creating meaningful projects for actual clients, not just adding to the project count for portfolios.🦇
             </p>
 
             {/* Icons */}
