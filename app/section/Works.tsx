@@ -17,9 +17,17 @@ const Works = () => {
       ImageSource:"/projectImg/LP.png",
       tags:["Next JS","React JS", "Tailwind CSS" , "Framer Motion"],
     },{
+      title:"Coffee Landing Page - UI Design",
+      description:"This was a project that I designed in Figma, featuring a coffee-themed landing page. The design focuses on creating an inviting and visually appealing user experience, incorporating elements that capture the essence of a cozy coffee shop. It includes interactive sections, a clean layout, and strategic use of color and typography to engage visitors and showcase the brand's personality.",
+      hrefLink:"https://dribbble.com/shots/24952926-Coffee-Landing-Page",
+      ImageSource:"/projectImg/Coffee_Design.png",
+      tags:["UI Design", "Figma", "High Fidelity", "Responsive","Design Project"]
+    },
+
+      {
       title:"Tourist Guide",
       hrefLink:"https://github.com/AadarshaKhatri/Tourist_Guide",
-      description:"This project highlights my ability to turn Figma designs into responsive web applications, blending technical expertise with design principles to deliver interactive and visually appealing solutions.",
+      description:"This project highlights my ability to turn Figma designs into responsive web applications, blending technical expertise with design principles to deliver interactive and visually appealing solutions. The design is below the same section",
       ImageSource:"/projectImg/Lp_tourist.png",
       tags:["React","Gsap","Tailwind CSS"],
     },{
@@ -28,7 +36,13 @@ const Works = () => {
       description:"A weather app delivering real-time updates, forecasts, and location-based insights with a clean, responsive design and dynamic visuals.",
       ImageSource:"/projectImg/Weather.png",
       tags:["JavaScript","Vanilla CSS", "API Handling"],
-    }
+    },{
+      title:"Web Design",
+      description:"Created a visually appealing, responsive landing page in Figma using advanced prototyping and plugins. It features a compelling hero section, clear value propositions, and attention-grabbing animations, all designed with meticulous attention to typography, layout, and color scheme.",
+      hrefLink:"https://dribbble.com/shots/24952926-Coffee-Landing-Page",
+      ImageSource:"/projectImg/Linked.png",
+      tags:["UI/UX", "Figma", "Responsive","Design Project"]
+    },
   ]
   return (
     <section>

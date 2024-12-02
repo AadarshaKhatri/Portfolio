@@ -49,7 +49,17 @@ const UpperSection = () => {
             />
             <div className=" relative flex flex-row justify-between mx-4 mt-4">
             {/* Profile Picture */}
-              <div className=" mt-[-86px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full border-4 border-white"></div>
+            <Image 
+            src = "/Logo/pfp.jpg"
+            alt="Pfp"
+            width={100}
+            height={100}
+            quality={100}
+            className="mt-[-86px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full border-4 border-white object-cover"
+            />
+              {/* <div className=" mt-[-86px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full border-4 border-white">
+                
+              </div> */}
 
               {/* Download Button */}
               <div className="">

@@ -25,7 +25,7 @@ const ProjectCard = (props :ProjectCardProps) => {
             <a href ={props.hrefLink} target = "_blank" className="flex flex-row gap-x-2 items-center cursor-pointer">
           <FaGithub className="text-white" size={24}/>
             <p className="text-white text-lg">
-             View Code 
+             View 
             </p>
             </a>
           
@@ -58,7 +58,7 @@ const ProjectCard = (props :ProjectCardProps) => {
           width={1000}
           height={320}
           quality={100}
-          className="w-full h-[320px] rounded-md z-50"
+          className="w-full h-[200px]md:h-[320px] rounded-md z-50"
           priority
           />
         </div>
