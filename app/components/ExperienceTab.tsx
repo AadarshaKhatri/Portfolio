@@ -11,7 +11,7 @@ interface ExperienceProps {
 }
 const ExperienceTab = (props:ExperienceProps) => {
   return (
-    <section className="border-l-4 border-primary">
+    <section className="border-l-4 border-primary ">
         <div className="flex flex-col px-6 py-3">
               {/* Image and Role */}
               <div className="flex flex-row items-center gap-x-5">

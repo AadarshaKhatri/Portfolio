@@ -1,29 +1,28 @@
-import Image from "next/image"
+
 import { FaGithub } from "react-icons/fa"
-const ProjectCard = () => {
+import Image from "next/image"
+interface ProjectCardProps {
+  key:number,
+  title:string,
+  hrefLink:string,
+  description:string,
+  ImageSource:string,
+  tags:Array<string>
+}
+
+const ProjectCard = (props :ProjectCardProps) => {
   return (
-    <section className="p-5 hover:bg-white/10 rounded-lg">
+    <section className="p-5  hover:bg-white/10 rounded-lg">
     <div className="container mx-auto px-2">
-    <div className="flex flex-row gap-1">
-            <div className="w-[50px]">
-              <Image
-                  src = {"/Logo/CV_logo.png"}
-                  alt = "Logos"
-                  height = {42}
-                  width={42}
-                  className="rounded-full max-w-[50px] max-h-[50px]"
-                  quality ={100}/>
-                  
+  
 
-            </div>
-
-      <div className="flex-1 flex-col">
+      <div className="flex flex-col">
 
 
-        <div className="flex flex-row justify-between pb-2">
-          <h1 className="text-white text-lg font-bold pb-1">Dashboard UI</h1>
+        <div className="flex flex-row justify-between pb-6">
+          <h1 className="text-white text-2xl font-bold pb-1">{props.title}</h1>
          
-            <a className="flex flex-row gap-x-2 items-center cursor-pointer">
+            <a href ={props.hrefLink} target = "_blank" className="flex flex-row gap-x-2 items-center cursor-pointer">
           <FaGithub className="text-white" size={24}/>
             <p className="text-white text-lg">
              View Code 
@@ -33,26 +32,42 @@ const ProjectCard = () => {
         </div>
         
         {/* Description */}
-        <p className="text-white">Just completed building an landing page using React.js and Framer motion! It’s fully responsive 💻🔧 
+        <p className="text-white">{props.description}
          
         </p>
         
-        {/* Tags */}
-        <p className="text-primary font-light pb-5">
-          #ReactJs #LandingPage #WebDevelopment #ParallaxEffect
-        </p>
+  
+        <div className="mt-5 flex flex-shrink flex-row gap-x-5 gap-y-5 flex-wrap pb-10">
+            {
+              props.tags?.map((element,index)=>(
+                <div key = {index} className="text-primary bg-primary/15 px-3 py-2 rounded-full">
+                {element}
+                </div>
+              ))
+            }   
+         
+              
+       </div>
 
         {/* Images */}
 
-        <div className="w-full h-[320px] bg-red-200">
-
+        <div>
+          <Image
+          src={props.ImageSource}
+          alt="Project Display Image"
+          width={1000}
+          height={320}
+          quality={100}
+          className="w-full h-[320px] rounded-md z-50"
+          priority
+          />
         </div>
 
       </div>
 
     </div>
       
-    </div>
+
   </section>
 
   )

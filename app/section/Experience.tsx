@@ -32,7 +32,7 @@ const Experience = () => {
     },
     {
       JobTitle: "Python and C Instructor (Community Hours)",
-      src :"/LangImg/Python.png",
+      src :"/Logo/BNS.jpeg",
       Location: "Bloom Nepal School - Onsite",
       TimeLine: "May 2024 - July 2024",
       Description: [
