@@ -1,5 +1,7 @@
 import Image from "next/image"
+import { VscPinned } from "react-icons/vsc"
 interface FeedCardsProps {
+  pinned:boolean,
   date:string,
   title:string,
   pfp:string,
@@ -10,8 +12,9 @@ interface FeedCardsProps {
 
 const FeedCards = (props : FeedCardsProps) => {
   return (
-    <section className="p-5 pt-10 hover:bg-white/10 rounded-lg">
+    <section className="p-5 md:pt-10 hover:bg-white/10 rounded-lg">
     <div className="container mx-auto px-2">
+
      <div className="flex flex-row gap-1">
             <div className="w-[50px]">
               <Image
@@ -19,13 +22,22 @@ const FeedCards = (props : FeedCardsProps) => {
                   alt = "Logos"
                   height = {42}
                   width={42}
-                  className="rounded-full max-w-[50px] max-h-[50px] object-contain"
+                  className="rounded-full max-w-[42px] max-h-[42px] object-cover"
                   quality ={100}/>
                   
 
             </div>
 
-       <div className="flex-1 flex-col">
+       <div className="flex-1 flex-col relative">
+       {
+        props.pinned == true ? 
+        <div className="flex flex-row items-center gap-2 absolute top-[-16px] md:top-[-30px]">
+            <VscPinned className="text-gray-300" size={16}/>
+            <p className="text-gray-300 text-sm">Pinned</p>
+        </div>
+        : null
+        
+      }
         <h1 className="text-white text-lg font-bold pb-1">{props.title}<span className="font-normal text-gray-400 text-sm"> - {props.date} </span></h1>
         
         {/* Description */}
@@ -52,7 +64,8 @@ const FeedCards = (props : FeedCardsProps) => {
               height={1000}
               quality={100}
               priority
-              className="w-full h-[220px] md:h-[320px] object-cover"/>
+              className="w-full h-[150px] md:h-[320px] object-cover"/>
+              
               
 
             </div>

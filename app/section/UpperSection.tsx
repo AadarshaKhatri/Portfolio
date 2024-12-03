@@ -42,20 +42,20 @@ const UpperSection = () => {
             <Image
               src="/assets/Bg.png"
               alt="Background-Image"
-              width={600} // Adjusted width for responsiveness
-              height={300} // Adjusted height for better proportions
+              width={1000} 
+              height={500} 
               quality={100}
               className="md:w-full md:h-[250px] h-auto object-cover"
             />
             <div className=" relative flex flex-row justify-between mx-4 mt-4">
             {/* Profile Picture */}
             <Image 
-            src = "/Logo/pfp.jpg"
+            src = "/assets/Default_pfp.jpg"
             alt="Pfp"
             width={100}
             height={100}
             quality={100}
-            className="mt-[-86px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full border-4 border-white object-cover"
+            className="mt-[-80px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full  object-cover"
             />
               {/* <div className=" mt-[-86px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full border-4 border-white">
                 
@@ -63,9 +63,10 @@ const UpperSection = () => {
 
               {/* Download Button */}
               <div className="">
+              <a href="/pdf/Cv.pdf" download>
               <button className="text-white font-comicNeue text-md border border-primary px-4 py-2 rounded-full hover:bg-primary">
                   Download CV
-              </button>
+              </button></a>
 
             </div>
   
