@@ -34,7 +34,7 @@ const UpperSection = () => {
     <section className="overflow-hidden min-h-screen flex justify-center ">
       <div className="w-full max-w-[650px] mx-auto">
 
-        {/* Infomation */}
+        {/* Information */}
         <div className="flex flex-col">
 
           {/* Background Image Section and Profile Section */}

@@ -12,9 +12,6 @@ export default {
         "primary": "#25BAEB",
       },
     },
-    fontFamily: {
-      comicNeue: ["'Comic Neue", "serif"], 
-    },
   },
   plugins: [
     // eslint-disable-next-line @typescript-eslint/no-require-imports
