@@ -5,6 +5,7 @@ const Works = () => {
   const ProjectList = [
     {
       title: "DashBoard UI",
+      liveLink:"https://preview-dashboard-xi.vercel.app/",
       hrefLink:"https://github.com/AadarshaKhatri/DashBoard",
       description:"Designed and developed a Shipments Dashboard user interface using React, focusing on delivering an intuitive and efficient experience for managing shipments. The project involved implementing responsive layouts, dynamic data visualization, and user-friendly components to streamline tracking and management tasks.",
       ImageSource:"/projectImg/DashBoard.png",
@@ -12,34 +13,39 @@ const Works = () => {
       
     },{
       title:"Sass Landing Page",
+      liveLink:"https://framer-lp.vercel.app/",
       hrefLink:"https://github.com/AadarshaKhatri/Framer_LP",
       description:"Developed a SaaS full-responsive product landing page featuring a sleek parallax effect and smooth scrolling animations for a modern and engaging user experience. The design was inspired by a reference template sourced from the Figma Community, adapted and implemented with precision to maintain visual appeal and functionality. ",
       ImageSource:"/projectImg/LP.png",
       tags:["Next JS","React JS", "Tailwind CSS" , "Framer Motion"],
     },{
       title:"Coffee Landing Page - UI Design",
+      liveLink:"https://dribbble.com/shots/24952926-Coffee-Landing-Page",
       description:"This was a project that I designed in Figma, featuring a coffee-themed landing page. The design focuses on creating an inviting and visually appealing user experience, incorporating elements that capture the essence of a cozy coffee shop. It includes interactive sections, a clean layout, and strategic use of color and typography to engage visitors and showcase the brand's personality.",
-      hrefLink:"https://dribbble.com/shots/24952926-Coffee-Landing-Page",
+      hrefLink:"",
       ImageSource:"/projectImg/Coffee_Design.png",
       tags:["UI Design", "Figma", "High Fidelity", "Responsive","Design Project"]
     },
 
       {
       title:"Tourist Guide",
+      liveLink:"",
       hrefLink:"https://github.com/AadarshaKhatri/Tourist_Guide",
       description:"This project highlights my ability to turn Figma designs into responsive web applications, blending technical expertise with design principles to deliver interactive and visually appealing solutions. The design is below the same section",
       ImageSource:"/projectImg/Lp_tourist.png",
       tags:["React","Gsap","Tailwind CSS"],
     },{
       title:"Weather App",
+      liveLink:"https://forescanner.netlify.app/",
       hrefLink:"https://github.com/AadarshaKhatri/Weather_forecast",
       description:"A weather app delivering real-time updates, forecasts, and location-based insights with a clean, responsive design and dynamic visuals.",
       ImageSource:"/projectImg/Weather.png",
       tags:["JavaScript","Vanilla CSS", "API Handling"],
     },{
       title:"Web Design",
+      liveLink:"https://dribbble.com/shots/24502020-Landing-Page",
       description:"Created a visually appealing, responsive landing page in Figma using advanced prototyping and plugins. It features a compelling hero section, clear value propositions, and attention-grabbing animations, all designed with meticulous attention to typography, layout, and color scheme.",
-      hrefLink:"https://dribbble.com/shots/24952926-Coffee-Landing-Page",
+      hrefLink:"",
       ImageSource:"/projectImg/Linked.png",
       tags:["UI/UX", "Figma", "Responsive","Design Project"]
     },
@@ -57,6 +63,7 @@ const Works = () => {
             ProjectList.map((currentElement,index)=>(
               <ProjectCard
               key={index}
+              liveLink={currentElement.liveLink}
               title={currentElement.title}
               hrefLink={currentElement.hrefLink}
               description={currentElement.description}

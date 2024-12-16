@@ -1,9 +1,10 @@
 
-import { FaGithub } from "react-icons/fa"
+import { FaEye, FaGithub } from "react-icons/fa"
 import Image from "next/image"
 interface ProjectCardProps {
   key:number,
   title:string,
+  liveLink:string,
   hrefLink:string,
   description:string,
   ImageSource:string,
@@ -21,13 +22,39 @@ const ProjectCard = (props :ProjectCardProps) => {
 
         <div className="flex flex-row justify-between pb-6">
           <h1 className="text-white text-2xl font-bold pb-1">{props.title}</h1>
+
+          <div className="flex flex-row gap-5">
+            {
+             props?.hrefLink ? 
+
+             <a href ={props.hrefLink} target = "_blank" className="flex flex-row gap-x-2 items-center cursor-pointer">
+             <FaGithub className="text-white" size={24}/>
+               <p className="text-white text-lg">
+                View Code 
+               </p>
+               </a>
+             :
+             null
+            }
+
+{
+             props?.liveLink ? 
+             <a href ={props.liveLink} target = "_blank" className="flex flex-row gap-x-2 items-center cursor-pointer">
+             <FaEye className="text-white" size={24}/>
+               <p className="text-white text-lg">
+                Live 
+               </p>
+               </a>
+             :
+             null
+            }
+
+
+      
+
+           
+          </div>
          
-            <a href ={props.hrefLink} target = "_blank" className="flex flex-row gap-x-2 items-center cursor-pointer">
-          <FaGithub className="text-white" size={24}/>
-            <p className="text-white text-lg">
-             View 
-            </p>
-            </a>
           
         </div>
         

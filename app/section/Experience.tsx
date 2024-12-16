@@ -9,13 +9,8 @@ const Experience = () => {
       src :"/Logo/CV_logo.png",
       Location: "ChimpVine - Hybrid",
       TimeLine: "Aug 2024 - Present",
-      Description: [
-        "Designed the UIs for Computer Vision Games",
-        "Developed a responsive landing page with parallax effect",
-        "Designed high-fidelity prototypes and developed approved designs using React.",
-       
-      ],
-      skills:["Next JS","React JS","Redux","API Integration", "Figma", "Bootstrap"]
+      Description: "ChimpVine is a US-based company that provides educational games, quizzes, and interactive courses for students from Pre-K to Grade 8, with the goal of making learning fun and engaging. I initially joined the company as an intern and have since been steadily advancing in my journey, gaining valuable experience and contributing to the company's mission of transforming education through innovative and enjoyable learning experiences.",
+      skills:["Next JS","React JS","Redux","TailWind Css", "Figma", "Bootstrap"]
       
     },
     {
@@ -23,33 +18,26 @@ const Experience = () => {
       src :"/Logo/Cod_logo.png",
       Location: "Codynn - Remote",
       TimeLine: "August 2024 - October 2024",
-      Description: [
-        "Contributed to UI design of Play Store products including BetterSchool and Codynn.",
-        "Designed UI from scratch for various apps in Figma, such as question banks, exercise, and programming apps.",
-      
-      ],
+      Description: 
+        "Coddyn, a product of vOID Nepal, is developed by a software company dedicated to bridging the education gap through programming courses. I began as a remote intern designer, where I refined my UX skills by contributing to UI designs for products like BetterSchool and Coddyn, as well as creating designs for apps such as question banks and programming learning tools.",
       skills:["Design Documentation","UX Research","UX Design" , "Ideation","Figma"]
     },
     {
-      JobTitle: "Python and C Instructor (Community Hours)",
+      JobTitle: "Community Hours",
       src :"/Logo/BNS.jpeg",
       Location: "Bloom Nepal School - Onsite",
       TimeLine: "May 2024 - July 2024",
-      Description: [
-        "Led Python and C programming classes for grades 8, 9, and 10 as part of community service.",
-        "Fostered a passion for computer science among students."
-      ],
-      skills:["Python","C","Management"]
+      Description: 
+        "Back on Track BNSF is a volunteer-driven initiative focused on rebuilding Nepali schools and enhancing education post-earthquake. As part of the Mentorship Program, I joined as a Python Instructor, teaching programming to grades 8, 9, and 10 at Bloom Nepal School. In this role, I inspired students' interest in computer science and helped them develop key coding skills in Python and C, supporting the school's educational recovery and growth.",
+      
+      skills:["Python","C","Mentoring"]
     },
       {
       JobTitle: "Video Editor Intern",
       src :"/Logo/Ann.png",
       Location: "Aviation News Nepal - Onsite",
       TimeLine: "June 2023 - July 2023",
-      Description: [
-        "Edited videos for various social media platforms, including shorts, podcasts, and musical videos.",
-       
-      ],
+      Description:  "Completed a summer internship as a Video Editor during high school, gaining hands-on experience in video production and post-production processes.",
       skills:["Premier Pro","Video Editing"]
     },
   ];
@@ -86,7 +74,7 @@ const Experience = () => {
           </div>
 
           Career Highlights
-          <div className="space-y-10">
+          <div className="space-y-16">
             <h2 className="font-comicNeue text-4xl font-semibold text-primary mb-5"> 
               Career Highlights
             </h2>

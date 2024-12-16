@@ -1,10 +1,17 @@
+"use client"
+
 import Image from "next/image";
 import { CiLocationOn } from "react-icons/ci";
 import { IoSchoolOutline } from "react-icons/io5";
 import { PiBalloon } from "react-icons/pi";
 import Feedtabs from "./Feedtabs";
+import { useState} from "react";
+
+
 
 const UpperSection = () => {
+
+  const [overlay, setOverlay] = useState(false);
   const BioInfo = [
     {
       icon:<CiLocationOn size={20} className="text-primary"/>,
@@ -19,6 +26,13 @@ const UpperSection = () => {
     }
   ]
 
+
+
+
+  const handleClick =()=>{
+    setOverlay(!overlay);
+    
+  }
   const logos = [
     {
       source:"/Logo/Ann.png"
@@ -111,7 +125,7 @@ const UpperSection = () => {
             </div>
 
             {/* Worked At */}
-            <div className="flex flex-row mt-4 gap-1 items-center">
+            <div onClick={handleClick} className="flex flex-row mt-4 gap-1 items-center">
               <div className="flex flex-row items-center -space-x-3 pr-1">
                 {
                   logos.map((currentElement,index)=>(
@@ -149,6 +163,17 @@ const UpperSection = () => {
 
 
       </div>
+      {overlay && (
+        <div
+          className="overlay fixed top-0 left-0 right-0 bottom-0 backdrop-blur flex justify-center items-center z-50"
+          onClick={handleClick} // Close overlay if clicked outside the square
+        >
+          {/* Square inside the overlay */}
+          <div className="w-72 h-96 bg-[#01071D] rounded-lg">
+            <h2 className="text-primary text-2xl font-semibold">Company Websites</h2>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

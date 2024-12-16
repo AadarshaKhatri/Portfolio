@@ -6,12 +6,12 @@ interface ExperienceProps {
   role:string,
   location:string,
   timeline:string,
-  description:Array<string>,
+  description:string,
   skills:Array<string>
 }
 const ExperienceTab = (props:ExperienceProps) => {
   return (
-    <section className="border-l-4 border-primary ">
+    <section className="border-l-4 border-primary">
         <div className="flex flex-col px-6 py-3">
               {/* Image and Role */}
               <div className="flex flex-row items-center gap-x-5">
@@ -34,17 +34,9 @@ const ExperienceTab = (props:ExperienceProps) => {
               </div>
 
               <div className="mt-5">
-              {
-                props.description?.map((ele,index)=>(
-              <div key={index}  >
-                <ol className="list-disc text-white list-inside">
-                  <li className="py-2 font-semibold">{ele}</li>
-                </ol>
-              </div>
-
-
-                ))
-              }
+          
+                <p className="py-2 font-light text-white">{props.description}</p>
+            
               </div>
 
               <div className="mt-5 flex flex-shrink flex-row gap-x-5 gap-y-5 flex-wrap">
