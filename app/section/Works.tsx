@@ -4,6 +4,15 @@ import ProjectCard from "../components/ProjectCard"
 const Works = () => {
   const ProjectList = [
     {
+      title: "Product Showcase ",
+      liveLink:"",
+      hrefLink:"https://github.com/AadarshaKhatri/bag",
+      description:"Developed a full-stack web application with an admin panel and user authentication, allowing users to view products. The admin can create products, which are then displayed on the frontend for users to browse.",
+      ImageSource:"/projectImg/Bag.png",
+      tags:["EJS","Node-JS","Express JS"],
+      
+    },
+    {
       title: "DashBoard UI",
       liveLink:"https://preview-dashboard-xi.vercel.app/",
       hrefLink:"https://github.com/AadarshaKhatri/DashBoard",
