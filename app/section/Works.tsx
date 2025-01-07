@@ -8,7 +8,7 @@ const Works = () => {
       liveLink:"",
       hrefLink:"https://github.com/AadarshaKhatri/travelWorld",
       description:"Developed a full-stack web application for users to book tours and user authentication, allowing users to view product. The admin can create products, which are then displayed on the frontend for users to browse.",
-      ImageSource:"/projectImg/Tour_travel.png",
+      ImageSource:"/projectImg/Tours_travel.png",
       tags:["React","Node-JS","Express JS","MongoDB Atlas"],
       
     },
