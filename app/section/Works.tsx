@@ -4,6 +4,15 @@ import ProjectCard from "../components/ProjectCard"
 const Works = () => {
   const ProjectList = [
     {
+      title: "Tours Booking",
+      liveLink:"",
+      hrefLink:"https://github.com/AadarshaKhatri/travelWorld",
+      description:"Developed a full-stack web application for users to book tours and user authentication, allowing users to view product. The admin can create products, which are then displayed on the frontend for users to browse.",
+      ImageSource:"/projectImg/Tour_travel.png",
+      tags:["React","Node-JS","Express JS","MongoDB Atlas"],
+      
+    },
+    {
       title: "Product Showcase ",
       liveLink:"",
       hrefLink:"https://github.com/AadarshaKhatri/bag",
@@ -12,11 +21,12 @@ const Works = () => {
       tags:["EJS","Node-JS","Express JS"],
       
     },
+    
     {
       title: "DashBoard UI",
       liveLink:"https://preview-dashboard-xi.vercel.app/",
       hrefLink:"https://github.com/AadarshaKhatri/DashBoard",
-      description:"Designed and developed a Shipments Dashboard user interface using React, focusing on delivering an intuitive and efficient experience for managing shipments. The project involved implementing responsive layouts, dynamic data visualization, and user-friendly components to streamline tracking and management tasks.",
+      description:"Developed a Shipments Dashboard user interface using React, focusing on delivering an intuitive and efficient experience for managing shipments. The project involved implementing responsive layouts, dynamic data visualization, and user-friendly components to streamline tracking and management tasks.",
       ImageSource:"/projectImg/DashBoard.png",
       tags:["React","Re-Charts","Tailwind Css"],
       
