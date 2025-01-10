@@ -32,7 +32,7 @@ const Feeds = () => {
       title:"Aadarsha Khatri 🤓",
       pfp:"/Logo/pfp.jpg",
       imgSrc:"/Feeds/Py_BNS.jpg",
-      description:"Volunteered to lead C and python programming classes at Bloom Nepal School, designing and delivering interactive lessons tailored to the students' needs. Focused on building foundational coding skills through hands-on projects and practical applications. Demonstrated strong leadership, communication, and adaptability, creating an engaging learning environment that inspired students to explore programming concepts and problem-solving.",
+      description:"Volunteered as a Python and C  instructor at Bloom Nepal School, designing and delivering interactive lessons tailored to the students' needs. Focused on building foundational coding skills through hands-on projects and practical applications. Demonstrated strong leadership, communication, and adaptability, creating an engaging learning environment that inspired students to explore programming concepts and problem-solving.",
       tags:"#C #Tutoring #Python"
     }
 

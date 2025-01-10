@@ -37,7 +37,7 @@ const Experience = () => {
       src :"/Logo/Ann.png",
       Location: "Aviation News Nepal - Onsite",
       TimeLine: "June 2023 - July 2023",
-      Description:  "Completed a summer internship as a Video Editor during high school, gaining hands-on experience in video production and post-production processes.",
+      Description:  "Aviation News Nepal, a media company dedicated to daily aviation updates across various social platforms, gave me the opportunity to contribute as an editor for their aviation content. During high school, I completed a summer internship as a Video Editor, where I gained valuable hands-on experience in video production and post-production workflows.",
       skills:["Premier Pro","Video Editing"]
     },
   ];
