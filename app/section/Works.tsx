@@ -48,7 +48,7 @@ const Works = () => {
 
       {
       title:"Tourist Guide",
-      liveLink:"",
+      liveLink:"https://guide-landing.vercel.app",
       hrefLink:"https://github.com/AadarshaKhatri/Tourist_Guide",
       description:"This project highlights my ability to turn Figma designs into responsive web applications, blending technical expertise with design principles to deliver interactive and visually appealing solutions. The design is below the same section",
       ImageSource:"/projectImg/Lp_tourist.png",

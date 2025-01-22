@@ -85,8 +85,8 @@ const ProjectCard = (props :ProjectCardProps) => {
           width={1000}
           height={320}
           quality={100}
-          className="w-full h-[200px]md:h-[320px] rounded-md z-50"
-          priority
+          className="w-full h-[200px]md:h-[320px] rounded-md z-50 object-fill"
+          priority = {true}
           />
         </div>
 
