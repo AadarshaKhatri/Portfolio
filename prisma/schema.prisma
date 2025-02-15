@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model User_models {
   id       Int     @id @default(autoincrement())
   email    String
   password String
@@ -40,7 +40,7 @@ model Post {
   updatedAt DateTime @default(now())
   pinned    Boolean
   tags      Json
-  author   User @relation(fields: [authorId], references: [id])
+  author   User_models @relation(fields: [authorId], references: [id])
   authorId Int
 }
 
@@ -52,7 +52,7 @@ model Projects {
   codelink    String
   Images      String
   Skills      Json
-  author   User @relation(fields: [authorId], references: [id])
+  author   User_models @relation(fields: [authorId], references: [id])
   authorId Int
 }
 
@@ -60,7 +60,7 @@ model Technologies {
   id     Int    @id @default(autoincrement())
   title  String
   Images String
-  author   User @relation(fields: [authorId], references: [id])
+  author   User_models @relation(fields: [authorId], references: [id])
   authorId Int
 }
 
@@ -68,7 +68,7 @@ model Languages {
   id      Int    @id @default(autoincrement())
   lang    String
   imaghes String
-  author   User @relation(fields: [authorId], references: [id])
+  author   User_models @relation(fields: [authorId], references: [id])
   authorId Int
 }
 
@@ -85,6 +85,6 @@ model Experience {
   company     String
   logo        String
   skills      Json
-  author   User @relation(fields: [authorId], references: [id])
+  author   User_models @relation(fields: [authorId], references: [id])
   authorId Int
 }
