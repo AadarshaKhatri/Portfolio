@@ -18,6 +18,18 @@ model User {
   email    String
   password String
   name     String?
+  title String
+  bio String 
+  location String
+  degree String
+  born DateTime
+  description String
+  post Post[]
+  experience Experience[]
+  tech_stack Technologies[]
+  Languages Languages[]
+  projects Projects[]
+
 }
 
 model Post {
@@ -28,6 +40,8 @@ model Post {
   updatedAt DateTime @default(now())
   pinned    Boolean
   tags      Json
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
 }
 
 model Projects {
@@ -38,18 +52,24 @@ model Projects {
   codelink    String
   Images      String
   Skills      Json
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
 }
 
 model Technologies {
   id     Int    @id @default(autoincrement())
   title  String
   Images String
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
 }
 
 model Languages {
   id      Int    @id @default(autoincrement())
   lang    String
   imaghes String
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
 }
 
 enum Types {
@@ -65,4 +85,6 @@ model Experience {
   company     String
   logo        String
   skills      Json
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
 }
