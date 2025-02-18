@@ -1,12 +1,13 @@
 "use client";
 import { useActionState } from "react";
-import { signIn } from "./action";
+import { SignIn } from "./action";
 
 export default function LoginForm() {
-  const [state,action] = useActionState(signIn,null);
+  const [state, action] = useActionState(SignIn, null);
+
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="w-full max-w-md  p-6 rounded-lg shadow-lg">
+      <div className="w-full max-w-md p-6 rounded-lg shadow-lg">
         <div className="text-center mb-6">
           <h1 className="text-2xl text-white font-semibold">Welcome Back, Aadarsha Khatri</h1>
           <p className="text-lg text-gray-400">Enter your credentials and login to your account.</p>
@@ -22,7 +23,7 @@ export default function LoginForm() {
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
               required
             />
-            {state?.errors?.email && <p>{state.errors.email}</p>}
+            {state?.error && <p className="text-white text-lg">{state.error}</p>}
           </div>
 
           <div className="space-y-2">
@@ -34,17 +35,17 @@ export default function LoginForm() {
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
               required
             />
-            {state?.errors?.password && <p>{state.errors.password}</p>}
+            {state?.error && <p className="text-white text-lg">{state.error}</p>}
           </div>
 
           <div className="text-center flex justify-center items-center">
-            <button  className="w-full mt-4  py-4 px-4 bg-primary hover:bg-blue-700 text-white font-semibold rounded-md transition">
-             {state?.pending === true ? "Submitting..":"LogIN"}
+            <button className="w-full mt-4 py-4 px-4 bg-primary hover:bg-blue-700 text-white font-semibold rounded-md transition">
+             Log In
             </button>
           </div>
-        </form>
 
-    
+          {state?.error && <p className="text-white text-lg text-center">{state.error}</p>}
+        </form>
       </div>
     </div>
   );

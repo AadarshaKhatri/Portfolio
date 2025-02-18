@@ -1,57 +1,50 @@
 "use server"
+import { createSession, deleteSession } from "./sessions"
+import { redirect } from "next/navigation"
+import prisma from "@/app/lib/db"
 
-import prisma from "@/app/lib/db";
-import { SignFormSchema } from "@/app/lib/definations";
-import { CreateSession } from "@/app/lib/session";
-import { ActionStateTypes } from "@/app/types/interfaces";
-import { comparePassword } from "@/app/utils/hasher";
+type SignInResponse = {
+  success: boolean;
+  message?: string;
+  error?: string;
+};
 
 
+// UserLogout
+export async function logout() {
+  deleteSession()
+  redirect('/login')
+}
 
-export async function signIn(state : ActionStateTypes,formData : FormData) {
-  console.log("Sign In Action Hit!")
-  try{
-    const validateResult = SignFormSchema.safeParse({
-      email:formData.get("email"),
-      password:formData.get("password")
-    })
 
-    if(!validateResult.success){
-      return {
-        errors: validateResult.error.flatten().fieldErrors,
-      }
-     
-    }
-    const{email,password} = validateResult.data;
-   
-     const user = await prisma.User_models.findUnique({
-      where: { email },
+export async function SignIn(
+  prevState: SignInResponse | null,
+  formData: FormData
+): Promise<SignInResponse> {
+  console.log("Sign API Hit!");
+
+  const userEmail = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  if (!userEmail || !password) {
+    return { success: false, error: "Email and password are required" };
+  }
+
+  try {
+    const user = await prisma.user_models.findUnique({
+      where: { email: userEmail },
     });
 
     if (!user) {
-      return {
-        error: "Incorrect Email or Password",
-      };
+      return { success: false, error: "Invalid credentials" };
     }
 
-    const isPasswordValid = comparePassword(password, user.password);
-    console.log(isPasswordValid)
-    
-    if (!isPasswordValid) {
-      return {
-        error: "Incorrect Email or Password",
-      };
-    }
-    
-    await CreateSession(email);
-
-  }catch(err){
-    console.log(`Error Message: ${err.message}`)
-    console.log("Failed to log In",err)
-  }finally{
-    return{
-      pending:false,
-    }
+    await createSession(user.email);
+    return { success: true, message: "Sign-in successful" };
+  } catch (err) {
+    console.error("Error while signing in the user:", err);
+    return { success: false, error: "Something went wrong, please try again" };
   }
-  
 }
+
+
