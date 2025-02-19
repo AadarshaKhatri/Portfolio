@@ -4,10 +4,11 @@ import prisma from "@/app/lib/db"
 import { redirect } from "next/navigation"
 import { SignFormSchema } from "@/app/lib/definations";
 
-type SignInReturn = {
+export type SignInReturn = {
   error?:string,
   message?:string,
   success?:boolean,
+  redirect?:string,
 }
 
 // UserLogout

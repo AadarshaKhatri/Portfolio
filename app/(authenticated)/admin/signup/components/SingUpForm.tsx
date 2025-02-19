@@ -1,22 +1,20 @@
 "use client";
 import { useActionState } from "react";
-import { SignIn } from "../action";
+import { SignUp } from "../action";
 import { redirect } from "next/navigation";
 
- 
-export default function LoginForm() {
-  const [state, action] = useActionState(SignIn, null);
 
-  if(state?.success === true && state.redirect){
-    redirect(`${state.redirect}`);
-  }
-
+export const SignUpForm = ()=>{
+    const [state, action] = useActionState(SignUp, null);
+    if(state?.success === true && state.redirect){
+      redirect(`${state.redirect}`);
+    }
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-full max-w-md p-6 rounded-lg shadow-lg">
         <div className="text-center mb-6">
-          <h1 className="text-2xl text-white font-semibold">Welcome Back, Aadarsha Khatri</h1>
-          <p className="text-lg text-gray-400">Enter your credentials and login to your account.</p>
+          <h1 className="text-2xl text-white font-semibold">Create a Admin Here</h1>
+          <p className="text-lg text-gray-400">Enter your credentials and sign to your account.</p>
         </div>
 
         <form action={action} className="space-y-4">
@@ -46,7 +44,7 @@ export default function LoginForm() {
 
           <div className="text-center flex justify-center items-center">
             <button className="w-full mt-4 py-4 px-4 bg-primary hover:bg-blue-700 text-white font-semibold rounded-md transition">
-             Log In
+             SignUP
             </button>
           </div>
 
