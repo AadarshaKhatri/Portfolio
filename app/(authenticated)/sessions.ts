@@ -1,11 +1,19 @@
 "use server"
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+
+
+
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
+
+
+type SessionPayload =  {
+  userId:string,
+  expiresAt:Date,
+}
  
-export async function encrypt(payload : any) {
+export async function encrypt(payload : SessionPayload) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -20,7 +28,8 @@ export async function decrypt(session: string | undefined = '') {
     })
     return payload
   } catch (error) {
-    console.log('Failed to verify session',error);
+    console.log('Failed to verify session');
+    console.log(error);
   }
 }
 
@@ -33,10 +42,8 @@ export async function createSession(userId: string) {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
-    sameSite: 'lax',
-    path: '/',
   })
-   redirect("/admin/site-controller");
+
 }
 
 
@@ -65,3 +72,5 @@ export async function deleteSession() {
   const cookieStore = await cookies()
   cookieStore.delete('session')
 }
+
+ 

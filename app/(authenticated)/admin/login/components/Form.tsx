@@ -1,9 +1,14 @@
 "use client";
 import { useActionState } from "react";
-import { SignIn } from "./action";
+import { SignIn } from "../action";
+import { redirect } from "next/navigation";
 
 export default function LoginForm() {
-  const [state, action] = useActionState(SignIn, null);
+  const [state, action] = useActionState(SignIn, undefined);
+
+  if(state?.success === true && state.redirect){
+    redirect(`${state.redirect}`);
+  }
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -23,7 +28,7 @@ export default function LoginForm() {
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
               required
             />
-            {state?.error && <p className="text-white text-lg">{state.error}</p>}
+            {state?.error?.email && <p className="text-white text-lg">{state.error.email}</p>}
           </div>
 
           <div className="space-y-2">
@@ -35,7 +40,7 @@ export default function LoginForm() {
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
               required
             />
-            {state?.error && <p className="text-white text-lg">{state.error}</p>}
+            {state?.error?.password && <p className="text-white text-lg">{state.error.password}</p>}
           </div>
 
           <div className="text-center flex justify-center items-center">
@@ -44,7 +49,7 @@ export default function LoginForm() {
             </button>
           </div>
 
-          {state?.error && <p className="text-white text-lg text-center">{state.error}</p>}
+          
         </form>
       </div>
     </div>
