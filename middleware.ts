@@ -4,15 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "./app/(authenticated)/sessions";
 
 const protectedRoutes = ["/admin/site-controller"];
-const publicRoutes = ["/admin/login",];
+const publicRoutes = ["/admin/login","/admin/signup"];
 
 export async function middleware(req: NextRequest) {
 
   try {
-    console.log(req.nextUrl);
-    const path = req.nextUrl.pathname;
-    console.log(path);
 
+    const path = req.nextUrl.pathname;
     if(path ==="/") return NextResponse.next();
 
     const isProtected = protectedRoutes.includes(path);

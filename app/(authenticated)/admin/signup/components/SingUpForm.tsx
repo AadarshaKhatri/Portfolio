@@ -2,19 +2,21 @@
 import { useActionState } from "react";
 import { SignUp } from "../action";
 import { redirect } from "next/navigation";
-
+import {  toast } from 'sonner';
 
 export const SignUpForm = ()=>{
     const [state, action] = useActionState(SignUp, null);
     if(state?.success === true && state.redirect){
+      toast("Logged In")
       redirect(`${state.redirect}`);
+      
     }
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-full max-w-md p-6 rounded-lg shadow-lg">
         <div className="text-center mb-6">
           <h1 className="text-2xl text-white font-semibold">Create a Admin Here</h1>
-          <p className="text-lg text-gray-400">Enter your credentials and sign to your account.</p>
+          <p className="text-lg text-gray-400">You really thouught you can create an account.😂😂</p>
         </div>
 
         <form action={action} className="space-y-4">
@@ -27,7 +29,7 @@ export const SignUpForm = ()=>{
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
               required
             />
-            {state?.error?.email && <p className="text-white text-lg">{state.error.email}</p>}
+            {state?.error?.email && <p className="text-white text-lg">{toast(`${state.error.email}`)}</p>}
           </div>
 
           <div className="space-y-2">
@@ -39,7 +41,7 @@ export const SignUpForm = ()=>{
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
               required
             />
-            {state?.error?.password && <p className="text-white text-lg">{state.error.password}</p>}
+            {state?.error?.password && <p className="text-white text-lg">{toast(`${state.error.password}`)}</p>}
           </div>
 
           <div className="text-center flex justify-center items-center">
@@ -47,6 +49,8 @@ export const SignUpForm = ()=>{
              SignUP
             </button>
           </div>
+
+          {state?.error && <p className="text-white text-lg">{toast(`${state.error}`)}</p>}
 
           
         </form>

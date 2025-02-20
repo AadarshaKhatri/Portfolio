@@ -3,6 +3,7 @@ import { createSession, deleteSession } from "../../sessions";
 import prisma from "@/app/lib/db"
 import { redirect } from "next/navigation"
 import { SignFormSchema } from "@/app/lib/definations";
+import { comparePassword } from "@/app/utils/hasher";
 
 export type SignInReturn = {
   error?:string,
@@ -22,8 +23,6 @@ export async function SignIn(
   prevstate:SignInReturn,
   formData: FormData
 ){
-  console.log("Sign API Hit!");
-
   const userEmail = formData.get("email") as string;
   const password = formData.get("password") as string;
 
@@ -46,12 +45,24 @@ export async function SignIn(
       where: { email: userEmail },
     });
 
-    if (user?.email !== email ||  password !== user?.password) {
+
+
+    if (user?.email !== email) {
       return { success: false, error:{
         email:"Invalid Email or Password",
         passowrd:"Invalid Email or password",
       } };
     }
+
+    const PasswrodMatched = await comparePassword(password,user?.password);
+
+    if(!PasswrodMatched){
+      return { success: false, error:{
+        email:"Invalid Email or Password",
+        passowrd:"Invalid Email or password",
+      } };
+    }
+    
     await createSession(String(user.id));
   
     return { success: true, message: "Sign-in successful",redirect:"/admin/site-controller" };

@@ -38,6 +38,16 @@ export async function SignUp(
       }
     }
 
+    const hasUserbeenCreated = await prisma.user_models.count();
+
+    if(hasUserbeenCreated>0){
+      return{
+        error:"Admin has already been created",
+        success:false,
+      }
+
+    }
+
     const{email,password} =  result.data
     const hashedPassword = await hashPassword(password)
     const user = await prisma.user_models.create({
