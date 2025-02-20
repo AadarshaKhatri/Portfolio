@@ -1,16 +1,36 @@
 "use client";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { SignUp } from "../action";
 import { redirect } from "next/navigation";
 import {  toast } from 'sonner';
 
+export type SignUpReturn  = {
+  error:string | null,
+  message:string | null,
+  success:boolean | null,
+  redirect:string | null,
+}
+
+const initialState:SignUpReturn = {
+  error:null,
+  message:null,
+  success:null,
+  redirect:null,
+}
 export const SignUpForm = ()=>{
-    const [state, action] = useActionState(SignUp, null);
-    if(state?.success === true && state.redirect){
-      toast("Logged In")
-      redirect(`${state.redirect}`);
-      
-    }
+    const [state, action] = useActionState(SignUp,initialState);
+      useEffect(() => {
+        if (state?.success === true && state.redirect) {
+          setTimeout(() => {
+            toast.success(`${state.message}`);
+            redirect(state.redirect);
+          }, 0);
+        } else if (state?.success === false && state.error) {
+          setTimeout(()=>{
+            toast.error(`${state?.error}`);
+          })
+        }
+      }, [state]);
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-full max-w-md p-6 rounded-lg shadow-lg">
@@ -29,7 +49,7 @@ export const SignUpForm = ()=>{
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
               required
             />
-            {state?.error?.email && <p className="text-white text-lg">{toast(`${state.error.email}`)}</p>}
+       
           </div>
 
           <div className="space-y-2">
@@ -41,7 +61,7 @@ export const SignUpForm = ()=>{
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
               required
             />
-            {state?.error?.password && <p className="text-white text-lg">{toast(`${state.error.password}`)}</p>}
+         
           </div>
 
           <div className="text-center flex justify-center items-center">
@@ -50,7 +70,6 @@ export const SignUpForm = ()=>{
             </button>
           </div>
 
-          {state?.error && <p className="text-white text-lg">{toast(`${state.error}`)}</p>}
 
           
         </form>

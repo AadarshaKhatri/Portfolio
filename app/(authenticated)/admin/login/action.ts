@@ -4,7 +4,6 @@ import prisma from "@/app/lib/db"
 import { redirect } from "next/navigation"
 import { SignFormSchema } from "@/app/lib/definations";
 import { comparePassword } from "@/app/utils/hasher";
-
 export type SignInReturn = {
   error?:string,
   message?:string,
@@ -27,7 +26,7 @@ export async function SignIn(
   const password = formData.get("password") as string;
 
   if (!userEmail || !password) {
-    return { success: false, message:"User Not Found!" };
+    return { success: false, error:"User Not Found!" };
   }
 
   try {
@@ -36,7 +35,7 @@ export async function SignIn(
     if(!result.success){
       return{
         success:false,
-        error:result.error.flatten().fieldErrors,
+        error:'Invalid Email or Password',
       }
     }
 
@@ -48,27 +47,25 @@ export async function SignIn(
 
 
     if (user?.email !== email) {
-      return { success: false, error:{
-        email:"Invalid Email or Password",
-        passowrd:"Invalid Email or password",
-      } };
+      return { 
+        success: false,
+        error:"Email or Password is incorrect",
+
+      }
     }
 
     const PasswrodMatched = await comparePassword(password,user?.password);
 
     if(!PasswrodMatched){
-      return { success: false, error:{
-        email:"Invalid Email or Password",
-        passowrd:"Invalid Email or password",
-      } };
+      return { success: false,error:"Email or Password is Incorrect" };
     }
     
     await createSession(String(user.id));
   
-    return { success: true, message: "Sign-in successful",redirect:"/admin/site-controller" };
+    return { success: true, message: "User Logged In Successfully",redirect:"/admin/site-controller" };
   } catch (err) {
-    console.log("Error while signing in the user:", err);
-    return { success: false, error: "Something went wrong, please try again message form catch" };
+    // console.log("Error while signing in the user:", err);
+    return { success: false, error: "Something went wrong, please try again message form catch",message:err, };
   }
 }
 

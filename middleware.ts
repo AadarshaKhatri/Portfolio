@@ -20,7 +20,7 @@ export async function middleware(req: NextRequest) {
     const cookieStore = await cookies();
     const cookie = cookieStore.get("session")?.value;
    
-    if(!cookie) console.log("Not Cookie Found!")
+    // if(!cookie) console.log("Not Cookie Found!")
       
     const session = await decrypt(String(cookie));
 
@@ -37,7 +37,10 @@ export async function middleware(req: NextRequest) {
 
     return NextResponse.next();
   } catch (err) {
-    console.log("Failed to Verify the JWT", err);
+    // console.log("Failed to Verify the JWT", err);
+    return {
+      error:err,
+    }
   }
 }
 

@@ -6,10 +6,10 @@ import { hashPassword } from "../../../utils/hasher"
 import { createSession } from "../../sessions";
 
 export type SignUpReturn  = {
-  error?:string,
-  message?:string,
-  success?:boolean,
-  redirect?:string,
+  error:string | null,
+  message:string | null,
+  success:boolean | null,
+  redirect:string | null,
 }
 
 
@@ -25,7 +25,13 @@ export async function SignUp(
   const password = formData.get("password") as string;
 
   if (!userEmail || !password) {
-    return { success: false, message:"User Not Found!" };
+    return { 
+      success: false,
+      error:"User Not Found!",
+      message:null,
+      redirect:null,
+
+     };
   }
 
   try {
@@ -33,16 +39,23 @@ export async function SignUp(
 
     if(!result.success){
       return{
+        message:null,
+        redirect:null,
         success:false,
-        error:result.error.flatten().fieldErrors,
+        error:"Invalid Email or Password",
       }
     }
+
+    // =====================Loggin the Errors from the ZOD=================
+    // console.log(result?.error?.flatten().fieldErrors);
 
     const hasUserbeenCreated = await prisma.user_models.count();
 
     if(hasUserbeenCreated>0){
       return{
-        error:"Admin has already been created",
+        error:"Admin already exists",
+        message:null,
+        redirect:null,
         success:false,
       }
 
@@ -57,10 +70,21 @@ export async function SignUp(
     }
     });
     await createSession(String(user.id));
-    return { success: true, message: "User Sucessfully successful",redirect:"/admin/site-controller" };
-  } catch (err) {
-    console.log("Error while signing in the user:", err);
-    return { success: false, error: "Something went wrong, please try again message form catch" };
+    return { 
+      success: true,
+      message: "User Created Successful",
+      redirect:"/admin/site-controller",
+      error:null,
+       };
+
+  } catch (error) {
+    // console.log("Error while signing in the user:", err);
+    return { 
+      success: false,
+       error: "Something went wrong, please try again message form catch",
+       message:error,
+       redirect:null,
+       };
   }
 }
 
