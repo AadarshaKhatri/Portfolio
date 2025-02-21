@@ -1,42 +1,81 @@
+"use server";
 import prisma from "@/app/lib/db";
+import { error } from "console";
 
 
+interface UpdateUserTypes  {
+  error:string
+  message:string
+  success:boolean
+}
 
-
-export async function UpdateAccount(formdata:FormData){
+export async function UpdateAccount(prevState:UpdateUserTypes,formData:FormData){
+  const id = formData.get("id") as string;
+  const bio = formData.get("bio") as string;
+  const date = new Date(formData.get("born") as string);
+  const description = formData.get("description") as string;
+  const location =  formData.get("location") as string;
+  const title = formData.get("title") as string;
+  const degree = formData.get("degree") as string;
   try{
-    const id = formdata.get("id") as string;
-    const bio = formdata.get("bio") as string;
-    const name = formdata.get("name") as string;
-    const date = formdata.get("date") as string;
-    
-    console.log(bio)
+    if(!formData){
+      return{
+        success:false,
+        error:"Data not recieved!",
+        message:null,
+      }
+    }
 
-    const updatedUser = await prisma.user_models.updateMany({
+    const updatedUser = await prisma.user_models.update({
       where:{
         id:Number(id)
       },
       data:{
-        name:name,
+        description:description,
         bio:bio,
-        born:date
+        born:date,
+        location:location,
+        title:title,
+        degree:degree,
       }
     })
+    console.log(updatedUser)
 
-    if(updatedUser.count>0){
+    if (updatedUser) {
       return {
-        success:true,
-        message:"User Succesfully Updated",
-        error:null,
-      }
+        success: true,
+        message: "User successfully updated",
+        error: null,
+      };
+    } else {
+      return {
+        success: false,
+        error: "User not found or update failed",
+        message: null,
+      };
     }
 
   }catch(err){
-    console.log(err)
-    return {
+    console.log("Error Message:")
+    return({
+      error:"Failed to update the user",
       success:false,
-      error:"Failed to Update the Account",
-      message:null,
-    }
+      message:null
+    })
   }
+}
+
+
+export async function getUser() {
+  return await prisma.user_models.findFirst({
+    select:{
+      id:true,
+      title:true,
+      bio:true,
+      degree:true,
+      description:true,
+      location:true,
+      born:true,
+    }
+  });
 }

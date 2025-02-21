@@ -1,59 +1,82 @@
-import prisma from "@/app/lib/db";
+"use client";
 import { UserModel } from "@/app/types/interfaces";
-import { Suspense } from "react";
+import { Suspense, useActionState, useEffect, useState } from "react";
+import { getUser, UpdateAccount } from "./action";
+import { toast } from "sonner";
+import ImagePre from "./components/IamgePre"
+const AccountStatus =  () => {
+  const [state,action] = useActionState(UpdateAccount,null);
+  const [user,setUser] = useState<UserModel>();
 
-const AccountStatus = async () => {
-  const user: UserModel = await prisma.user_models.findFirst();
-  console.log(user);
+  useEffect(() => {
+    async function fetchUser() {
+      const response: UserModel = await getUser();
+      setUser(response);
+    }
+    fetchUser();
+  }, [state]); 
+
+  useEffect(() => {
+    setTimeout(()=>{
+      if (state?.success) {
+        toast.success(`${state?.message}`);
+      } else if (state?.error) {
+        toast.error(`${state?.error}`);
+      }
+    },0)
+  }, [state]); 
   return (
     <section className="container mx-auto px-6 md:px-0 py-10">
-      <h3 className="text-primary text-2xl font-semibold mb-6">Account Settings</h3>
-      <div className="flex flex-col lg:flex-row justify-between items-start gap-10">
-        {/* Profile Image Section */}
-        <div className="w-[300px] flex justify-center items-center">
-          <div className="w-40 h-40 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-lg">
-            Image Here
-          </div>
-        </div>
+      <div className="flex flex-col justify-between items-start gap-10">
+        <ImagePre/>
 
         {/* Account Settings Form */}
         <div className="flex-1">
-          <form className="flex flex-wrap gap-6">
+          <form action={action} className="flex flex-wrap gap-6">
+            <input name="id" defaultValue={user?.id} className="hidden"/>
             {/* First Row - Full Width */}
-            <div className="flex w-full">
+            <div className="flex w-full gap-6">
+              
               <input 
+                name="title"
                 type="text" 
                 placeholder="Title Here" 
                 className="text-white border-2 border-primary rounded-md w-full py-3 px-4 bg-[#01071D]" 
                 defaultValue={user?.title} 
               />
+               
             </div>
             
             {/* Second Row - Three Inputs in One Line */}
-            <div className="flex w-full gap-6">
-              <input 
-                type="date" 
-                placeholder="BirthDate" 
-                className="text-white border-2 border-primary rounded-md flex-1 py-3 px-4 bg-[#01071D]" 
-                defaultValue={user?.born ? new Date(user.born).toISOString().split("T")[0] : ""} 
-              />
-              <input 
-                type="text" 
-                placeholder="Graduation" 
-                className="text-white border-2 border-primary rounded-md flex-1 py-3 px-4 bg-[#01071D]" 
-                defaultValue={user?.degree} 
-              />
-              <input 
-                type="text" 
-                placeholder="Location" 
-                className="text-white border-2 border-primary rounded-md flex-1 py-3 px-4 bg-[#01071D]" 
-                defaultValue={user?.location} 
-              />
+            <div className="flex flex-col md:flex-row w-full gap-6">
+  <input 
+    name="born"
+    type="date" 
+    placeholder="BirthDate" 
+    className="text-white border-2 border-primary rounded-md w-full md:w-1/3 py-3 px-4 bg-[#01071D]" 
+    defaultValue={user?.born ? new Date(user.born).toISOString().split("T")[0] : ""} 
+  />
+  <input 
+    name="degree"
+    type="text" 
+    placeholder="Graduation" 
+    className="text-white border-2 border-primary rounded-md w-full md:w-1/3 py-3 px-4 bg-[#01071D]" 
+    defaultValue={user?.degree} 
+  />
+  <input 
+    name="location"
+    type="text" 
+    placeholder="Location" 
+    className="text-white border-2 border-primary rounded-md w-full md:w-1/3 py-3 px-4 bg-[#01071D]" 
+    defaultValue={user?.location} 
+  />
             </div>
+
             
             {/* Third Row - Full Width */}
             <div className="flex w-full">
               <input 
+                name="bio"
                 type="text" 
                 placeholder="Bio"
                 className="text-white border-2 border-primary rounded-md w-full py-3 px-4 bg-[#01071D]"
@@ -64,6 +87,7 @@ const AccountStatus = async () => {
             {/* Fourth Row - Full Width */}
             <div className="flex w-full">
               <textarea 
+                name="description"
                 placeholder="Description of the About Us Page" 
                 className="text-white border-2 border-primary rounded-md w-full py-3 px-4 bg-[#01071D] h-24"
                 defaultValue={user?.description}
@@ -71,9 +95,9 @@ const AccountStatus = async () => {
             </div>
 
             <div className="w-full flex flex-row justify-center items-center mt-5">
-              <Suspense fallback={'Loading...'}>
+              
                 <button className="text-white bg-green-800 rounded-md text-lg py-3 px-6 hover:bg-green-800/50" type="submit">Save</button>
-              </Suspense>
+              
             </div>
           </form>
         </div>
