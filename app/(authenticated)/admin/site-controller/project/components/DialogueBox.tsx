@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+"use client";
+import { useState } from "react";
 export default function AddProjectDialouge() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');

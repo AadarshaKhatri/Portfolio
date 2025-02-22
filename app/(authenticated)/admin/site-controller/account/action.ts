@@ -1,6 +1,5 @@
 "use server";
 import prisma from "@/app/lib/db";
-import { error } from "console";
 
 
 interface UpdateUserTypes  {
@@ -56,7 +55,7 @@ export async function UpdateAccount(prevState:UpdateUserTypes,formData:FormData)
     }
 
   }catch(err){
-    console.log("Error Message:")
+    console.log("Error Message:",err)
     return({
       error:"Failed to update the user",
       success:false,

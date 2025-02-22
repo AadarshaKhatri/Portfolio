@@ -1,9 +1,10 @@
 "use client";
 import { UserModel } from "@/app/types/interfaces";
-import { Suspense, useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { getUser, UpdateAccount } from "./action";
 import { toast } from "sonner";
-import ImagePre from "./components/IamgePre";
+import ImagePre from "./components/ImagePre";
+
 const AccountStatus = () => {
   const [state, action] = useActionState(UpdateAccount, null);
   const [user, setUser] = useState<UserModel>();

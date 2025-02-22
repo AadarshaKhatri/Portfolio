@@ -1,11 +1,11 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import AccountStatus from "./components/AccountStatus/Account_Status";
+import AccountStatus from "./account/AccountStatus";
 import NavigationBar from "./components/Navigation/Navigation";
-import ProjectStatus from "./components/ProjectStatus/ProjectStatus";
-import ExperienceStatus from "./components/ExperienceStatus/ExperienceStatus";
-import PostStatus from "./components/PostStatus/PostStatus";
+import ProjectStatus from "./project/ProjectStatus";
+import ExperienceStatus from "./experience/ExperienceStatus";
+import PostStatus from "./post/PostStatus";
 
 export default function SiteController() {
   const [activeTabs, setactiveTabs] = useState("AccountStatus");
@@ -71,5 +71,6 @@ export default function SiteController() {
         </div>
       </div>
     </section>
+    
   );
 }
