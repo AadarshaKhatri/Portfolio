@@ -60,7 +60,7 @@ export async function SignIn(
       return { success: false,error:"Email or Password is Incorrect" };
     }
     
-    await createSession(String(user.id));
+    await createSession(String(user.id),String(user.name));
   
     return { success: true, message: "User Logged In Successfully",redirect:"/admin/site-controller" };
   } catch (err) {

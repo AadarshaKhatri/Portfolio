@@ -8,6 +8,7 @@ const encodedKey = new TextEncoder().encode(secretKey)
 
 type SessionPayload =  {
   userId:string,
+  userName:string,
   expiresAt:Date,
 }
  
@@ -21,7 +22,7 @@ export async function encrypt(payload : SessionPayload) {
  
 export async function decrypt(session: string) {
   try {
-
+ 
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ['HS256'],
     })
@@ -33,9 +34,9 @@ export async function decrypt(session: string) {
   }
 }
 
-export async function createSession(userId: string) {
+export async function createSession(userId: string,userName:string) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-  const session = await encrypt({ userId, expiresAt })
+  const session = await encrypt({ userId,userName,expiresAt })
   const cookieStore = await cookies()
  
   cookieStore.set('session', session, {
@@ -49,6 +50,22 @@ export async function createSession(userId: string) {
 export async function deleteSession() {
   const cookieStore = await cookies()
   cookieStore.delete('session')
+}
+
+
+export async function getUser() {
+  const cookieStore = cookies();
+  const session = (await cookieStore).get("session")?.value;
+
+  if (!session) {
+    return null; 
+  }
+
+  const payload = await decrypt(session);
+  return {
+    userId: payload?.userId as number,
+    userName : payload?.userName as string,
+  }
 }
 
  

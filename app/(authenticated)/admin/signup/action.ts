@@ -69,7 +69,7 @@ export async function SignUp(
       password: hashedPassword,
     }
     });
-    await createSession(String(user.id));
+    await createSession(String(user.id),String(user.name));
     return { 
       success: true,
       message: "User Created Successful",
