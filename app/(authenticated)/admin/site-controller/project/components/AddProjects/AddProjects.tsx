@@ -35,8 +35,6 @@ const AddProjects = () => {
       <div className="flex flex-col">
         <div className="flex-col gap-10">
           <form action={action} className="flex flex-wrap gap-6">
-            <input name="id" className="hidden" />
-
             {/* First Row - Full Width */}
             <div className="flex w-full gap-6">
               <input
@@ -56,24 +54,17 @@ const AddProjects = () => {
             {/* Second Row - Three Inputs in One Line */}
             <div className="flex flex-col md:flex-row w-full gap-6">
               <input
-                name="codeink"
+                name="codelink"
                 type="url"
                 placeholder="Share the Repo Link"
-                className="text-white border-b-2 border-primary w-full md:w-1/3 py-3 px-4 bg-[#01071D] outline-none focus:border-white"
+                className="text-white border-b-2 border-primary w-full md:w-2/3 py-3 px-4 bg-[#01071D] outline-none focus:border-white"
               />
 
               <input
                 name="liveLink"
                 type="url"
                 placeholder="Share the link to the site"
-                className="text-white border-b-2 border-primary w-full md:w-1/3 py-3 px-4 bg-[#01071D] outline-none focus:border-white"
-              />
-
-              <input
-                name="location"
-                type="Enter the location"
-                placeholder="Location"
-                className="text-white border-b-2 border-primary  w-full md:w-1/3 py-3 px-4 bg-[#01071D] outline-none focus:border-white"
+                className="text-white border-b-2 border-primary w-full md:w-2/3 py-3 px-4 bg-[#01071D] outline-none focus:border-white"
               />
             </div>
 
@@ -109,7 +100,7 @@ const AddProjects = () => {
 
               {/* 🔥 Hidden Inputs to Submit Skills */}
               {skills.map((skill, index) => (
-                <input key={index} type="hidden" name="skills[]" value={skill} />
+                <input key={index} type="hidden" name="skills" value={skill} />
               ))}
             </div>
 
