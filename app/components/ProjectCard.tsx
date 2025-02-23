@@ -15,8 +15,6 @@ const ProjectCard = (props :ProjectCardProps) => {
   return (
     <section className="p-5  hover:bg-white/10 rounded-lg">
     <div className="container mx-auto px-2">
-  
-
       <div className="flex flex-col">
 
 

@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from "react";
 import AddProjects from "./components/AddProjects/AddProjects";
-import ViewProject from "./components/ViewProject/ViewProject";
+import {ViewProject} from "./components/ViewProject/ViewProject";
 
 const ProjectStatus = () => {
   const [activeTabs, setactiveTabs] = useState("View Projects");

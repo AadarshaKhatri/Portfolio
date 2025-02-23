@@ -60,7 +60,7 @@ export default function SiteController() {
 
           {/* Main Content Section - On the Right */}
           <div className="md:ml-[320px] w-full">
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div className="text-primary">Loading...</div>}>
               {activeTabs === "AccountStatus" && <AccountStatus />}
               {activeTabs === "ProjectStatus" && <ProjectStatus />}
               {activeTabs === "ExperienceStatus" && <ExperienceStatus />}

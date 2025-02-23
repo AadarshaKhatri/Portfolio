@@ -10,3 +10,15 @@ export interface UserModel {
   description: string;
   degree: string;
 }
+
+
+export interface ProjectModel {
+  id:number,
+  title:string,
+  description:string,
+  liveLink:string,
+  codelink:string,
+  Images:string,
+  Skills:string[],
+  authorId:number
+}
