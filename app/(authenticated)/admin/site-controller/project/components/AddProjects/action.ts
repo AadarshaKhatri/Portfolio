@@ -18,7 +18,7 @@ interface uploadFileResponse {
 }
 
 // =================== Function to Upload the File ====================
-async function uploadFile(file: File): Promise<uploadFileResponse> {
+export async function uploadFile(file: File): Promise<uploadFileResponse> {
 
   try {
     if (!file) {
@@ -74,7 +74,6 @@ export async function createProject(
   formData: FormData
 ) {
   try {
-
     const name = formData.get("title") as string;
     const skills = formData.getAll("skills") as string[];
     const description = formData.get("description") as string;

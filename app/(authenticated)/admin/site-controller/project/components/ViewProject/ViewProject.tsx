@@ -111,9 +111,9 @@ import Link from 'next/link';
                    src={project.Images}
                    alt="Project Display Image"
                    width={1000}
-                   height={320}
+                   height={1000}
                    quality={75}
-                   className="w-[400px] h-[200px] md:h-[320px] rounded-md object-cover"
+                   className=" bg-red-500 w-[400px] h-[200px] md:h-[320px] rounded-md object-fill"
                    priority = {true}
                    />
                  </div>
