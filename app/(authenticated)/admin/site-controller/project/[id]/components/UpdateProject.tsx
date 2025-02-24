@@ -3,7 +3,7 @@
 import { ProjectModel } from "@/app/types/interfaces";
 import { useParams } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
-import { EditProject, GetUniqueProject } from "../action";
+import { EditProject, GetUniqueProject } from "../../action";
 import { MdCancel } from "react-icons/md";
 import Image from "next/image";
 import { toast } from "sonner";

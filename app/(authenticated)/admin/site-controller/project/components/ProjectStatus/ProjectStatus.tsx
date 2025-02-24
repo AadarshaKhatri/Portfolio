@@ -1,8 +1,9 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import AddProjects from "./components/AddProjects/AddProjects";
-import {ViewProject} from "./components/ViewProject/ViewProject";
+import AddProjects from "../AddProjects/AddProjects";
+import { ViewProject } from "../ViewProject/ViewProject";
+;
 
 const ProjectStatus = () => {
   const [activeTabs, setactiveTabs] = useState("View Projects");

@@ -4,7 +4,7 @@ import React, { useActionState, useEffect, useState } from 'react'
 import { FaEye, FaGithub } from 'react-icons/fa';
 import Image from 'next/image';
 import { ProjectModel } from '@/app/types/interfaces';
-import { deleteProject, ReadProjects } from './action';
+import { deleteProject, ReadProjects } from '../../action';
 import { toast } from 'sonner';
 import Link from 'next/link';
 

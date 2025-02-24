@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import AccountStatus from "./account/AccountStatus";
 import NavigationBar from "./components/Navigation/Navigation";
-import ProjectStatus from "./project/ProjectStatus";
+import ProjectStatus from "../site-controller/project/components/ProjectStatus/ProjectStatus";
 import ExperienceStatus from "./experience/ExperienceStatus";
 import PostStatus from "./post/PostStatus";
 

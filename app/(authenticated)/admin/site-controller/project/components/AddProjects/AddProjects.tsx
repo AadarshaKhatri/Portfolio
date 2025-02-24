@@ -1,9 +1,11 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
-import { createProject } from "./action";
+import { createProject } from "../../action";
 import { toast } from "sonner";
 import { MdCancel } from "react-icons/md";
+
+
 
 const AddProjects = () => {
   const [skills, setSkills] = useState<string[]>([]);
@@ -19,7 +21,12 @@ const AddProjects = () => {
   const removeSkill = (skillToRemove: string) => {
     setSkills(skills.filter((skill) => skill !== skillToRemove));
   };
-  const [state, action] = useActionState(createProject, null);
+  const initialState = {
+    error: "",
+    success: false,
+    message: ""
+  }
+  const [state, action] = useActionState(createProject, initialState);
   useEffect(() => {
     setTimeout(() => {
       if (!state?.success && state?.error) {
