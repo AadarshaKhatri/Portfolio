@@ -3,7 +3,8 @@ import { UserModel } from "@/app/types/interfaces";
 import { useActionState, useEffect, useState } from "react";
 import { getUser, UpdateAccount } from "./action";
 import { toast } from "sonner";
-import ImagePre from "./components/ImagePre";
+import Image from "next/image";
+import { MdCancel } from "react-icons/md";
 
 const AccountStatus = () => {
   const [state, action] = useActionState(UpdateAccount, null);
@@ -11,12 +12,12 @@ const AccountStatus = () => {
 
   useEffect(() => {
     async function fetchUser() {
-      const response: UserModel = await getUser();
+      const response = await getUser();
       setUser(response);
     }
     fetchUser();
   }, [state]);
-
+ 
   useEffect(() => {
     setTimeout(() => {
       if (state?.success) {
@@ -29,11 +30,30 @@ const AccountStatus = () => {
   return (
     <section className="container mx-auto px-6 md:px-0 py-10">
       <div className="flex flex-col justify-between items-start gap-10">
-        <ImagePre />
 
         {/* Account Settings Form */}
         <div className="flex-1">
           <form action={action} className="flex flex-wrap gap-6">
+          <div className="w-full">
+                      {user?.profile === "" ? null : 
+                        <div className="relative">
+                          <Image priority={true} quality={100} width={100} height = {100} src={user?.profile} alt="Project Image" className="w-[400px] h-[200px] object-fill" />
+                          <button
+                            type="button"
+                            className="absolute top-0 right-0 bg-red-600 text-white rounded-full p-1"
+                          >
+                            <MdCancel size={24} />
+                          </button>
+                        </div>
+                      }
+                      <input
+                        name="image"
+                        type="file"
+                        className="text-white border-b-2 border-b-primary w-full py-3 px-4 bg-[#01071D] outline-none focus:border-white mt-2"
+                      />
+                      <span className="text-primary text-sm">Note: The current Image will be replaced by the one you will be uploading</span>
+            
+                    </div>
             <input name="id" defaultValue={user?.id} className="hidden" />
 
             {/* First Row - Full Width */}

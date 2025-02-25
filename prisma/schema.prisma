@@ -22,6 +22,7 @@ model User_models {
   bio String?
   location String?
   degree String?
+  profile String?
   born DateTime?
   description String?
   post Post[]

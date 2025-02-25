@@ -69,7 +69,7 @@ export async function EditProject(formData:FormData){
      }
    });
    console.log(`${project?.Images}`);
-  const updateProject = await prisma.projects.update({
+  await prisma.projects.update({
    where:{
      id:Number(id),
    },
@@ -146,6 +146,7 @@ export async function uploadFile(file: File): Promise<uploadFileResponse> {
   } catch (err) {
     return {
       success: false,
+      message:`Error Message:${err}`,
       error: "Failed to upload file!",
     };
   }
@@ -194,7 +195,7 @@ export async function createProject(formData: FormData) {
     }
 
     // Store project details in the database
-    const createdProject = await prisma.projects.create({
+     await prisma.projects.create({
       data: {
         codelink: codeLink,
         title: name,
@@ -218,6 +219,7 @@ export async function createProject(formData: FormData) {
     return {
       success: false,
       error: `Failed to Create the Project`,
+      message:`Error Message:${err}`
     };
   }
 }
@@ -240,7 +242,7 @@ export async function deleteProject(formData:FormData){
       }
     }
 
-    const isDeleted = await prisma.projects.delete({
+     await prisma.projects.delete({
       where:{
         id:Number(id),
       }
@@ -255,7 +257,7 @@ export async function deleteProject(formData:FormData){
   }catch(err){
     return{
       success:false,
-      message:null,
+      message:`Error Message:${err}`,
       error:"Failed to Delete the Project",
     }
   }

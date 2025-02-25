@@ -126,7 +126,7 @@ export default function UpdateProject(){
           <div className="flex w-full flex-col gap-4">
             {project?.Images && (
               <div className="relative">
-                <Image priority={100} quality={100} width={100} height = {100} src={project?.Images} alt="Project Image" className="w-[400px] h-[200px] object-fill" />
+                <Image priority={true} quality={100} width={100} height = {100} src={project?.Images} alt="Project Image" className="w-[400px] h-[200px] object-fill" />
                 <button
                   type="button"
                   onClick={handleDeleteImage}

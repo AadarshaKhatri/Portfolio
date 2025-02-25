@@ -1,5 +1,6 @@
 "use server";
 import prisma from "@/app/lib/db";
+import { uploadFile } from "../project/action";
 
 
 interface UpdateUserTypes  {
@@ -16,6 +17,8 @@ export async function UpdateAccount(prevState:UpdateUserTypes,formData:FormData)
   const location =  formData.get("location") as string;
   const title = formData.get("title") as string;
   const degree = formData.get("degree") as string;
+  const image = formData.get("image") as File;
+  let url = null
   try{
     if(!formData){
       return{
@@ -24,6 +27,18 @@ export async function UpdateAccount(prevState:UpdateUserTypes,formData:FormData)
         message:null,
       }
     }
+
+    const {fileUrl,success,error} = await uploadFile(image);
+
+    if(!success && error && !fileUrl){
+      return {
+        success:false,
+        message:null,
+        error:"File Url not generated",
+      }
+    }
+    url = fileUrl;
+
 
     const updatedUser = await prisma.user_models.update({
       where:{
@@ -36,6 +51,7 @@ export async function UpdateAccount(prevState:UpdateUserTypes,formData:FormData)
         location:location,
         title:title,
         degree:degree,
+        profile:url,
       }
     })
     console.log(updatedUser)
@@ -55,11 +71,10 @@ export async function UpdateAccount(prevState:UpdateUserTypes,formData:FormData)
     }
 
   }catch(err){
-    console.log("Error Message:",err)
     return({
       error:"Failed to update the user",
       success:false,
-      message:null
+      message:err,
     })
   }
 }
@@ -77,4 +92,9 @@ export async function getUser() {
       born:true,
     }
   });
+}
+
+
+export async function UpdateProfilePicture(){
+
 }
