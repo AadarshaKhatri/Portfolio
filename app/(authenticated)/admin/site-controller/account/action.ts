@@ -80,7 +80,7 @@ export async function UpdateAccount(prevState:UpdateUserTypes,formData:FormData)
 }
 
 
-export async function getUser() {
+export async function getUniqueUser() {
   return await prisma.user_models.findFirst({
     select:{
       id:true,

@@ -23,3 +23,15 @@ export interface ProjectModel {
   Skills:string[],
   authorId:number
 }
+
+
+export interface PostModel{
+  id:number
+  caption:string
+  images:string
+  createdAt:Date
+  updatedAt:Date
+  pinned:boolean
+  tags:string[]
+  authorId:number
+}

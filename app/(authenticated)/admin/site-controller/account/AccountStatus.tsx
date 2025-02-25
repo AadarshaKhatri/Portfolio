@@ -1,7 +1,7 @@
 "use client";
 import { UserModel } from "@/app/types/interfaces";
 import { Suspense, useActionState, useEffect, useState } from "react";
-import { getUser, UpdateAccount } from "./action";
+import { getUniqueUser, UpdateAccount } from "./action";
 import { toast } from "sonner";
 import Image from "next/image";
 import Status from "./components/Status";
@@ -12,12 +12,11 @@ const AccountStatus = () => {
 
   useEffect(() => {
     async function fetchUser() {
-      const response = await getUser();
+      const response = await getUniqueUser();
       setUser(response);
     }
     fetchUser();
   }, [state]);
-  console.log(user);
   useEffect(() => {
     setTimeout(() => {
       if (state?.success) {

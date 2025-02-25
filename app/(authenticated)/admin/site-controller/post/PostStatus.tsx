@@ -2,8 +2,7 @@
 
 import { Suspense, useState } from "react";
 import AddPost from "./components/AddPost/AddPost";
-import ViewPost from "./components/ViewPost/ViewPost";
-
+import { ViewPost } from "./components/ViewPost/ViewPost";
 const PostStatus = () => {
   const [activeTabs, setactiveTabs] = useState("View Posts");
 
