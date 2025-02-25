@@ -84,6 +84,7 @@ export async function getUser() {
   return await prisma.user_models.findFirst({
     select:{
       id:true,
+      profile:true,
       title:true,
       bio:true,
       degree:true,
@@ -97,4 +98,21 @@ export async function getUser() {
 
 export async function UpdateProfilePicture(){
 
+}
+
+
+export async function getProjectCount(){
+  return await prisma.projects.count();
+}
+
+export async function getTechStackCount(){
+  return await prisma.technologies.count();
+}
+
+export async function getExperienceCount() {
+  return await prisma.experience.count();
+}
+
+export async function getPostCount(){
+  return await prisma.post.count();
 }

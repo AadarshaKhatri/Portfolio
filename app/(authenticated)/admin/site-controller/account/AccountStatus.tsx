@@ -1,10 +1,10 @@
 "use client";
 import { UserModel } from "@/app/types/interfaces";
-import { useActionState, useEffect, useState } from "react";
+import { Suspense, useActionState, useEffect, useState } from "react";
 import { getUser, UpdateAccount } from "./action";
 import { toast } from "sonner";
 import Image from "next/image";
-import { MdCancel } from "react-icons/md";
+import Status from "./components/Status";
 
 const AccountStatus = () => {
   const [state, action] = useActionState(UpdateAccount, null);
@@ -17,7 +17,7 @@ const AccountStatus = () => {
     }
     fetchUser();
   }, [state]);
- 
+  console.log(user);
   useEffect(() => {
     setTimeout(() => {
       if (state?.success) {
@@ -31,27 +31,32 @@ const AccountStatus = () => {
     <section className="container mx-auto px-6 md:px-0 py-10">
       <div className="flex flex-col justify-between items-start gap-10">
 
+        {/* Account Status */}
+        <div className="flex flex-col justify-center items-center">
+        <Suspense fallback={<p className="text-primary">Loading....</p>}>
+            <Status/>
+        </Suspense>
+        </div>
         {/* Account Settings Form */}
         <div className="flex-1">
+          <div className="w-full flex justify-start items-start">
+            <h1 className=" text-2xl font-semibold text-white/50 pb-5">Update your profile</h1> 
+          </div>
           <form action={action} className="flex flex-wrap gap-6">
-          <div className="w-full">
-                      {user?.profile === "" ? null : 
-                        <div className="relative">
-                          <Image priority={true} quality={100} width={100} height = {100} src={user?.profile} alt="Project Image" className="w-[400px] h-[200px] object-fill" />
-                          <button
-                            type="button"
-                            className="absolute top-0 right-0 bg-red-600 text-white rounded-full p-1"
-                          >
-                            <MdCancel size={24} />
-                          </button>
-                        </div>
-                      }
+          <div className="w-full flex fle-row justify-center items-center gap-10">
+                  {user?.profile ? (
+                    <div className="relative">
+                      <Image priority={true} quality={100} width={100} height={100} src={user.profile} alt="Project Image" className="w-[200px] h-auto object-fill"  />
+                    </div>
+                  ) : <div><h3 className="text-primary">No Images Uploaded</h3></div>}
+                  <div className="flex flex-col justify-center items-start">
                       <input
                         name="image"
                         type="file"
                         className="text-white border-b-2 border-b-primary w-full py-3 px-4 bg-[#01071D] outline-none focus:border-white mt-2"
                       />
                       <span className="text-primary text-sm">Note: The current Image will be replaced by the one you will be uploading</span>
+                  </div>
             
                     </div>
             <input name="id" defaultValue={user?.id} className="hidden" />

@@ -29,7 +29,7 @@ export async function GetUniqueProject(id:number){
 }
 
 
-export async function EditProject(formData:FormData){
+export async function EditProject(prevState:ResponseTypes,formData:FormData){
  console.log("Edit Project Hit!");
  console.log("Form Data:",formData);
 
@@ -152,7 +152,7 @@ export async function uploadFile(file: File): Promise<uploadFileResponse> {
   }
 }
 
-export async function createProject(formData: FormData) {
+export async function createProject(prevState:ResponseTypes,formData: FormData) {
   try {
     const name = formData.get("title") as string;
     const skills = formData.getAll("skills") as string[];
@@ -218,7 +218,7 @@ export async function createProject(formData: FormData) {
   } catch (err) {
     return {
       success: false,
-      error: `Failed to Create the Project`,
+      error: `Failed to Create the Project, ${err}`,
       message:`Error Message:${err}`
     };
   }
@@ -230,7 +230,7 @@ export async function ReadProjects(){
   return await prisma.projects.findMany();
 }
 
-export async function deleteProject(formData:FormData){
+export async function deleteProject(prevState:ResponseTypes,formData:FormData){
   try{
     const id = formData.get("id") as string;
 

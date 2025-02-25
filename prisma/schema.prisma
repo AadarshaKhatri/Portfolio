@@ -14,61 +14,60 @@ datasource db {
 }
 
 model User_models {
-  id       Int     @id @default(autoincrement())
-  email    String @unique 
-  password String
-  name     String?
-  title String?
-  bio String?
-  location String?
-  degree String?
-  profile String?
-  born DateTime?
+  id          Int            @id @default(autoincrement())
+  email       String         @unique
+  password    String
+  name        String?
+  title       String?
+  bio         String?
+  location    String?
+  degree      String?
+  profile     String?
+  born        DateTime?
   description String?
-  post Post[]
-  experience Experience[]
-  tech_stack Technologies[]
-  Languages Languages[]
-  projects Projects[]
-
+  post        Post[]
+  experience  Experience[]
+  tech_stack  Technologies[]
+  Languages   Languages[]
+  projects    Projects[]
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   caption   String
   images    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now())
   pinned    Boolean
   tags      Json
-  author   User_models @relation(fields: [authorId], references: [id])
-  authorId Int
+  author    User_models @relation(fields: [authorId], references: [id])
+  authorId  Int
 }
 
 model Projects {
-  id          Int      @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   title       String
   description String
   liveLink    String
   codelink    String
   Images      String
   Skills      Json
-  author   User_models @relation(fields: [authorId], references: [id])
-  authorId Int
+  author      User_models @relation(fields: [authorId], references: [id])
+  authorId    Int
 }
 
 model Technologies {
-  id     Int    @id @default(autoincrement())
-  title  String
-  Images String
+  id       Int         @id @default(autoincrement())
+  title    String
+  Images   String
   author   User_models @relation(fields: [authorId], references: [id])
   authorId Int
 }
 
 model Languages {
-  id      Int    @id @default(autoincrement())
-  lang    String
-  imaghes String
+  id       Int         @id @default(autoincrement())
+  lang     String
+  imaghes  String
   author   User_models @relation(fields: [authorId], references: [id])
   authorId Int
 }
@@ -80,12 +79,12 @@ enum Types {
 }
 
 model Experience {
-  id          Int      @id @default(autoincrement())
-  type        Types    @default(INTERNSHIP)
+  id          Int         @id @default(autoincrement())
+  type        Types       @default(INTERNSHIP)
   description String
   company     String
   logo        String
   skills      Json
-  author   User_models @relation(fields: [authorId], references: [id])
-  authorId Int
+  author      User_models @relation(fields: [authorId], references: [id])
+  authorId    Int
 }
