@@ -67,12 +67,19 @@ export async function createPost(prevState:ReturnType,formData:FormData){
 
 }
 
-export async function deletePost(id:number){
-  return await prisma.post.delete({
+export async function deletePost(prevState:ResponseType,formData:FormData){
+
+  const id = formData.get("id") as string;
+   await prisma.post.delete({
     where:{
-      id:id,
+      id:Number(id),
     }
   })
+  return {
+    success:true,
+    message:"Project Deleted Successfully",
+    error:null,
+  }
 }
 
 
@@ -80,12 +87,32 @@ export async function editPost(prevState:ReturnType, formData:FormData){
   console.log("Edit Post Hit!");
   console.log("Form Data Hit:",formData);
   try{
-    // const caption = formData.get("caption") as string
-    // const status = formData.get("status") as string
-    // const tags = formData.getAll("tags") as string[]
-    // const images = formData.get("image") as File
-    // let url = null;
-    
+    const id = formData.get("id") as string;
+    const caption = formData.get("caption") as string
+    const status = formData.get("status") as string
+    const tags = formData.getAll("tags") as string[]
+    const images = formData.get("image") as File
+    let url = null;
+
+    const {fileUrl} = await uploadFile(images);
+    url = fileUrl
+   await prisma.post.update({
+      where:{
+        id:Number(id),
+      },
+      data:{
+        caption:caption,
+        tags:tags,
+        images:url ? url : undefined,
+        pinned:status === "pinned" ? true : false
+      }
+    })
+
+    return {
+      success:true,
+      error:null,
+      message:"Project Updated Successfully!"
+    }
 
   }catch(error){
     return{
@@ -107,6 +134,14 @@ export async function getPostCreator(userId:number){
   return await prisma.user_models.findUnique({
     where:{
       id:userId,
+    }
+  })
+}
+
+export async function getUniquePost(id:number){
+  return await prisma.post.findUnique({
+    where:{
+      id:id,
     }
   })
 }

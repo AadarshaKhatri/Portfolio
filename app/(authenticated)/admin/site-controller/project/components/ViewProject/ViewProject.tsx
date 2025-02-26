@@ -21,7 +21,7 @@ import Link from 'next/link';
         window.location.reload();
       }
     },0)
-  })
+  },[state])
 
   useEffect(()=>{
     async function fetchProject(){

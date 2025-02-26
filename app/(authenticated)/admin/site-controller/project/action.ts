@@ -68,7 +68,6 @@ export async function EditProject(prevState:ResponseTypes,formData:FormData){
        id:Number(id),
      }
    });
-   console.log(`${project?.Images}`);
   await prisma.projects.update({
    where:{
      id:Number(id),

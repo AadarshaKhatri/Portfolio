@@ -1,15 +1,29 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import Image from "next/image";
 import { PostModel, UserModel } from "@/app/types/interfaces";
-import { getPostCreator, readPost } from "../../action";
+import { deletePost, getPostCreator, readPost } from "../../action";
 import { VscPinned } from "react-icons/vsc";
 import { getUser } from "@/app/(authenticated)/sessions";
+import Link from "next/link";
+import { toast } from "sonner";
 
 export const ViewPost = () => {
   const [posts, setPosts] = useState<PostModel[]>([]);
   const [user, setUser] = useState<UserModel | null>(null);
+  const [state,action] = useActionState(deletePost,null)
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      if(!state?.success && state?.error){
+        toast.error(`${state.error}`)
+      }else if(state?.success && state.message){
+        toast.success(`${state.message}`);
+        window.location.reload();
+      }
+    },0)
+  },[state])
 
   // Fetch posts once on component mount
   useEffect(() => {
@@ -35,7 +49,7 @@ export const ViewPost = () => {
   // If posts are not loaded yet
   if (!posts || posts.length === 0) {
     return (
-      <div className="bg-red-200 border-2 border-red-800 p-3 rounded-md text-white">
+      <div className="bg-red-100 border-2 border-red-800 p-3 rounded-md text-black">
         <p className="text-md">No Project Found!</p>
       </div>
     );
@@ -43,14 +57,13 @@ export const ViewPost = () => {
 
   return (
     <div>
-      <h2 className="text-2xl text-white">{user?.name || "No name"}</h2>
       <section className="container mx-auto">
         <div className="flex flex-row justify-center items-start flex-wrap gap-5">
           {posts.map((post, index) => (
-            <section key={index} className="p-5 md:pt-10 hover:bg-white/10 rounded-lg">
-              <div className="container mx-auto px-2">
+            <section key={index} className=" py-10 md:pt-10 hover:bg-white/10 rounded-lg md:w-[430px]">
+              <div className="container mx-auto px-5">
                 <div className="flex flex-row gap-1">
-                  <div className="w-[50px]">
+                  <div className="w-[52px]">
                     {user?.profile ? (
                       <Image
                         src={user.profile || "/default-profile.png"} // Fallback image
@@ -67,18 +80,22 @@ export const ViewPost = () => {
 
                   <div className="flex-1 flex-col relative">
                     {post.pinned && (
-                      <div className="flex flex-row items-center gap-2 absolute top-[-16px] md:top-[-30px]">
+                      <div className="flex flex-row items-center gap-2 absolute top-[-24px] md:top-[-20px]">
                         <VscPinned className="text-gray-300" size={16} />
                         <p className="text-gray-300 text-sm">Pinned</p>
                       </div>
                     )}
 
                     <h1 className="text-white text-lg font-bold pb-1">
-                      Aadarsha Khatri <span className="font-normal text-gray-400 text-sm"> - 24th Feb </span>
+                      {user?.name}<span className="font-normal text-gray-400 text-sm"> - {new Date(post?.createdAt).toLocaleDateString("en-US", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })} </span>
                     </h1>
 
                     {/* Description */}
-                    {post.caption && <p className="text-white">{post.caption}</p>}
+                    {post.caption && <p className="text-white mt-2">{post.caption}</p>}
 
                     {/* Tags */}
                     <p className="text-primary font-light pb-5 mt-2">{post.tags}</p>
@@ -98,6 +115,25 @@ export const ViewPost = () => {
                       </div>
                     ) : null}
                   </div>
+                </div>
+
+                <div className='flex flex-row justify-center items-center mt-5 gap-5'>
+
+{/* Delete Button */}
+
+                <div className='flex'>
+                  <form action={action}>
+                    <input type='text'  name="id" defaultValue={post.id} placeholder='id of the project' className='hidden'/>
+                  <button className='px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-500/50'>Delete Project</button></form>
+                </div>
+
+                {/* Edit Button */}
+                <div className='flex'>
+                  <Link href={`/admin/site-controller/post/${post.id}`}>
+                  <button className='px-3 py-2 bg-green-500 text-white rounded-md hover:bg-green-500/50'>Edit Project</button></Link>
+
+                </div>
+
                 </div>
               </div>
             </section>
