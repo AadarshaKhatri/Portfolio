@@ -48,9 +48,10 @@ const AddPost = () => {
                 />
                 <div className="w-auto">
                   <select
-                  name="status"
+                    name="status"
                     className="text-white border w-[200px] border-primary rounded-md py-3 px-4 bg-[#01071D] outline-none focus:ring-2 focus:ring-primary transition"
                   >
+                    <option value="">Select the Status</option>
                     <option value="pinned">Pinned</option>
                     <option value="unpinned">Unpinned</option>
                   </select>

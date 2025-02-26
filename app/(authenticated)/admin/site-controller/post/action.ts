@@ -11,13 +11,11 @@ interface ReturnType {
 }
 
 export async function createPost(prevState:ReturnType,formData:FormData){
-  console.log("Create Post Api Hit");
-  console.log("Form Data : ",formData);
   try{
     const caption = formData.get("caption") as string
     const status = formData.get("status") as string
     const tags = formData.getAll("tags") as string[]
-    const images = formData.get("iamges") as File
+    const images = formData.get("image") as File
     let url = null;
 
     const {fileUrl} = await uploadFile(images);
@@ -30,7 +28,6 @@ export async function createPost(prevState:ReturnType,formData:FormData){
         message:null,
       }
     }
-    console.log(user);
     url = fileUrl
     console.log(await uploadFile(images));
     if(!url){
@@ -68,4 +65,48 @@ export async function createPost(prevState:ReturnType,formData:FormData){
     }
   }
 
+}
+
+export async function deletePost(id:number){
+  return await prisma.post.delete({
+    where:{
+      id:id,
+    }
+  })
+}
+
+
+export async function editPost(prevState:ReturnType, formData:FormData){
+  console.log("Edit Post Hit!");
+  console.log("Form Data Hit:",formData);
+  try{
+    // const caption = formData.get("caption") as string
+    // const status = formData.get("status") as string
+    // const tags = formData.getAll("tags") as string[]
+    // const images = formData.get("image") as File
+    // let url = null;
+    
+
+  }catch(error){
+    return{
+      error:"Failed to Edit the Post",
+      message:`Error Message : ${error}`,
+      success:false,
+
+    
+    }
+  }
+}
+
+export async function readPost(){
+  return await prisma.post.findMany();
+}
+
+
+export async function getPostCreator(userId:number){
+  return await prisma.user_models.findUnique({
+    where:{
+      id:userId,
+    }
+  })
 }
