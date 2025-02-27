@@ -63,11 +63,7 @@ export async function EditProject(prevState:ResponseTypes,formData:FormData){
    }
    }
 
-   const project = await prisma.projects.findUnique({
-     where:{
-       id:Number(id),
-     }
-   });
+
   await prisma.projects.update({
    where:{
      id:Number(id),
@@ -232,15 +228,20 @@ export async function ReadProjects(){
 export async function deleteProject(prevState:ResponseTypes,formData:FormData){
   try{
     const id = formData.get("id") as string;
-
-    if(!id){
-      return{
+    const FoundProject = await prisma.projects.findUnique({
+      where:{
+        id:Number(id),
+      }
+    })
+    
+    if(!FoundProject){
+      return {
         success:false,
         error:"Project Not Found!",
         message:null,
       }
     }
-
+    await deleteImages(FoundProject?.Images)
      await prisma.projects.delete({
       where:{
         id:Number(id),
@@ -258,6 +259,30 @@ export async function deleteProject(prevState:ResponseTypes,formData:FormData){
       success:false,
       message:`Error Message:${err}`,
       error:"Failed to Delete the Project",
+    }
+  }
+}
+
+
+export async function deleteImages(imagePath : string){
+
+  try{
+    const { error } = await supabase.storage.from("images").remove([imagePath]);
+
+    if(error){
+      return {
+        success:false,
+        error:"Failed to Delete the Image",
+        message:`Error Message: ${error}`,
+      }
+    }
+
+  }catch(err){
+    console.log(`Error Message : ${err}`);
+    return { 
+      message:`Error Message: ${err}`,
+      error:"Error Deleting the Images",
+      success:false,
     }
   }
 }

@@ -1,6 +1,6 @@
 "use server"
 import prisma from "@/app/lib/db";
-import { uploadFile } from "../project/action";
+import { deleteImages, uploadFile } from "../project/action";
 import { getUser } from "@/app/(authenticated)/sessions";
 
 
@@ -29,7 +29,6 @@ export async function createPost(prevState:ReturnType,formData:FormData){
       }
     }
     url = fileUrl
-    console.log(await uploadFile(images));
     if(!url){
       return { 
         error:"Failed to Upload the file",
@@ -70,6 +69,22 @@ export async function createPost(prevState:ReturnType,formData:FormData){
 export async function deletePost(prevState:ResponseType,formData:FormData){
 
   const id = formData.get("id") as string;
+
+  const foundPost = await prisma.post.findUnique({
+    where:{
+      id:Number(id),
+    }
+  })
+  if(!foundPost){
+  return{
+    success:false,
+    error:"Failed to find the Project!",
+    message:null,
+  }
+
+  }
+  console.log(await deleteImages(foundPost?.images));
+  await deleteImages(foundPost?.images);
    await prisma.post.delete({
     where:{
       id:Number(id),
@@ -84,8 +99,6 @@ export async function deletePost(prevState:ResponseType,formData:FormData){
 
 
 export async function editPost(prevState:ReturnType, formData:FormData){
-  console.log("Edit Post Hit!");
-  console.log("Form Data Hit:",formData);
   try{
     const id = formData.get("id") as string;
     const caption = formData.get("caption") as string

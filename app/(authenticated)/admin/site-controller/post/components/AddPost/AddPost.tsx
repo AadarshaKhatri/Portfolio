@@ -30,6 +30,7 @@ const AddPost = () => {
       } else if (state?.success && state.message) {
         toast.success(`${state?.message}`);
       }
+  
     }, 0);
   }, [state]);
 
@@ -95,7 +96,7 @@ const AddPost = () => {
 
                 {/* 🔥 Hidden Inputs to Submit Skills */}
                 {tags.map((tag, index) => (
-                  <input key={index} type="hidden" name="skills" value={tag} />
+                  <input key={index} type="hidden" name="tags" value={tag} />
                 ))}
               </div>
 

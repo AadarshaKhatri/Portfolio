@@ -20,9 +20,9 @@ export const ViewPost = () => {
         toast.error(`${state.error}`)
       }else if(state?.success && state.message){
         toast.success(`${state.message}`);
-        window.location.reload();
       }
     },0)
+   
   },[state])
 
   // Fetch posts once on component mount
