@@ -241,12 +241,15 @@ export async function deleteProject(prevState:ResponseTypes,formData:FormData){
         message:null,
       }
     }
-    await deleteImages(FoundProject?.Images)
-     await prisma.projects.delete({
-      where:{
-        id:Number(id),
-      }
-    })
+    const {success} = await deleteImages(FoundProject?.Images)
+
+    if(success){
+      await prisma.projects.delete({
+       where:{
+         id:Number(id),
+       }
+     })
+    }
 
     return {
       success:true,
@@ -264,25 +267,46 @@ export async function deleteProject(prevState:ResponseTypes,formData:FormData){
 }
 
 
-export async function deleteImages(imagePath : string){
+export async function deleteImages(imageUrl: string) {
+  try {
+    // Ensure the image URL starts with the correct prefix
+    const imagePath = imageUrl.split('/public/images/')[1];  // Extract the image path after /public/images/
 
-  try{
-    const { error } = await supabase.storage.from("images").remove([imagePath]);
+    // Log the image path to verify it's correct
+    console.log("Extracted Image Path:", imagePath);
 
-    if(error){
+    if (!imagePath) {
       return {
-        success:false,
-        error:"Failed to Delete the Image",
-        message:`Error Message: ${error}`,
-      }
+        success: false,
+        error: "Invalid image URL",
+        message: "Failed to extract a valid image path from the URL",
+      };
     }
 
-  }catch(err){
-    console.log(`Error Message : ${err}`);
-    return { 
-      message:`Error Message: ${err}`,
-      error:"Error Deleting the Images",
-      success:false,
+    // Try to remove the image from the storage bucket
+    const { data, error } = await supabase.storage.from("images").remove([`public/images/${imagePath}`]);
+
+    // Check if there is an error during the remove operation
+    if (error) {
+      return {
+        success: false,
+        error: error.message,
+        message: `Failed to delete the image: ${error.message}`,
+      };
     }
+
+    // If data is returned, the image has been successfully deleted
+    return {
+      success: true,
+      message: "Image deleted successfully",
+      error: null,
+    };
+  } catch (err) {
+    console.log("Unexpected Error:", err);
+    return {
+      success: false,
+      message: `Error Message: ${err}`,
+      error: "Error Deleting the Image",
+    };
   }
 }

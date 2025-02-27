@@ -83,13 +83,16 @@ export async function deletePost(prevState:ResponseType,formData:FormData){
   }
 
   }
-  console.log(await deleteImages(foundPost?.images));
-  await deleteImages(foundPost?.images);
-   await prisma.post.delete({
-    where:{
-      id:Number(id),
-    }
-  })
+  
+  const {success} = await deleteImages(foundPost?.images);
+
+  if(success){
+    await prisma.post.delete({
+     where:{
+       id:Number(id),
+     }
+   })
+  }
   return {
     success:true,
     message:"Project Deleted Successfully",
