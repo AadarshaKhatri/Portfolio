@@ -35,3 +35,20 @@ export interface PostModel{
   tags:string[]
   authorId:number
 }
+
+
+export enum ExperienceType {
+  INTERNSHIP = "INTERNSHIP",
+  WORKS = "WORKS",
+  COMMUNITY_HOURS = "COMMUNITY_HOURS",
+}
+
+export interface ExperinceModel{
+  id:number
+  type:ExperienceType
+  description:string,
+  company:string,
+  logo:string,
+  skills:string,
+  authorId:number
+}
