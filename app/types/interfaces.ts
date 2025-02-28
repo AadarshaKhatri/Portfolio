@@ -53,3 +53,10 @@ export interface ExperinceModel{
   authorId:number
   title:string
 }
+
+export interface TechnologiesModel {
+  id:number
+  title:string
+  Images:string
+  authorId:number
+}

@@ -116,7 +116,7 @@ const AddPost = () => {
                   className="text-white bg-green-800 rounded-md text-lg py-3 px-6 hover:bg-green-800/50"
                   type="submit"
                 >
-                  Save
+                  Create Project
                 </button>
               </div>
             </form>

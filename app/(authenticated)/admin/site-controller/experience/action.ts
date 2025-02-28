@@ -184,27 +184,97 @@ export async function readUniqueExperience(id:number){
    
 }
 
-// export async function createTech(prevState:ResponseTypes, formDat : FormData){
-//   try{
+export async function createTech(prevState:ResponseTypes, formData : FormData){
+  try{
+    const title = formData.get("title") as string
+    const image = formData.get("image") as File
 
-//   }catch(error){
-//     return { 
-//       success:false,
-//       message:`Error Message : ${error}`,
-//       error:"Failed to create the Technologies",
-//     }
-//   }
-// }
+    const {success,fileUrl} = await uploadFile(image);
+
+    const user = await getUser();
+    if(!user){
+      return {
+        error:"User not Found",
+        success:false,
+        message:null,
+      }
+    }
+
+    if(success && fileUrl){
+      await prisma.technologies.create({
+        data:{
+          title:title,
+          Images:fileUrl,
+          author:{
+            connect:{
+              id:Number(user.userId),
+            }
+          }  
+        }
+      })
+      return {
+        success:true,
+        message:"Successfully Created Tech!",
+        error:null
+      }
+    }
+
+  }catch(error){
+    return { 
+      success:false,
+      message:`Error Message : ${error}`,
+      error:`Failed to create the Technologies!`,
+    }
+  }
+}
 
 
-// export async function deleteTech(id:number){
-//   try{
+export async function readTech(){
+  try{
+  return await prisma.technologies.findMany();
+  }catch(err){
+console.log(err)
+    return {
+      success:false,
+      message:null,
+      error:"Failed to fetch tech!"
+    }
+  }
+}
 
-//   }catch(error){
-//     return { 
-//       success:false,
-//       message:`Error Message : ${error}`,
-//       error:"Failed to delete the Technolgoies"
-//     }
-//   }
-// }
+export async function deleteTech(prevState:ResponseTypes,formData:FormData){
+  try{
+    const id = formData.get("id") as string
+    const FoundTech = await prisma.technologies.findUnique({
+      where:{
+        id:Number(id),
+      }
+    });
+    if(!FoundTech){
+      return{
+        success:false,
+        message:null,
+        error:"Tech not Found!"
+      }
+    }
+    const {success} = await deleteImages(FoundTech?.Images);
+    if(success){
+      await prisma.technologies.delete({
+        where:{
+          id:FoundTech.id,
+        }
+      })
+      return {
+        success:true,
+        message:"Tech Deleted SuccessFully!",
+        error:null,
+      }
+    }
+  }catch(error){
+    return { 
+      success:false,
+      message:`Error Message : ${error}`,
+      error:"Failed to delete the Technolgoies"
+    }
+  }
+}

@@ -61,6 +61,7 @@ const AddExperience = () => {
                 name="type"
                 className="text-white border-b-2 border-b-primary w-full py-4 px-4 bg-[#01071D] outline-none"
               >
+                <option value="">Select the type</option>
                 <option value="INTERNSHIP">INTERNSHIP</option>
                 <option value="WORKS">WORKS</option>
                 <option value="COMMUNITY_HOURS">COMMUNITY HOURS</option>

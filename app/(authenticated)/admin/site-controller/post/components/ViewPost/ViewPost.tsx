@@ -123,14 +123,14 @@ export const ViewPost = () => {
 
                 <div className='flex'>
                   <form action={action}>
-                    <input type='text'  name="id" defaultValue={post.id} placeholder='id of the project' className='hidden'/>
-                  <button className='px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-500/50'>Delete Project</button></form>
+                    <input type='text'  name="id" defaultValue={post.id} placeholder='id of the post' className='hidden'/>
+                  <button className='px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-500/50'>Delete Post</button></form>
                 </div>
 
                 {/* Edit Button */}
                 <div className='flex'>
                   <Link href={`/admin/site-controller/post/${post.id}`}>
-                  <button className='px-3 py-2 bg-green-500 text-white rounded-md hover:bg-green-500/50'>Edit Project</button></Link>
+                  <button className='px-3 py-2 bg-green-500 text-white rounded-md hover:bg-green-500/50'>Edit Post</button></Link>
 
                 </div>
 

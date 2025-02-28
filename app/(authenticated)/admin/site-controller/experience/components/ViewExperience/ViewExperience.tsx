@@ -6,6 +6,7 @@ import { useActionState, useEffect, useState } from "react";
 import { deleteExperiences, readExperiences } from "../../action";
 import Link from "next/link";
 import { toast } from "sonner";
+import Technologies from "../Technologies/Technologies";
 
 const ViewExperience = () => {
   const [state,action] = useActionState(deleteExperiences,null);
@@ -35,8 +36,12 @@ const ViewExperience = () => {
   },[state])
   return (
     <section className="w-[800px] py-10">
+      <div className="flex flex-col">
+        <Technologies/>
+      </div>
       <div className="max-w-4xl mx-auto px-5">
         <div className="flex flex-col gap-10">
+          <h2 className="text-primary font-semibold">Your Experiences</h2>
           {experiences?.map((experience, index) => (
             <section key={index} className="border-l-4 border-primary bg-gray-800 p-6 rounded-lg shadow-md">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
@@ -88,14 +93,14 @@ const ViewExperience = () => {
 
                   <div className='flex'>
                     <form action={action}>
-                      <input type='text'  name="id" defaultValue={experience.id} placeholder='id of the project' className='hidden'/>
-                    <button className='px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-500/50'>Delete Project</button></form>
+                      <input type='text'  name="id" defaultValue={experience.id} placeholder='id of the experience' className='hidden'/>
+                    <button className='px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-500/50'>Delete Experiencce</button></form>
                   </div>
 
                   {/* Edit Button */}
                   <div className='flex'>
                     <Link href={`/admin/site-controller/experience/${experience.id}`}>
-                    <button className='px-3 py-2 bg-green-500 text-white rounded-md hover:bg-green-500/50'>Edit Project</button></Link>
+                    <button className='px-3 py-2 bg-green-500 text-white rounded-md hover:bg-green-500/50'>Edit Experience</button></Link>
 
                   </div>
 
