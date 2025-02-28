@@ -81,6 +81,7 @@ enum Types {
 model Experience {
   id          Int         @id @default(autoincrement())
   type        Types       @default(INTERNSHIP)
+  title       String
   description String
   company     String
   logo        String

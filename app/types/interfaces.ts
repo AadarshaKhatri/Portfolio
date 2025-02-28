@@ -39,7 +39,7 @@ export interface PostModel{
 
 export enum ExperienceType {
   INTERNSHIP = "INTERNSHIP",
-  WORKS = "WORKS",
+  WORKS = "WORK",
   COMMUNITY_HOURS = "COMMUNITY_HOURS",
 }
 
@@ -49,6 +49,7 @@ export interface ExperinceModel{
   description:string,
   company:string,
   logo:string,
-  skills:string,
+  skills:string[],
   authorId:number
+  title:string
 }

@@ -13,7 +13,7 @@ const ExperienceStatus = () => {
 
   return (
     <section>
-      <div className="flex flex-col justify-center items-center gap-y-10">
+      <div className="w-full flex flex-col justify-center items-center gap-y-10">
         <div className="flex flex-row justify-center items-center gap-10">
               <div
                 onClick={() => handletabs("View Experience")}

@@ -1,75 +1,111 @@
-"use client"
+"use client";
 
-// import { ExperinceModel } from "@/app/types/interfaces"
-// import Image from "next/image"
-// import { useEffect, useState } from "react"
-// import { readExperiences } from "../../action"
+import { ExperinceModel } from "@/app/types/interfaces";
+import Image from "next/image";
+import { useActionState, useEffect, useState } from "react";
+import { deleteExperiences, readExperiences } from "../../action";
+import Link from "next/link";
+import { toast } from "sonner";
+
 const ViewExperience = () => {
+  const [state,action] = useActionState(deleteExperiences,null);
 
-  // const [experience,setExperience] = useState<ExperinceModel>()
-  // useEffect(()=>{
-  //   async function FetchData(){
-  //     const data = await readExperiences();
-  //     setExperience(data);
-  //   }
-  //   FetchData();
-  // },[])
+  const [experiences, setExperiences] = useState<ExperinceModel[]>();
+
+  useEffect(() => {
+    async function FetchData() {
+      const data = await readExperiences();
+      setExperiences(data);
+    }
+    FetchData();
+  }, []);
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      if(!state?.success && state?.error){
+        toast.error(`${state.error}`)
+      }else if(state?.success && state.message){
+        toast.success(`${state.message}`);
+        setTimeout(()=>{
+          window.location.reload();
+        },3000)
+      }
+    },0)
+   
+  },[state])
   return (
-    // <section>
-    //   <div className="container mx-auto">
-    //       <div className="flex flex-col gap-10">
-    //           <section className="border-l-4 border-primary">
-    //                 <div className="flex flex-col px-6 py-3">
-    //                       {/* Image and Role */}
-    //                       <div className="flex flex-row items-center gap-x-5">
-    //                         <div>
-    //                           <Image
-    //                           src = {experience?.logo}
-    //                           quality={100}
-    //                           width = {100}
-    //                           height={100}
-    //                           alt = {"Logo"}
-    //                           className="rounded-full object-fill"
-    //                           />
-    //                         </div>
-            
-    //                         <div className="flex flex-col">
-    //                           <h2 className="text-2xl text-white font-bold">{experience?.type}</h2>
-    //                           <h4 className="text-md text-white ">{experience} </h4>
-    //                           <h6 className="text-sm text-gray-400 font-light">{experience.timeline}</h6>
-    //                         </div>
-    //                       </div>
-            
-    //                       <div className="mt-5">
-                      
-    //                         <p className="py-2 font-light text-white">{experience.description}</p>
-                        
-    //                       </div>
-            
-    //                       <div className="mt-5 flex flex-shrink flex-row gap-x-5 gap-y-5 flex-wrap">
-    //                         {
-    //                           experience.skills?.map((ele,index)=>(
-    //                             <div key = {index} className="text-primary bg-primary/15 px-3 py-2 rounded-full">
-    //                               {ele}
-    //                             </div>
-    //                           ))
-    //                         }
-            
-    //                       </div>
-            
-                        
-                          
-            
-    //                     </div>
-    //             </section>
+    <section className="w-[800px] py-10">
+      <div className="max-w-4xl mx-auto px-5">
+        <div className="flex flex-col gap-10">
+          {experiences?.map((experience, index) => (
+            <section key={index} className="border-l-4 border-primary bg-gray-800 p-6 rounded-lg shadow-md">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                {/* Image */}
+                {experience.logo && (
+                  <Image
+                    priority
+                    src={experience.logo}
+                    width={80}
+                    height={80}
+                    alt="Company Logo"
+                    className="w-[80px] h-[80px] rounded-full object-cover border border-gray-700"
+                    
+                  />
+                )}
 
-    //       </div>
-    //   </div>
-    // </section>
-    <>
-    Expe
-    </>
-  )
-}
+                {/* Experience Details */}
+                <div className="flex flex-col">
+                  <h2 className="text-xl sm:text-2xl text-white font-bold">{experience.title}</h2>
+                  {experience.type === "INTERNSHIP" ? (
+                    <h4 className="text-md text-primary font-semibold">Intern</h4>
+                  ) : null}
+                  {experience.type === "WORK" ? (
+                    <h4 className="text-md text-primary font-semibold">Dev</h4>
+                  ): null}
+                  {experience.type === "COMMUNITY_HOURS" ? (
+                    <h4 className="text-md text-primary font-semibold">Volunter (Community Service)</h4>
+                  ):null}
+                  <h6 className="text-sm text-gray-400">{experience.company}</h6>
+                </div>
+              </div>
 
-export default ViewExperience
+              {/* Description */}
+              <p className="mt-4 text-gray-300 leading-relaxed">{experience.description}</p>
+
+              {/* Skills */}
+              <div className="mt-4 flex flex-wrap gap-2">
+                {experience.skills.map((skill : string, index:number) => (
+                  <span key={index} className="text-primary bg-primary/20 px-3 py-1 rounded-full text-sm font-medium">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+
+
+              <div className='flex flex-row justify-center items-center mt-5 gap-5'>
+
+                  {/* Delete Button */}
+
+                  <div className='flex'>
+                    <form action={action}>
+                      <input type='text'  name="id" defaultValue={experience.id} placeholder='id of the project' className='hidden'/>
+                    <button className='px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-500/50'>Delete Project</button></form>
+                  </div>
+
+                  {/* Edit Button */}
+                  <div className='flex'>
+                    <Link href={`/admin/site-controller/experience/${experience.id}`}>
+                    <button className='px-3 py-2 bg-green-500 text-white rounded-md hover:bg-green-500/50'>Edit Project</button></Link>
+
+                  </div>
+
+                </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ViewExperience;

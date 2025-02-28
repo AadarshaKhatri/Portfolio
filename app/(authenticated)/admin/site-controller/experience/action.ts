@@ -1,4 +1,8 @@
-import { uploadFile } from "../project/action";
+"use server";
+
+
+import { getUser } from "@/app/(authenticated)/sessions";
+import { deleteImages, uploadFile } from "../project/action";
 import prisma from "@/app/lib/db";
 import { ExperienceType } from "@/app/types/interfaces";
 
@@ -11,21 +15,28 @@ interface ResponseTypes{
 
 
 export async function createExperience(prevState: ResponseTypes, formData: FormData) {
-  console.log("Form Data:", formData)
   try {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const type = formData.get("type") as string;
+    const type = formData.get("type") as keyof typeof ExperienceType;
     const companyName = formData.get("companyName") as string;
     const skills = formData.getAll("skills") as string[];
     const image = formData.get("image") as File;
 
-    // Validate if the type exists in the enum
-    if (!Object.values(ExperienceType).includes(type as ExperienceType)) {
+    // Validate the type against the enum
+    if (!Object.values(ExperienceType).includes(ExperienceType[type])) {
       return { success: false, error: "Invalid experience type!" };
     }
 
-    // Upload file and get URL
+    const user = await getUser();
+    if (!user) {
+      return {
+        success: false,
+        error: "Failed to get the Author",
+        message: null,
+      };
+    }
+
     const { fileUrl } = await uploadFile(image);
     if (!fileUrl) {
       return {
@@ -42,71 +53,136 @@ export async function createExperience(prevState: ResponseTypes, formData: FormD
         description: description,
         logo: fileUrl,
         skills: skills,
-        type: type as ExperienceType, // Convert type to Prisma Enum
+        type: ExperienceType[type], // Convert string to enum
         title: title,
+        author: {
+          connect: {
+            id: Number(user.userId),
+          },
+        },
       },
     });
 
     return { success: true, message: "Experience created successfully!" };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       message: `Error Message: ${error}`,
-      error: "Failed to create an experience",
+      error: `Failed to create an experience; ${error}`,
     };
   }
 }
 
-// export async function updateExperience(prevState:ResponseTypes, formData:FormData){
-
-//   try{
-
-//   }catch(error){
-//    return {
-//     success:false,
-//     message:`Error Message: ${error}`,
-//     error:"Failed to create a experience "
-//    }
-//   }
-// }
 
 
-// export async function readExperiences(){
-//   try{
 
-//   }catch(error){
-//     return {
-//       success:false,
-//       mesasge:`Error Message: ${error}`,
-//       error:"Failed to read experiences"
-//     }
-//   }
-// }
+export async function updateExperience(prevState:ResponseTypes, formData:FormData){
+  
+  try{
+    const id = formData.get("id") as string
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const type = formData.get("type") as keyof typeof ExperienceType;
+    const companyName = formData.get("companyName") as string;
+    const skills = formData.getAll("skills") as string[];
+    const image = formData.get("image") as File;
+    let url = null
+    // Validate the type against the enum
+    if (!Object.values(ExperienceType).includes(ExperienceType[type])) {
+      return { success: false, error: "Invalid experience type!" };
+    }
+      const { fileUrl } = await uploadFile(image);
+      url = fileUrl
+ 
+    await prisma.experience.update({
+      where:{
+        id:Number(id),
+      },
+      data: {
+        company: companyName,
+        description: description,
+        logo:url ? url : undefined,
+        skills: skills,
+        type: ExperienceType[type], // Convert string to enum
+        title: title,
+      }
+    })
+    return {
+      success:true,
+      message:"Experience Updated Successfully",
+      error:null,
+    }
+  }catch(error){
+    console.log(`Error Message:${error}`)
+   return {
+    success:false,
+    message:`Error Message: ${error}`,
+    error:`Faile to Update; ${error}`,
+   }
+  }
+}
 
-// export async function deleteExperiences(id:number){
-//   try{
 
-//   }catch(error){
-//     return{
-//       success:false,
-//       error:"Failed to delete the experience",
-//       message:`Error Message: ${error}`
-//     }
-//   }
-// }
+export async function readExperiences(){
+  try{
+    return await prisma.experience.findMany();
 
-// export async function readUniqueExperience(id:number){
-//   try{
-    
-//   }catch(error){
-//     return { 
-//       success:false,
-//       error:"Failed to read the experience",
-//       message:`Error Message: ${error}`
-//     }
-//   }
-// }
+  }catch(error){
+    return {
+      success:false,
+      mesasge:`Error Message: ${error}`,
+      error:"Failed to read experiences"
+    }
+  }
+}
+
+export async function deleteExperiences(prevState:ResponseTypes , formData:FormData){
+  try{
+    const id = formData.get("id") as string
+    const FoundExperience = await prisma.experience.findUnique({
+      where:{
+        id:Number(id),
+      }
+    })
+
+    if(!FoundExperience){
+      return { 
+        success:false,
+        error:"Experience not Found!",
+        message:null,
+      }
+    }
+    const {success} = await deleteImages(FoundExperience?.logo)
+    if(success){
+    await prisma.experience.delete({
+      where:{
+        id:FoundExperience?.id,
+      }
+    })
+  }
+  return {
+    success:true,
+    message:"Experience Successfully Deleted!",
+    error:null,
+  }
+  }catch(error){
+    return{
+      success:false,
+      error:"Failed to delete the experience",
+      message:`Error Message: ${error}`
+    }
+  }
+}
+
+export async function readUniqueExperience(id:number){
+    return await prisma.experience.findUnique({
+      where:{
+        id:Number(id),
+      }
+    })
+  
+   
+}
 
 // export async function createTech(prevState:ResponseTypes, formDat : FormData){
 //   try{
