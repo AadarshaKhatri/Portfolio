@@ -4,17 +4,12 @@
 import { getUser } from "@/app/(authenticated)/sessions";
 import { deleteImages, uploadFile } from "../project/action";
 import prisma from "@/app/lib/db";
-import { ExperienceType } from "@/app/types/interfaces";
-
-interface ResponseTypes{
-  error?:string
-  success?: boolean
-  message?:string
-}
+import { ExperienceType, ResponseTypes } from "@/app/types/interfaces";
 
 
 
-export async function createExperience(prevState: ResponseTypes, formData: FormData) {
+
+export async function createExperience(prevState: ResponseTypes, formData: FormData) : Promise<ResponseTypes>  {
   try {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
@@ -76,7 +71,7 @@ export async function createExperience(prevState: ResponseTypes, formData: FormD
 
 
 
-export async function updateExperience(prevState:ResponseTypes, formData:FormData){
+export async function updateExperience(prevState:ResponseTypes, formData:FormData) : Promise<ResponseTypes> {
   
   try{
     const id = formData.get("id") as string
@@ -136,7 +131,7 @@ export async function readExperiences(){
   }
 }
 
-export async function deleteExperiences(prevState:ResponseTypes , formData:FormData){
+export async function deleteExperiences(prevState:ResponseTypes , formData:FormData) : Promise<ResponseTypes> {
   try{
     const id = formData.get("id") as string
     const FoundExperience = await prisma.experience.findUnique({
@@ -184,7 +179,7 @@ export async function readUniqueExperience(id:number){
    
 }
 
-export async function createTech(prevState:ResponseTypes, formData : FormData){
+export async function createTech(prevState:ResponseTypes, formData : FormData) : Promise<ResponseTypes> {
   try{
     const title = formData.get("title") as string
     const image = formData.get("image") as File
@@ -233,16 +228,17 @@ export async function readTech(){
   try{
   return await prisma.technologies.findMany();
   }catch(err){
-console.log(err)
     return {
       success:false,
-      message:null,
+      message:`Error Message:${err}`,
       error:"Failed to fetch tech!"
     }
   }
 }
 
-export async function deleteTech(prevState:ResponseTypes,formData:FormData){
+
+
+export async function deleteTech(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes> {
   try{
     const id = formData.get("id") as string
     const FoundTech = await prisma.technologies.findUnique({
@@ -280,8 +276,7 @@ export async function deleteTech(prevState:ResponseTypes,formData:FormData){
 }
 
 
-export async function createLang(prevState:ResponseTypes,formData:FormData){
-  console.log("Form Data :",formData);
+export async function createLang(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes> {
   try{
     const title = formData.get("title") as string
     const image = formData.get("image") as File
@@ -330,16 +325,15 @@ export async function readLang(){
   try{
   return await prisma.languages.findMany();
   }catch(err){
-console.log(err)
     return {
       success:false,
-      message:null,
+      message:`Error Message:${err}`,
       error:"Failed to fetch Languages!"
     }
   }
 }
 
-export async function deleteLang(prevState:ResponseTypes,formData:FormData){
+export async function deleteLang(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes> {
   try{
     const id = formData.get("id") as string
     const FoundLang = await prisma.languages.findUnique({

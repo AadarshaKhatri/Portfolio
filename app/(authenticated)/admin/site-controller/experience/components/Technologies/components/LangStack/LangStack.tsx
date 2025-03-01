@@ -7,12 +7,23 @@ import { toast } from "sonner";
 import Image from "next/image";
 
 const LangStack = () => {
-  const[state,action] = useActionState(deleteLang,null);
+  const[state,action] = useActionState(deleteLang,{
+    success:false,
+    message:null,
+    error:null,
+  });
   
-  const [langs, setLangs] = useState<LanguagesModel []>([]);
+  const [langs, setLangs] = useState<LanguagesModel[]>([]);
   useEffect(() => {
     async function FetchTech() {
-        const data : LanguagesModel[] = await readLang();
+        const data = await readLang();
+        
+        if(!Array.isArray(data)){
+          setTimeout(()=>{
+            toast.error(`${data.error}`);
+          },0)
+          return;
+        }
         setLangs(data);
     }
     FetchTech();

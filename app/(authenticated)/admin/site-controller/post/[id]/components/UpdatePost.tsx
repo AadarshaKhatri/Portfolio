@@ -13,7 +13,11 @@ export default function UpdatePost(){
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [post, setPost] = useState<PostModel>();
-  const [state, action] = useActionState(editPost, null);
+  const [state, action] = useActionState(editPost, {
+    success:false,
+    error:null,
+    message:null
+  });
   const params = useParams();
   const userId = params.id;
   useEffect(()=>{

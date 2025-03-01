@@ -9,13 +9,23 @@ import { toast } from "sonner";
 import Technologies from "../Technologies/Technologies";
 
 const ViewExperience = () => {
-  const [state,action] = useActionState(deleteExperiences,null);
+  const [state,action] = useActionState(deleteExperiences,{
+    success:false,
+    error:null,
+    message:null,
+  });
 
-  const [experiences, setExperiences] = useState<ExperinceModel[]>();
+  const [experiences, setExperiences] = useState<ExperinceModel[]>([]);
 
   useEffect(() => {
     async function FetchData() {
       const data = await readExperiences();
+      if(!Array.isArray(data)){
+        setTimeout(()=>{
+          toast.error(`${data.error}`);
+        })
+        return;
+      }
       setExperiences(data);
     }
     FetchData();

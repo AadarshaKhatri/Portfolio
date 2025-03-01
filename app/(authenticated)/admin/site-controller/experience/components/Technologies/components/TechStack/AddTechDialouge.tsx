@@ -5,7 +5,11 @@ import { toast } from "sonner";
 
 export default function AddTechDialouge() {
   const [isOpen, setIsOpen] = useState(false);
-  const [state,action] = useActionState(createTech,null);
+  const [state,action] = useActionState(createTech,{
+    success:false,
+    error:null,
+    message:null
+  });
   useEffect(() => {
     setTimeout(() => {
       if (!state?.success && state?.error) {

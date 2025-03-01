@@ -19,7 +19,11 @@ const AddExperience = () => {
     setSkills(skills.filter((skill) => skill !== skillToRemove));
   };
   
-  const [state,action] = useActionState(createExperience,null);
+  const [state,action] = useActionState(createExperience,{
+    success:false,
+    error:null,
+    message:null
+  });
   useEffect(() => {
     setTimeout(() => {
       if (!state?.success && state?.error) {

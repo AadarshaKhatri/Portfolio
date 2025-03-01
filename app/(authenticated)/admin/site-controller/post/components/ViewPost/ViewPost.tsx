@@ -12,7 +12,11 @@ import { toast } from "sonner";
 export const ViewPost = () => {
   const [posts, setPosts] = useState<PostModel[]>([]);
   const [user, setUser] = useState<UserModel | null>(null);
-  const [state,action] = useActionState(deletePost,null)
+  const [state,action] = useActionState(deletePost,{
+    success:false,
+    error:null,
+    message:null,
+  })
 
   useEffect(()=>{
     setTimeout(()=>{
@@ -40,6 +44,10 @@ export const ViewPost = () => {
       async function fetchUser() {
         const userPayload = await getUser();
         const UserData = await getPostCreator(Number(userPayload?.userId));
+        if(!UserData){
+          console.log("Error Getting the User");
+          return;
+        }
         setUser(UserData)
       }
       fetchUser();

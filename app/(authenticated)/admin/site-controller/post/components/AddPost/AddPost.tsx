@@ -22,7 +22,11 @@ const AddPost = () => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
-  const [state, action] = useActionState(createPost, null);
+  const [state, action] = useActionState(createPost, {
+    success:false,
+    error:null,
+    message:null,
+  });
   useEffect(() => {
     setTimeout(() => {
       if (!state?.success && state?.error) {

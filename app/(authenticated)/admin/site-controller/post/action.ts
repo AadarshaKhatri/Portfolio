@@ -2,15 +2,12 @@
 import prisma from "@/app/lib/db";
 import { deleteImages, uploadFile } from "../project/action";
 import { getUser } from "@/app/(authenticated)/sessions";
+import {  ResponseTypes } from "@/app/types/interfaces";
 
 
-interface ReturnType {
-  error?:string,
-  message?:string,
-  success?:boolean,
-}
 
-export async function createPost(prevState:ReturnType,formData:FormData){
+
+export async function createPost(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes> {
   try{
     const caption = formData.get("caption") as string
     const status = formData.get("status") as string
@@ -66,7 +63,7 @@ export async function createPost(prevState:ReturnType,formData:FormData){
 
 }
 
-export async function deletePost(prevState:ResponseType,formData:FormData){
+export async function deletePost(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes> {
 
   const id = formData.get("id") as string;
 
@@ -101,7 +98,7 @@ export async function deletePost(prevState:ResponseType,formData:FormData){
 }
 
 
-export async function editPost(prevState:ReturnType, formData:FormData){
+export async function editPost(prevState:ResponseTypes, formData:FormData)  : Promise<ResponseTypes>{
   try{
     const id = formData.get("id") as string;
     const caption = formData.get("caption") as string
@@ -155,9 +152,18 @@ export async function getPostCreator(userId:number){
 }
 
 export async function getUniquePost(id:number){
+  try{
   return await prisma.post.findUnique({
     where:{
       id:id,
     }
   })
+}catch(error){
+  return{
+    success:false,
+    error:"Failed to get the post",
+    message:`Error Message: ${error} `
+  }
+}
+
 }

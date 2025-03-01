@@ -7,13 +7,24 @@ import { TechnologiesModel } from "@/app/types/interfaces";
 import Image from "next/image";
 import { toast } from "sonner";
 
+
 const TechStack = () => {
-  const[state,action] = useActionState(deleteTech,null);
+  const[state,action] = useActionState(deleteTech, {
+    success: false,
+    message: null,
+    error: null,
+  });
   
-  const [techs, setTechs] = useState<TechnologiesModel []>([]);
+  const [techs, setTechs] = useState<TechnologiesModel[]>([]);
   useEffect(() => {
     async function FetchTech() {
-        const data : TechnologiesModel[] = await readTech();
+        const data  = await readTech(); 
+        if(!Array.isArray(data)){
+          setTimeout(()=>{
+            toast.error(`${data.error}`);
+          },0)
+          return;
+        }
         setTechs(data);
     }
     FetchTech();

@@ -3,17 +3,17 @@
 import { supabase } from "@/app/lib/supabase";
 import { getUser } from "@/app/(authenticated)/sessions";
 import prisma from "@/app/lib/db";
+import { ResponseTypes } from "@/app/types/interfaces";
 
 
-interface ResponseTypes { 
+
+
+
+interface uploadFileResponse{
+  fileUrl?:string
+  success?:boolean,
   error?:string
   message?:string
-  success?:boolean
-}
-
-
-interface uploadFileResponse extends ResponseTypes {
-  fileUrl?:string
 }
 
 
@@ -147,7 +147,7 @@ export async function uploadFile(file: File): Promise<uploadFileResponse> {
   }
 }
 
-export async function createProject(prevState:ResponseTypes,formData: FormData) {
+export async function createProject(prevState:ResponseTypes,formData: FormData) : Promise<ResponseTypes> {
   try {
     const name = formData.get("title") as string;
     const skills = formData.getAll("skills") as string[];
@@ -284,7 +284,7 @@ export async function deleteImages(imageUrl: string) {
     }
 
     // Try to remove the image from the storage bucket
-    const { data, error } = await supabase.storage.from("images").remove([`public/images/${imagePath}`]);
+    const {error } = await supabase.storage.from("images").remove([`public/images/${imagePath}`]);
 
     // Check if there is an error during the remove operation
     if (error) {

@@ -58,7 +58,7 @@ export interface TechnologiesModel {
   id:number
   title:string
   Images:string
-  authorId:number
+
 }
 
 
@@ -66,5 +66,10 @@ export interface LanguagesModel{
   id:number
   lang:string
   Images:string
-  authordId:number
 }
+
+export type ResponseTypes  = {
+  error?:string | null
+  success?: boolean
+  message?:string | null
+} | undefined

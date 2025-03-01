@@ -21,12 +21,12 @@ const AddProjects = () => {
   const removeSkill = (skillToRemove: string) => {
     setSkills(skills.filter((skill) => skill !== skillToRemove));
   };
-  const initialState = {
-    error: "",
+  
+  const [state, action] = useActionState(createProject,{
+    error: null,
     success: false,
-    message: ""
-  }
-  const [state, action] = useActionState(createProject, initialState);
+    message: null
+  });
   useEffect(() => {
     setTimeout(() => {
       if (!state?.success && state?.error) {
