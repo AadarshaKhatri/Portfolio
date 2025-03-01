@@ -60,3 +60,11 @@ export interface TechnologiesModel {
   Images:string
   authorId:number
 }
+
+
+export interface LanguagesModel{
+  id:number
+  lang:string
+  Images:string
+  authordId:number
+}

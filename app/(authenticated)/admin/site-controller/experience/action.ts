@@ -278,3 +278,100 @@ export async function deleteTech(prevState:ResponseTypes,formData:FormData){
     }
   }
 }
+
+
+export async function createLang(prevState:ResponseTypes,formData:FormData){
+  console.log("Form Data :",formData);
+  try{
+    const title = formData.get("title") as string
+    const image = formData.get("image") as File
+  
+
+    const {success,fileUrl} = await uploadFile(image);
+
+    const user = await getUser();
+    if(!user){
+      return {
+        error:"User not Found",
+        success:false,
+        message:null,
+      }
+    }
+
+    if(success && fileUrl){
+      await prisma.languages.create({
+        data:{
+          lang:title,
+          Images:fileUrl,
+          author:{
+            connect:{
+              id:Number(user.userId),
+            }
+          }  
+        }
+      })
+      return {
+        success:true,
+        message:"Successfully Created Langauge!",
+        error:null
+      }
+    }
+
+  }catch(error){
+    return {
+      success:false,
+      error:`Failed to create the Lanaguage`,
+      message:`Error Message:${error}`,
+    }
+  }
+}
+
+export async function readLang(){
+  try{
+  return await prisma.languages.findMany();
+  }catch(err){
+console.log(err)
+    return {
+      success:false,
+      message:null,
+      error:"Failed to fetch Languages!"
+    }
+  }
+}
+
+export async function deleteLang(prevState:ResponseTypes,formData:FormData){
+  try{
+    const id = formData.get("id") as string
+    const FoundLang = await prisma.languages.findUnique({
+      where:{
+        id:Number(id),
+      }
+    });
+    if(!FoundLang){
+      return{
+        success:false,
+        message:null,
+        error:"Tech not Found!"
+      }
+    }
+    const {success} = await deleteImages(FoundLang?.Images);
+    if(success){
+      await prisma.languages.delete({
+        where:{
+          id:FoundLang.id,
+        }
+      })
+      return {
+        success:true,
+        message:"Langauge Deleted SuccessFully!",
+        error:null,
+      }
+    }
+  }catch(error){
+    return { 
+      success:false,
+      message:`Error Message : ${error}`,
+      error:"Failed to delete the Language"
+    }
+  }
+}
