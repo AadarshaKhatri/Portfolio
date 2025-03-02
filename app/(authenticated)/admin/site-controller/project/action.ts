@@ -29,7 +29,7 @@ export async function GetUniqueProject(id:number){
 }
 
 
-export async function EditProject(prevState:ResponseTypes,formData:FormData){
+export async function EditProject(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes>{
  console.log("Edit Project Hit!");
  console.log("Form Data:",formData);
 
@@ -222,10 +222,18 @@ export async function createProject(prevState:ResponseTypes,formData: FormData) 
 
 
 export async function ReadProjects(){
+  try{
   return await prisma.projects.findMany();
+}catch(error){
+  return {
+    success:false,
+    mesasge:`Error Message: ${error}`,
+    error:"Failed to read experiences"
+  }
+}
 }
 
-export async function deleteProject(prevState:ResponseTypes,formData:FormData){
+export async function deleteProject(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes>{
   try{
     const id = formData.get("id") as string;
     const FoundProject = await prisma.projects.findUnique({
@@ -269,12 +277,13 @@ export async function deleteProject(prevState:ResponseTypes,formData:FormData){
 
 export async function deleteImages(imageUrl: string) {
   try {
-    // Ensure the image URL starts with the correct prefix
-    const imagePath = imageUrl.split('/public/images/')[1];  // Extract the image path after /public/images/
+    // Ensure the image URL starts with the correct prefix and decode the URL
+    const decodedImageUrl = decodeURIComponent(imageUrl);
+    const imagePath = decodedImageUrl.split('/public/images/')[1];  // Extract the image path after /public/images/
+
+    console.log("Decoded Image Url Being Deleted:", imagePath);
 
     // Log the image path to verify it's correct
-    console.log("Extracted Image Path:", imagePath);
-
     if (!imagePath) {
       return {
         success: false,
@@ -284,7 +293,7 @@ export async function deleteImages(imageUrl: string) {
     }
 
     // Try to remove the image from the storage bucket
-    const {error } = await supabase.storage.from("images").remove([`public/images/${imagePath}`]);
+    const { error } = await supabase.storage.from("images").remove([`${imagePath}`]);
 
     // Check if there is an error during the remove operation
     if (error) {
@@ -302,7 +311,6 @@ export async function deleteImages(imageUrl: string) {
       error: null,
     };
   } catch (err) {
-    console.log("Unexpected Error:", err);
     return {
       success: false,
       message: `Error Message: ${err}`,

@@ -9,7 +9,11 @@ import { toast } from 'sonner';
 import Link from 'next/link';
 
  export const ViewProject = () => {
-  const [state,action] = useActionState(deleteProject,null)
+  const [state,action] = useActionState(deleteProject,{
+    success:false,
+    message:null,
+    error:null,
+  })
   const [projects,setProject] = useState<ProjectModel[]>();
 
   useEffect(()=>{
@@ -26,6 +30,10 @@ import Link from 'next/link';
   useEffect(()=>{
     async function fetchProject(){
      const data  = await  ReadProjects();
+     if(!Array.isArray(data)){
+        setTimeout(()=>{toast.error(`${data.error}`)},0)
+      return;
+     }
      setProject(data);
     }
     fetchProject();

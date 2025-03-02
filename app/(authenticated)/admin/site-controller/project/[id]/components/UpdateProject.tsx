@@ -13,7 +13,11 @@ export default function UpdateProject(){
   const [skills, setSkills] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [project, setProject] = useState<ProjectModel>();
-  const [state, action] = useActionState(EditProject, null);
+  const [state, action] = useActionState(EditProject, {
+    success:false,
+    error:null,
+    message:null,
+  });
   const params = useParams();
   const id = params.id;
   useEffect(()=>{
