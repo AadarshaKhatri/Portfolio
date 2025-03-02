@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "./app/(authenticated)/sessions";
 
 const protectedRoutes = ["/admin/site-controller"];
-const publicRoutes = ["/admin/login","/admin/signup"];
+const publicRoutes = ["/admin/login","/admin/signup","/"];
 
 export async function middleware(req: NextRequest) {
 

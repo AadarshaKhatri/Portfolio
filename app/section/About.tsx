@@ -1,6 +1,25 @@
+"use client";
 import Image from "next/image"
+import { useEffect, useState } from "react"
+import { getTechnologies } from "../(notauthenticated)/action,";
+import { TechnologiesModel } from "../types/interfaces";
 
 const About = () => {
+  const [tech,setTechs] = useState<TechnologiesModel []>();
+  // const [lang,setLang] = useState<LanguagesModel []>();
+  // const [user,setUser] = useState<UserModel []>();
+
+  useEffect(()=>{
+    async function fetchData(){
+      setTechs(await getTechnologies());
+      console.log(tech);
+      // setLang(await getLanguages());
+      // setUser(await getProfile());
+    }
+    fetchData();
+  },[])
+
+
   const LangStack = [
     {
       iconSrc : "/LangImg/TypeScript.png",
@@ -17,54 +36,54 @@ const About = () => {
     }
   ]
 
-  const TechStack = [
-    {
-      iconSrc : "/techImg/html.png",
-      title: "HTML"
-    },
-    {
-      iconSrc : "/techImg/Css.png",
-      title: "CSS"
-    },    {
-      iconSrc : "/techImg/Tailwindcss.png",
-      title: "TailwindCss"
-    },    {
-      iconSrc : "/techImg/react.png",
-      title: "React JS"
-    },    {
-      iconSrc : "/techImg/next.png",
-      title: "Next JS"
-    },    {
-      iconSrc : "/techImg/bootstrap.png",
-      title: "Bootstrap"
-    },    {
-      iconSrc : "/techImg/Figma.png",
-      title: "Figma"
-    }, 
-    {
-      iconSrc:"/techImg/Nodejs.png",
-      title:"Node JS"
-    },
-    {
-      iconSrc:"/techImg/Express.png",
-      title:"Express JS"
-    },
-    {
-      iconSrc : "/techImg/git.png",
-      title: "Git"
-    },  
-    {
-      iconSrc:"/techImg/Overleaf.png",
-      title:"Overleaf"
-    },   
-        {
-      iconSrc : "/techImg/shad.png",
-      title: "ShadCn"
-    },    {
-      iconSrc : "/techImg/Framer.png",
-      title: "Framer"
-    },
-  ]
+  // const TechStack = [
+  //   {
+  //     iconSrc : "/techImg/html.png",
+  //     title: "HTML"
+  //   },
+  //   {
+  //     iconSrc : "/techImg/Css.png",
+  //     title: "CSS"
+  //   },    {
+  //     iconSrc : "/techImg/Tailwindcss.png",
+  //     title: "TailwindCss"
+  //   },    {
+  //     iconSrc : "/techImg/react.png",
+  //     title: "React JS"
+  //   },    {
+  //     iconSrc : "/techImg/next.png",
+  //     title: "Next JS"
+  //   },    {
+  //     iconSrc : "/techImg/bootstrap.png",
+  //     title: "Bootstrap"
+  //   },    {
+  //     iconSrc : "/techImg/Figma.png",
+  //     title: "Figma"
+  //   }, 
+  //   {
+  //     iconSrc:"/techImg/Nodejs.png",
+  //     title:"Node JS"
+  //   },
+  //   {
+  //     iconSrc:"/techImg/Express.png",
+  //     title:"Express JS"
+  //   },
+  //   {
+  //     iconSrc : "/techImg/git.png",
+  //     title: "Git"
+  //   },  
+  //   {
+  //     iconSrc:"/techImg/Overleaf.png",
+  //     title:"Overleaf"
+  //   },   
+  //       {
+  //     iconSrc : "/techImg/shad.png",
+  //     title: "ShadCn"
+  //   },    {
+  //     iconSrc : "/techImg/Framer.png",
+  //     title: "Framer"
+  //   },
+  // ]
 
   return (
     <section className="py-8">
@@ -76,17 +95,17 @@ const About = () => {
             {/* Tech Stack Images */}
             <div className="grid  grid-cols-3 md:grid-cols-6 gap-y-12 py-8">
             {
-              TechStack.map((currentElement,index)=>(
-                <div key={index} className="flex flex-col items-center gap-y-5">
+              tech?.map((tech : TechnologiesModel)=>(
+                <div key={tech.id} className="flex flex-col items-center gap-y-5">
                   <Image 
-                  src = {currentElement.iconSrc}
+                  src = {tech.Images}
                   alt = "tech-logo"
                   width={42}
                   height={42}
                   quality={100}
                   className="w-[42px] h-[42px]"
                   />
-                  <h4 className=" text-gray-400 font-semibold">{currentElement.title}</h4>
+                  <h4 className=" text-gray-400 font-semibold">{tech.title}</h4>
                 </div>
               ))
             }

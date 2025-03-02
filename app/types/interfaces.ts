@@ -1,15 +1,19 @@
+import { Types } from "@prisma/client";
+import { JsonValue } from "@prisma/client/runtime/library";
+
 export interface UserModel {
   id: number;
-  profile:string,
+  profile:string | null,
   email: string;
   password: string;
-  name: string;
-  location: string;
-  bio: string;  
-  title: string;
-  born: Date;
-  description: string;
-  degree: string;
+  name: string | null;
+  location: string | null;
+  bio: string | null;  
+  title: string | null;
+  born: Date | null;
+  description: string | null;
+  degree: string | null;
+
 }
 
 
@@ -20,7 +24,7 @@ export interface ProjectModel {
   liveLink:string,
   codelink:string,
   Images:string,
-  Skills:string[],
+  Skills:JsonValue,
   authorId:number
 }
 
@@ -32,24 +36,20 @@ export interface PostModel{
   createdAt:Date
   updatedAt:Date
   pinned:boolean
-  tags:string[]
+  tags:JsonValue
   authorId:number
-}
+} 
 
 
-export enum ExperienceType {
-  INTERNSHIP = "INTERNSHIP",
-  WORKS = "WORK",
-  COMMUNITY_HOURS = "COMMUNITY_HOURS",
-}
+
 
 export interface ExperinceModel{
   id:number
-  type:ExperienceType
+  type:Types
   description:string,
   company:string,
   logo:string,
-  skills:string[],
+  skills:JsonValue,
   authorId:number
   title:string
 }
