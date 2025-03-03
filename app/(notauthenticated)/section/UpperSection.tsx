@@ -5,41 +5,52 @@ import { CiLocationOn } from "react-icons/ci";
 import { IoSchoolOutline } from "react-icons/io5";
 import { PiBalloon } from "react-icons/pi";
 import Feedtabs from "./Feedtabs";
+import { useEffect, useState } from "react";
+import { UserModel } from "@/app/types/interfaces";
+import { getProfile } from "../action";
 
 
 
 
 const UpperSection = () => {
+    const [user,setUser] = useState<UserModel>();
+    useEffect(() => {
+      console.log("Fetching data...");
+      async function fetchData() {
+        try {
+          const UserData = await getProfile();
+          setUser(UserData);
+        } catch (error) {
+          console.log("Error fetching data:", error);
+        }
+      }
+      fetchData();
+    }, []);
 
  
   const BioInfo = [
     {
       icon:<CiLocationOn size={20} className="text-primary"/>,
-      name: "Nepal"
+      name: user?.location
     },
     {
       icon:<IoSchoolOutline size={20} className="text-primary"/>,
-      name:"Undergraduate"
+      name:user?.degree
     },{
       icon:<PiBalloon size={20} className="text-primary"/>,
-      name:"Born 2005",
+      name:new Date(user?.born).getFullYear()
     }
   ]
 
 
 
 
-  const logos = [
-    {
-      source:"/Logo/Ann.png"
-    },
-    {
-      source:"/Logo/Cod_logo.png",
-    },
-    {
-      source :"/Logo/Cv_logo.png",
-    }
-  ]
+
+  if(!user){
+   return (
+    <div>No Data!</div>
+   )
+  }
   return (
     <section className="overflow-hidden min-h-screen flex justify-center ">
       <div className="w-full max-w-[650px] mx-auto">
@@ -59,14 +70,17 @@ const UpperSection = () => {
             />
             <div className=" relative flex flex-row justify-between mx-4 mt-4">
             {/* Profile Picture */}
-            <Image 
-            src = "/assets/Default_pfp.jpg"
-            alt="Pfp"
-            width={100}
-            height={100}
-            quality={100}
-            className="mt-[-80px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full  object-cover"
-            />
+            {
+              user.profile ? <Image 
+              src = {user?.profile}
+              alt="Pfp"
+              width={100}
+              height={100}
+              quality={100}
+              className="mt-[-80px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full  object-cover"
+              /> :null
+            }
+            
               {/* <div className=" mt-[-86px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full border-4 border-white">
                 
               </div> */}
@@ -86,7 +100,7 @@ const UpperSection = () => {
           {/* Personal Information */}
           <div className="flex flex-col mx-4">
             <div className="flex flex-row items-center gap-x-2">
-              <h2 className="text-primary text-2xl md:text-4xl font-semibold">Aadarsha Khatri</h2>
+              <h2 className="text-primary text-2xl md:text-4xl font-semibold">{user?.name}</h2>
               <Image
                 src="/assets/Code.png"
                 alt="Code"
@@ -98,11 +112,11 @@ const UpperSection = () => {
             </div>
 
             {/* Role */}
-            <h4 className="text-md text-gray-400">@Software Developer Aspirant</h4>
+            <h4 className="text-md text-gray-400">{user?.title}</h4>
 
             {/* Info/Bio */}
             <p className="text-white mt-4">
-              Creating meaningful projects for actual clients, not just adding to the project count for portfolios.🦇
+            {user?.bio}
             </p>
 
             {/* Icons */}
@@ -120,32 +134,7 @@ const UpperSection = () => {
 
             </div>
 
-            {/* Worked At */}
-            <div className="flex flex-row mt-4 gap-1 items-center">
-              <div className="flex flex-row items-center -space-x-3 pr-1">
-                {
-                  logos.map((currentElement,index)=>(
-                    <Image
-                    key = {index}
-                    src = {currentElement.source}
-                    alt = "Logos"
-                    height = {24}
-                    width={24}
-                    className="rounded-full max-w-[24px] max-h-[24px]"
-                    quality ={100}/>
-                    
-                  
-                  ))
-                }
-
-              
-              </div>
-
-              <div>
-                <p className="text-primary hover:underline cursor-pointer">Worked at ChimpVine, Codynn, Aviation News Nepal and more..</p>
-              </div> 
-
-            </div>
+    
 
 
           </div>

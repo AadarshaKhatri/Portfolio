@@ -1,16 +1,9 @@
 import Image from "next/image"
 import { VscPinned } from "react-icons/vsc"
-interface FeedCardsProps {
-  pinned:boolean,
-  date:string,
-  title:string,
-  pfp:string,
-  imgSrc:string,
-  description:string,
-  tags:string | null
-}
+import { PostModel } from "../types/interfaces"
 
-const FeedCards = (props : FeedCardsProps) => {
+
+const FeedCards = (props : PostModel) => {
   return (
     <section className="p-5 md:pt-10 hover:bg-white/10 rounded-lg">
     <div className="container mx-auto px-2">
@@ -18,7 +11,7 @@ const FeedCards = (props : FeedCardsProps) => {
      <div className="flex flex-row gap-1">
             <div className="w-[50px]">
               <Image
-                  src = {props.pfp}
+                  src = "/assets/Default_pfp.jpg"
                   alt = "Logos"
                   height = {42}
                   width={42}
@@ -38,27 +31,52 @@ const FeedCards = (props : FeedCardsProps) => {
         : null
         
       }
-        <h1 className="text-white text-lg font-bold pb-1">{props.title}<span className="font-normal text-gray-400 text-sm"> - {props.date} </span></h1>
+      <h1 className="text-white text-lg font-bold pb-1">
+                  Aadarsha Khatri
+                  <span className="font-normal text-gray-400 text-sm">
+                    - {new Date(props.createdAt).toLocaleDateString('en-GB', { 
+                      day: '2-digit', 
+                      month: 'long', 
+                      year: 'numeric' 
+                    })}
+                  </span>
+                </h1>
+
         
         {/* Description */}
         {
-          props.description ? <p className="text-white">{props.description}
+          props.caption ? <p className="text-white">{props.caption}
         </p> :null
         }
         
         
-        {/* Tags */}
-        <p className="text-primary font-light pb-5 mt-2">
-          {props.tags}
-        </p>
+
+
+{
+  Array.isArray(props.tags) && props.tags.every(tag => typeof tag === 'string') ? (
+    <div className="w-full flex flex-row text-primary font-light pb-5 mt-2 gap-3">
+      {props.tags.map((tag: string, index: number) => (
+        <div key={index}>
+          <h2>{tag}</h2>
+        </div>
+      ))}
+    </div>
+  ) : (
+    null
+  )
+}
+
+
+
+
 
         {/* Images */}
         
         {
-          props.imgSrc ? 
+          props.images ? 
           <div className="">
               <Image
-              src={props.imgSrc}
+              src={props.images}
               alt = "Feed"
               width={1000}
               height={1000}

@@ -1,7 +1,8 @@
+
+import UpperSection from "../(notauthenticated)/section/UpperSection";
 import NavBar from "../components/NavBar";
-import Footer from "../section/Footer";
-import UpperSection from "../section/UpperSection";
 import "../globals.css";
+import Footer from "./section/Footer";
 
 
 

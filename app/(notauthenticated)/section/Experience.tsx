@@ -1,4 +1,5 @@
-import ExperienceTab from "../components/ExperienceTab"
+import ExperienceTab from "@/app/components/ExperienceTab";
+
 
 
 const Experience = () => {

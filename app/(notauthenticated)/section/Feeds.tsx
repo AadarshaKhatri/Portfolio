@@ -1,8 +1,29 @@
+import FeedCards from "@/app/components/FeedCards"
+import { PostModel, UserModel } from "@/app/types/interfaces";
+import { useEffect, useState } from "react";
+import { getPost, getProfile } from "../action";
 
-import FeedCards from "../components/FeedCards"
+
 
 
 const Feeds = () => {
+  const [feeds,setFeeds] = useState<PostModel []>();
+  const [profile,setProfile] = useState<UserModel>();
+   useEffect(() => {
+        console.log("Fetching data...");
+        async function fetchData() {
+          try {
+            const PostData = await getPost();
+            const UserData = await getProfile();
+            setFeeds(PostData);
+            setProfile(UserData);
+          } catch (error) {
+            console.log("Error fetching data:", error);
+          }
+        }
+        fetchData();
+      }, []);
+  
 
   const FeedTasks = [
     {
@@ -47,16 +68,16 @@ const Feeds = () => {
       <div className="container mx-auto px-1 md:px-0">
         <div className="flex flex-col">
           {
-            FeedTasks.map((currentElement,index)=>(
+            feeds?.map((feed)=>(
               <FeedCards
-              pinned={currentElement.pinned}
-              key={index}
-              title={currentElement.title}
-              tags={currentElement.tags}
-              pfp={currentElement.pfp}
-              date={currentElement.date}
-              description={currentElement.description}
-              imgSrc={currentElement.imgSrc}
+              id={feed.id}
+              authorId={Number(profile?.id)}
+              pinned={feed.pinned}
+              key={feed.id}
+              tags={feed.tags}
+              createdAt={feed.createdAt}
+              caption={feed.caption}
+              images={feed.images}
               
               />
 
