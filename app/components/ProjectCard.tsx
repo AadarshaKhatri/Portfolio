@@ -1,6 +1,7 @@
 
 import { FaEye, FaGithub } from "react-icons/fa"
 import Image from "next/image"
+import { JsonValue } from "@prisma/client/runtime/library"
 interface ProjectCardProps {
   key:number,
   title:string,
@@ -8,7 +9,7 @@ interface ProjectCardProps {
   hrefLink:string,
   description:string,
   ImageSource:string,
-  tags:Array<string>
+  tags:JsonValue
 }
 
 const ProjectCard = (props :ProjectCardProps) => {
@@ -63,13 +64,23 @@ const ProjectCard = (props :ProjectCardProps) => {
         
   
         <div className="mt-5 flex flex-shrink flex-row gap-x-5 gap-y-5 flex-wrap pb-10">
-            {
-              props.tags?.map((element,index)=>(
-                <div key = {index} className="text-primary bg-primary/15 px-3 py-2 rounded-full">
-                {element}
-                </div>
-              ))
-            }   
+  
+
+
+{
+                Array.isArray(props.tags) && props.tags.every(tag => typeof tag === 'string') ? (
+                  <div className="w-full flex flex-row text-primary font-light pb-5 mt-2 gap-3">
+                    {props.tags.map((tag: string, index: number) => (
+                      <div key={index}>
+                        <h2 className="text-primary bg-primary/15 px-3 py-2 rounded-full">{tag}</h2>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  null
+                )
+              }
+
          
               
        </div>

@@ -6,7 +6,7 @@ export async function GET(){
 
   try{
     console.log("Get Project Routes Hit!");
-    const projects = await prisma.projects.findMany();
+    const projects = (await prisma.projects.findMany()).reverse();
     return NextResponse.json(projects);
 
   }catch(err){

@@ -1,111 +1,119 @@
 import ExperienceTab from "@/app/components/ExperienceTab";
+import { useEffect, useState } from "react";
+import { getExperience } from "../action";
+import { ExperinceModel } from "@/app/types/interfaces";
 
+// Skeleton Component for Button
+const SkeletonButton = () => (
+  <div className="h-10 bg-gray-500 rounded w-40"></div>
+);
 
+// Skeleton Component for Experience Card
+const SkeletonExperienceCard = () => (
+  <section className="border-l-4 border-gray-400 animate-pulse">
+  <div className="flex flex-col px-6 py-3">
+    {/* Image and Role */}
+    <div className="flex flex-row items-center gap-x-5">
+      <div className="bg-gray-500 rounded-full w-24 h-24"></div> {/* Skeleton for Image */}
+
+      <div className="flex flex-col space-y-2">
+        <div className="h-6 bg-gray-500 w-3/4 rounded"></div> {/* Skeleton for Role */}
+        <div className="h-4 bg-gray-500 w-1/2 rounded"></div> {/* Skeleton for Company/Location */}
+      </div>
+    </div>
+
+    <div className="mt-5">
+      <div className="h-4 bg-gray-500 w-5/6 rounded mb-2"></div> {/* Skeleton for Description */}
+      <div className="h-4 bg-gray-500 w-4/5 rounded mb-2"></div>
+      <div className="h-4 bg-gray-500 w-3/4 rounded mb-2"></div>
+    </div>
+
+    {/* Skeleton for Skills */}
+    <div className="mt-5 flex flex-shrink flex-row gap-x-5 gap-y-5 flex-wrap">
+      {Array(3).fill(0).map((_, index) => (
+        <div key={index} className="h-8 bg-gray-500 rounded-full w-24"></div>
+      ))}
+    </div>
+  </div>
+</section>
+);
 
 const Experience = () => {
+  const [experience, setExperience] = useState<ExperinceModel[]>();
+  const [positions, setPostions] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);  // Add loading state
 
-  const ExperienceLists = [
-    {
-      JobTitle: "JavaScript Intern",
-      src :"/Logo/CV_logo.png",
-      Location: "ChimpVine - Hybrid",
-      TimeLine: "Aug 2024 - Present",
-      Description: "ChimpVine is a US-based company that provides educational games, quizzes, and interactive courses for students from Pre-K to Grade 8, with the goal of making learning fun and engaging. I initially joined the company as an intern and have since been steadily advancing in my journey, gaining valuable experience and contributing to the company's mission of transforming education through innovative and enjoyable learning experiences.",
-      skills:["Next JS","React JS","Redux","TailWind Css", "Figma", "Bootstrap"]
-      
-    },
-    {
-      JobTitle: "UI/UX Designer Intern",
-      src :"/Logo/Cod_logo.png",
-      Location: "Codynn - Remote",
-      TimeLine: "August 2024 - October 2024",
-      Description: 
-        "Coddyn, a product of vOID Nepal, is developed by a software company dedicated to bridging the education gap through programming courses. I began as a remote intern designer, where I refined my UX skills by contributing to UI designs for products like BetterSchool and Coddyn, as well as creating designs for apps such as question banks and programming learning tools.",
-      skills:["Design Documentation","UX Research","UX Design" , "Ideation","Figma"]
-    },
-    {
-      JobTitle: "Community Hours",
-      src :"/Logo/BNS.jpeg",
-      Location: "Bloom Nepal School - Onsite",
-      TimeLine: "May 2024 - July 2024",
-      Description: 
-        "Back on Track BNSF is a volunteer-driven initiative focused on rebuilding Nepali schools and enhancing education post-earthquake. As part of the Mentorship Program, I joined as a Python Instructor, teaching programming to grades 8, 9, and 10 at Bloom Nepal School. In this role, I inspired students' interest in computer science and helped them develop key coding skills in Python and C, supporting the school's educational recovery and growth.",
-      
-      skills:["Python","C","Mentoring"]
-    },
-      {
-      JobTitle: "Video Editor Intern",
-      src :"/Logo/Ann.png",
-      Location: "Aviation News Nepal - Onsite",
-      TimeLine: "June 2023 - July 2023",
-      Description:  "Aviation News Nepal, a media company dedicated to daily aviation updates across various social platforms, gave me the opportunity to contribute as an editor for their aviation content. During high school, I completed a summer internship as a Video Editor, where I gained valuable hands-on experience in video production and post-production workflows.",
-      skills:["Premier Pro","Video Editing"]
-    },
-  ];
-  
-  const ButtonTitle = [
-    {
-      title: "Python Instructor",
-    },{
-      title:"Video Editor Intern",
-
-    },{
-      title:"Frontend Intern",
-    },{
-      title:"UI/UX Designer",
-    },{
-      title:"JavaScript Intern",
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const experienceData = await getExperience();
+        setExperience(experienceData);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);  // Set loading to false once data is fetched
+      }
     }
-  ]
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (experience) {
+      const newPositions = experience.map((exp) => exp.title);
+      setPostions(newPositions);
+    }
+  }, [experience]);
+
   return (
     <section>
       <div className="container mx-auto px-6 md:px-0">
         <div className="flex flex-col">
           <h3 className="text-white font-semibold">Positions I have held</h3>
-
-          <div className="grid grid-cols-3  items-center justify-between gap-y-5 px-15 py-10">
-            {
-              ButtonTitle.map((currentElement,index)=>(
-                <div key={index}>
-                  <button className=" px-3 py-2 border border-primary text-md text-white rounded-lg hover:bg-primary hover:text-black focus:outline-none focus:ring-2 focus:ring-primary">{currentElement.title}</button>
-                </div>
-
+          
+          <div className="grid grid-cols-3 items-center justify-between gap-y-8 px-15 py-10">
+            {isLoading ? (  // Conditional rendering for skeleton loader
+              Array(4).fill(0).map((_, index) => (
+                <SkeletonButton key={index} />
               ))
-            }
+            ) : (
+              positions.map((position, index) => (
+                <div key={index}>
+                  <button className=" px-3 py-2 border border-primary text-md text-white rounded-lg hover:bg-primary hover:text-black focus:outline-none focus:ring-2 focus:ring-primary">
+                    {position}
+                  </button>
+                </div>
+              ))
+            )}
           </div>
 
-          Career Highlights
           <div className="space-y-16">
-            <h2 className="font-comicNeue text-4xl font-semibold text-primary mb-5"> 
+            <h2 className="font-comicNeue text-4xl font-semibold text-primary mb-5">
               Career Highlights
             </h2>
 
-            {
-              ExperienceLists.map((currentElement,index)=>(
+            {isLoading ? (  // Conditional rendering for skeleton loader
+              Array(3).fill(0).map((_, index) => (
+                <SkeletonExperienceCard key={index} />
+              ))
+            ) : (
+              experience?.map((exp) => (
                 <ExperienceTab
-                key={index}
-                role={currentElement.JobTitle}
-                ImgSrc={currentElement.src}
-                location={currentElement.Location}
-                timeline={currentElement.TimeLine}
-                description={currentElement.Description}
-                skills={currentElement.skills}
+                  id={exp.id}
+                  company={exp.company}
+                  key={exp.id}
+                  role={exp.title}
+                  ImgSrc={exp.logo}
+                  location={exp.type}
+                  description={exp.description}
+                  skills={exp.skills}
                 />
               ))
-            }
-
-          
-
-          
-
+            )}
           </div>
-
         </div>
-
       </div>
-      
     </section>
-  )
-}
+  );
+};
 
-export default Experience
+export default Experience;

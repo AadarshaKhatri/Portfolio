@@ -1,9 +1,20 @@
+import { JsonValue } from "@prisma/client/runtime/library"
 import Image from "next/image"
 import { VscPinned } from "react-icons/vsc"
-import { PostModel } from "../types/interfaces"
 
+interface FeedCardsProps {
+  id:number,
+  authorId:number,
+  profile:string,
+  username:string,
+  pinned:boolean,
+  createdAt:Date,
+  caption:string,
+  tags:JsonValue,
+  images:string,
 
-const FeedCards = (props : PostModel) => {
+}
+const FeedCards = (props : FeedCardsProps) => {
   return (
     <section className="p-5 md:pt-10 hover:bg-white/10 rounded-lg">
     <div className="container mx-auto px-2">
@@ -11,7 +22,7 @@ const FeedCards = (props : PostModel) => {
      <div className="flex flex-row gap-1">
             <div className="w-[50px]">
               <Image
-                  src = "/assets/Default_pfp.jpg"
+                  src = {props.profile}
                   alt = "Logos"
                   height = {42}
                   width={42}
@@ -32,7 +43,7 @@ const FeedCards = (props : PostModel) => {
         
       }
       <h1 className="text-white text-lg font-bold pb-1">
-                  Aadarsha Khatri
+                  {props.username }
                   <span className="font-normal text-gray-400 text-sm">
                     - {new Date(props.createdAt).toLocaleDateString('en-GB', { 
                       day: '2-digit', 

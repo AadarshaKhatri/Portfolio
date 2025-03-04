@@ -1,106 +1,94 @@
-import ProjectCard from "@/app/components/ProjectCard"
+import { useEffect, useState } from "react";
+import ProjectCard from "@/app/components/ProjectCard";
+import { getProjects } from "../action";
+import { ProjectModel } from "@/app/types/interfaces";
 
+// Skeleton Loader for a Project Card
+const SkeletonProjectCard = () => (
+    <section className="p-5 animate-pulse bg-gray-800 rounded-lg">
+     <div className="container mx-auto px-2">
+      <div className="flex flex-col">
 
-const Works = () => {
-  const ProjectList = [
-    {
-      title: "Tours Booking",
-      liveLink:"",
-      hrefLink:"https://github.com/AadarshaKhatri/travelWorld",
-      description:"Developed a full-stack web application for users to book tours and user authentication, allowing users to view product. The admin can create products, which are then displayed on the frontend for users to browse.",
-      ImageSource:"/projectImg/Tours_travel.png",
-      tags:["React","Node-JS","Express JS","MongoDB Atlas"],
-      
-    },
-    {
-      title: "Product Showcase ",
-      liveLink:"",
-      hrefLink:"https://github.com/AadarshaKhatri/bag",
-      description:"Developed a full-stack web application with an admin panel and user authentication, allowing users to view products. The admin can create products, which are then displayed on the frontend for users to browse.",
-      ImageSource:"/projectImg/Bag.png",
-      tags:["EJS","Node-JS","Express JS"],
-      
-    },
-    
-    {
-      title: "DashBoard UI",
-      liveLink:"https://preview-dashboard-xi.vercel.app/",
-      hrefLink:"https://github.com/AadarshaKhatri/DashBoard",
-      description:"Developed a Shipments Dashboard user interface using React, focusing on delivering an intuitive and efficient experience for managing shipments. The project involved implementing responsive layouts, dynamic data visualization, and user-friendly components to streamline tracking and management tasks.",
-      ImageSource:"/projectImg/DashBoard.png",
-      tags:["React","Re-Charts","Tailwind Css"],
-      
-    },{
-      title:"Sass Landing Page",
-      liveLink:"https://framer-lp.vercel.app/",
-      hrefLink:"https://github.com/AadarshaKhatri/Framer_LP",
-      description:"Developed a SaaS full-responsive product landing page featuring a sleek parallax effect and smooth scrolling animations for a modern and engaging user experience. The design was inspired by a reference template sourced from the Figma Community, adapted and implemented with precision to maintain visual appeal and functionality. ",
-      ImageSource:"/projectImg/LP.png",
-      tags:["Next JS","React JS", "Tailwind CSS" , "Framer Motion"],
-    },{
-      title:"Coffee Landing Page - UI Design",
-      liveLink:"https://dribbble.com/shots/24952926-Coffee-Landing-Page",
-      description:"This was a project that I designed in Figma, featuring a coffee-themed landing page. The design focuses on creating an inviting and visually appealing user experience, incorporating elements that capture the essence of a cozy coffee shop. It includes interactive sections, a clean layout, and strategic use of color and typography to engage visitors and showcase the brand's personality.",
-      hrefLink:"",
-      ImageSource:"/projectImg/Coffee_Design.png",
-      tags:["UI Design", "Figma", "High Fidelity", "Responsive","Design Project"]
-    },
+        {/* Title and Action Links */}
+        <div className="flex flex-row justify-between pb-6 mt-5">
+          <div className="bg-gray-500 h-6 w-3/4 rounded"></div>
 
-      {
-      title:"Tourist Guide",
-      liveLink:"https://guide-landing.vercel.app",
-      hrefLink:"https://github.com/AadarshaKhatri/Tourist_Guide",
-      description:"This project highlights my ability to turn Figma designs into responsive web applications, blending technical expertise with design principles to deliver interactive and visually appealing solutions. The design is below the same section",
-      ImageSource:"/projectImg/Lp_tourist.png",
-      tags:["React","Gsap","Tailwind CSS"],
-    },{
-      title:"Weather App",
-      liveLink:"https://forescanner.netlify.app/",
-      hrefLink:"https://github.com/AadarshaKhatri/Weather_forecast",
-      description:"A weather app delivering real-time updates, forecasts, and location-based insights with a clean, responsive design and dynamic visuals.",
-      ImageSource:"/projectImg/Weather.png",
-      tags:["JavaScript","Vanilla CSS", "API Handling"],
-    },{
-      title:"Web Design",
-      liveLink:"https://dribbble.com/shots/24502020-Landing-Page",
-      description:"Created a visually appealing, responsive landing page in Figma using advanced prototyping and plugins. It features a compelling hero section, clear value propositions, and attention-grabbing animations, all designed with meticulous attention to typography, layout, and color scheme.",
-      hrefLink:"",
-      ImageSource:"/projectImg/Linked.png",
-      tags:["UI/UX", "Figma", "Responsive","Design Project"]
-    },
-  ]
-  return (
-    <section>
-      <div className="container mx-auto px-6 md:px-0">
+          <div className="flex flex-row gap-5">
+            <div className="bg-gray-500 h-6 w-12 rounded"></div>
+            <div className="bg-gray-500 h-6 w-12 rounded"></div>
+          </div>
+        </div>
+        
+        {/* Description */}
+        <div className="h-4 bg-gray-500 w-full rounded mb-4"></div>
+        <div className="h-4 bg-gray-500 w-5/6 rounded mb-4"></div>
 
+        {/* Tags */}
+        <div className="mt-5 flex flex-shrink flex-row gap-x-5 gap-y-5 flex-wrap pb-10">
+          <div className="w-full flex flex-row text-primary font-light pb-5 mt-2 gap-3">
+            {Array(3).fill(0).map((_, index) => (
+              <div key={index}>
+                <div className="h-8 bg-gray-500 rounded-full w-24"></div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-        <div className="flex flex-col justify-between gap-y-10">
-
-          {/* Card */}
-
-          {
-            ProjectList.map((currentElement,index)=>(
-              <ProjectCard
-              key={index}
-              liveLink={currentElement.liveLink}
-              title={currentElement.title}
-              hrefLink={currentElement.hrefLink}
-              description={currentElement.description}
-              ImageSource={currentElement.ImageSource}
-              tags={currentElement.tags}
-              
-              />
-
-            ))
-          }
-
-          
+        {/* Image */}
+        <div>
+          <div className="bg-gray-500 h-56 rounded-md w-full"></div>
         </div>
 
       </div>
+     </div>
+  </section>
+);
 
+const Works = () => {
+  const [projects, setProject] = useState<ProjectModel[] | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    console.log("Fetching data...");
+    async function fetchData() {
+      try {
+        const projectData = await getProjects();
+        setProject(projectData);
+         // Set loading to false once data is fetched
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }finally{
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  return (
+    <section>
+      <div className="container mx-auto px-6 md:px-0">
+        <div className="flex flex-col justify-between gap-y-10">
+          {/* Render Skeletons while loading */}
+          {isLoading ? (
+            Array(3).fill(0).map((_, index) => <SkeletonProjectCard key={index} />)
+          ) : (
+            // Render actual cards once data is fetched
+            projects?.map((project) => (
+              <ProjectCard
+                key={project.id}
+                liveLink={project.liveLink}
+                title={project.title}
+                hrefLink={project.liveLink}
+                description={project.description}
+                ImageSource={project.Images}
+                tags={project.Skills}
+              />
+            ))
+          )}
+        </div>
+      </div>
     </section>
-  )
-}
+  );
+};
 
-export default Works
+export default Works;
