@@ -4,26 +4,20 @@ import { SignUp } from "../action";
 import { redirect } from "next/navigation";
 import {  toast } from 'sonner';
 
-export type SignUpReturn  = {
-  error:string | null,
-  message:string | null,
-  success:boolean | null,
-  redirect:string | null,
-}
 
-const initialState:SignUpReturn = {
-  error:null,
-  message:null,
-  success:null,
-  redirect:null,
-}
+
 export const SignUpForm = ()=>{
-    const [state, action] = useActionState(SignUp,initialState);
+    const [state, action] = useActionState(SignUp,{
+      error:null,
+      message:null,
+      success:false,
+      redirect:null,
+    });
       useEffect(() => {
         if (state?.success === true && state.redirect) {
           setTimeout(() => {
             toast.success(`${state.message}`);
-            redirect(state.redirect);
+            redirect(String(state.redirect));
           }, 0);
         } else if (state?.success === false && state.error) {
           setTimeout(()=>{

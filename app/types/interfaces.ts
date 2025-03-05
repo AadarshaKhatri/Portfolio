@@ -14,7 +14,7 @@ export interface UserModel {
   description: string | null;
   degree: string | null;
 
-}
+} 
 
 
 export interface ProjectModel {

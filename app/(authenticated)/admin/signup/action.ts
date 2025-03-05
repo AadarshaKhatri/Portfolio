@@ -8,7 +8,7 @@ import { createSession } from "../../sessions";
 export type SignUpReturn  = {
   error:string | null,
   message:string | null,
-  success:boolean | null,
+  success:boolean,
   redirect:string | null,
 }
 
@@ -18,7 +18,7 @@ export type SignUpReturn  = {
 export async function SignUp(
   prevstate:SignUpReturn,
   formData: FormData
-){
+) : Promise<SignUpReturn>{
   
 
   const userEmail = formData.get("email") as string;
@@ -78,11 +78,10 @@ export async function SignUp(
        };
 
   } catch (error) {
-    // console.log("Error while signing in the user:", err);
     return { 
       success: false,
        error: "Something went wrong, please try again message form catch",
-       message:error,
+       message:String(error),
        redirect:null,
        };
   }
