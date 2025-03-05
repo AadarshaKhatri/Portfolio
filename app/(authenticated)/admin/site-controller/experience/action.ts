@@ -8,47 +8,45 @@ import { ExperienceType, ResponseTypes } from "@/app/types/interfaces";
 
 
 
-
-export async function createExperience(prevState: ResponseTypes, formData: FormData) : Promise<ResponseTypes>  {
+export async function createExperience(prevState: ResponseTypes, formData: FormData): Promise<ResponseTypes> {
   try {
+    // Extract form data
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const type = formData.get("type") as keyof typeof ExperienceType;
+    const type = formData.get("type") as string;  // Get the string value of type from the form
+    
+    // Validate the type against the ExperienceType enum
+    const experienceType = ExperienceType[type as keyof typeof ExperienceType];
+    
+    if (!experienceType) {
+      return { success: false, error: "Invalid experience type!" };
+    }
+  
+
     const companyName = formData.get("companyName") as string;
     const skills = formData.getAll("skills") as string[];
     const image = formData.get("image") as File;
 
-    // Validate the type against the enum
-    if (!Object.values(ExperienceType).includes(ExperienceType[type])) {
-      return { success: false, error: "Invalid experience type!" };
-    }
-
+    // Get user
     const user = await getUser();
     if (!user) {
-      return {
-        success: false,
-        error: "Failed to get the Author",
-        message: null,
-      };
+      return { success: false, error: "Failed to get the Author", message: null };
     }
 
+    // Upload image
     const { fileUrl } = await uploadFile(image);
     if (!fileUrl) {
-      return {
-        success: false,
-        message: null,
-        error: "Failed to Upload the Images!",
-      };
+      return { success: false, message: null, error: "Failed to Upload the Image!" };
     }
 
-    // Create experience
+    // Create experience record in Prisma
     await prisma.experience.create({
       data: {
         company: companyName,
         description: description,
         logo: fileUrl,
         skills: skills,
-        type: ExperienceType[type], // Convert string to enum
+        type: experienceType, // Pass the mapped enum value to Prisma
         title: title,
         author: {
           connect: {
@@ -71,19 +69,22 @@ export async function createExperience(prevState: ResponseTypes, formData: FormD
 
 
 
+
+
 export async function updateExperience(prevState:ResponseTypes, formData:FormData) : Promise<ResponseTypes> {
   
   try{
     const id = formData.get("id") as string
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const type = formData.get("type") as keyof typeof ExperienceType;
+    const type = formData.get("type") as string;
+    const experienceType = ExperienceType[type as keyof typeof ExperienceType];
     const companyName = formData.get("companyName") as string;
     const skills = formData.getAll("skills") as string[];
     const image = formData.get("image") as File;
     let url = null
     // Validate the type against the enum
-    if (!Object.values(ExperienceType).includes(ExperienceType[type])) {
+    if (!experienceType) {
       return { success: false, error: "Invalid experience type!" };
     }
       const { fileUrl } = await uploadFile(image);
@@ -98,7 +99,7 @@ export async function updateExperience(prevState:ResponseTypes, formData:FormDat
         description: description,
         logo:url ? url : undefined,
         skills: skills,
-        type: ExperienceType[type], // Convert string to enum
+        type:experienceType, // Convert string to enum
         title: title,
       }
     })
@@ -235,8 +236,6 @@ export async function readTech(){
     }
   }
 }
-
-
 
 export async function deleteTech(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes> {
   try{
