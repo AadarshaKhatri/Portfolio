@@ -14,6 +14,7 @@ export type SignInReturn = {
 // UserLogout
 export async function logout() {
   deleteSession()
+  
   redirect('/admin/login')
 }
 

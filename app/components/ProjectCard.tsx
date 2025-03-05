@@ -20,7 +20,7 @@ const ProjectCard = (props :ProjectCardProps) => {
 
 
         <div className="flex flex-row justify-between pb-6">
-          <h1 className="text-white text-2xl font-bold pb-1">{props.title}</h1>
+          <h1 className="text-white text-lg md:text-2xl font-bold pb-1">{props.title}</h1>
 
           <div className="flex flex-row gap-5">
             {
@@ -28,7 +28,7 @@ const ProjectCard = (props :ProjectCardProps) => {
 
              <a href ={props.hrefLink} target = "_blank" className="flex flex-row gap-x-2 items-center cursor-pointer">
              <FaGithub className="text-white" size={24}/>
-               <p className="text-white text-lg">
+               <p className="text-white text-sm md:text-lg">
                 View Code 
                </p>
                </a>
@@ -40,7 +40,7 @@ const ProjectCard = (props :ProjectCardProps) => {
              props?.liveLink ? 
              <a href ={props.liveLink} target = "_blank" className="flex flex-row gap-x-2 items-center cursor-pointer">
              <FaEye className="text-white" size={24}/>
-               <p className="text-white text-lg">
+               <p className="text-white text-sm md:text-lg">
                 Live 
                </p>
                </a>
