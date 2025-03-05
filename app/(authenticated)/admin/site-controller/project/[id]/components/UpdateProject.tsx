@@ -12,7 +12,7 @@ import { toast } from "sonner";
 export default function UpdateProject(){
   const [skills, setSkills] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
-  const [project, setProject] = useState<ProjectModel>();
+  const [project, setProject] = useState<ProjectModel | null>();
   const [state, action] = useActionState(EditProject, {
     success:false,
     error:null,
@@ -32,9 +32,9 @@ export default function UpdateProject(){
   },[state])
   useEffect(() => {
     async function FetchProject(id: number) {
-      const data: ProjectModel = await GetUniqueProject(id);
+      const data = await GetUniqueProject(id);
       setProject(data);
-      setSkills(data.Skills || []);
+      setSkills(Array.isArray(data?.Skills) ? data.Skills.filter((skill): skill is string => typeof skill === "string") : []);
     }
     FetchProject(Number(id));
   }, [id]);

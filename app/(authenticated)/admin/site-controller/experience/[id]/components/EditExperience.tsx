@@ -12,7 +12,7 @@ const EditExperience = () => {
   const params = useParams();
   const id = params.id;
 
-  const [experience, setExperience] = useState<ExperinceModel>();
+  const [experience, setExperience] = useState<ExperinceModel | null>();
   const [skills, setSkills] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [experienceType, setExperienceType] = useState<string>("");
@@ -29,7 +29,11 @@ const EditExperience = () => {
     setSkills(skills.filter((skill) => skill !== skillToRemove));
   };
 
-  const [state, action] = useActionState(updateExperience, null);
+  const [state, action] = useActionState(updateExperience, {
+    success:false,
+    error:null,
+    message:null,
+  });
 
   const handleDeleteImage = () => {
     setExperience((prev) => (prev ? { ...prev, logo: "" } : prev));
@@ -39,7 +43,7 @@ const EditExperience = () => {
     async function readExperience(id: number) {
       const data = await readUniqueExperience(id);
       setExperience(data);
-      setSkills([...data?.skills]); // Ensure skills are populated
+      setSkills(Array.isArray(data?.skills) ? data.skills.filter((s): s is string => typeof s === "string") : []);
       setExperienceType(data?.type || ""); // Ensure select has the right default value
     }
     readExperience(Number(id));

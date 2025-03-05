@@ -2,7 +2,7 @@
 import prisma from "@/app/lib/db";
 import { deleteImages, uploadFile } from "../project/action";
 import { getUser } from "@/app/(authenticated)/sessions";
-import {  ResponseTypes } from "@/app/types/interfaces";
+import {  PostModel, ResponseTypes } from "@/app/types/interfaces";
 
 
 
@@ -151,7 +151,7 @@ export async function getPostCreator(userId:number){
   })
 }
 
-export async function getUniquePost(id:number){
+export async function getUniquePost(id:number) : Promise <PostModel | null>{
   try{
   return await prisma.post.findUnique({
     where:{
@@ -159,11 +159,7 @@ export async function getUniquePost(id:number){
     }
   })
 }catch(error){
-  return{
-    success:false,
-    error:"Failed to get the post",
-    message:`Error Message: ${error} `
-  }
+  return null;
 }
 
 }

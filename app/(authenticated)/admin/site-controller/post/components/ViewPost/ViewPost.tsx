@@ -106,8 +106,20 @@ export const ViewPost = () => {
                     {post.caption && <p className="text-white mt-2">{post.caption}</p>}
 
                     {/* Tags */}
-                    <p className="text-primary font-light pb-5 mt-2">{post.tags}</p>
-
+                    {
+                      Array.isArray(post.tags) && post.tags.every(tag => typeof tag === 'string') ? (
+                        <div className="w-full flex flex-row text-primary font-light pb-5 mt-2 gap-3">
+                          {post.tags.map((tag: string, index: number) => (
+                            <div key={index}>
+                              <h2>{tag}</h2>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        null
+                      )
+                    }
+                    
                     {/* Post Image */}
                     {post.images && post.images !== "" ? (
                       <div className="">

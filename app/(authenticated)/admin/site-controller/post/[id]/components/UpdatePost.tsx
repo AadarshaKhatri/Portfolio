@@ -12,7 +12,7 @@ import { editPost, getUniquePost } from "../../action";
 export default function UpdatePost(){
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
-  const [post, setPost] = useState<PostModel>();
+  const [post, setPost] = useState<PostModel | null>();
   const [state, action] = useActionState(editPost, {
     success:false,
     error:null,
@@ -32,9 +32,10 @@ export default function UpdatePost(){
   },[state])
   useEffect(() => {
     async function FetchProject(id: number) {
-      const data: PostModel = await getUniquePost(id);
+      const data = await getUniquePost(id);
       setPost(data);
-      setTags(data.tags || []);
+      setTags(Array.isArray(data?.tags) ? data.tags.filter((tag): tag is string => typeof tag === "string") : []);
+
     }
     FetchProject(Number(userId));
   }, [userId]);
