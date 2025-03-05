@@ -3,7 +3,7 @@
 import { supabase } from "@/app/lib/supabase";
 import { getUser } from "@/app/(authenticated)/sessions";
 import prisma from "@/app/lib/db";
-import { ResponseTypes } from "@/app/types/interfaces";
+import { ProjectModel, ResponseTypes } from "@/app/types/interfaces";
 
 
 
@@ -20,7 +20,7 @@ interface uploadFileResponse{
 
 
 
-export async function GetUniqueProject(id:number){
+export async function GetUniqueProject(id:number) : Promise<ProjectModel | null>{
  return await prisma.projects.findUnique({
    where:{
      id:id,

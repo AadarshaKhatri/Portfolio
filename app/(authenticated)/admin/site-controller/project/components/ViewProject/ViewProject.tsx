@@ -101,13 +101,15 @@ import Link from 'next/link';
                  
            
                  <div className="mt-5 flex flex-shrink flex-row gap-x-5 gap-y-5 flex-wrap pb-10">
-                     {
-                       project.Skills?.map((element,index)=>(
-                         <div key = {index} className="text-primary bg-primary/15 px-3 py-2 rounded-full">
-                         {element}
-                         </div>
-                       ))
-                     }   
+                
+              {Array.isArray(project.Skills) 
+                ? project.Skills.filter((skill): skill is string => typeof skill === "string")
+                    .map((skill, index) => (
+                      <div key = {index} className="text-primary bg-primary/15 px-3 py-2 rounded-full">
+                      {skill}
+                      </div>
+                    ))
+                : null}
                   
                        
                 </div>

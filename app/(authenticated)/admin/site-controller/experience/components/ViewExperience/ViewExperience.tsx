@@ -89,11 +89,19 @@ const ViewExperience = () => {
 
               {/* Skills */}
               <div className="mt-4 flex flex-wrap gap-2">
-                {experience.skills.map((skill : string, index:number) => (
-                  <span key={index} className="text-primary bg-primary/20 px-3 py-1 rounded-full text-sm font-medium">
-                    {skill}
-                  </span>
-                ))}
+               {/* Skills */}
+                <div className="mt-4 flex flex-wrap gap-2">
+                {Array.isArray(experience.skills) 
+                ? experience.skills.filter((skill): skill is string => typeof skill === "string")
+                    .map((skill, index) => (
+                      <span key={index} className="text-primary bg-primary/20 px-3 py-1 rounded-full text-sm font-medium">
+                        {skill}
+                      </span>
+                    ))
+                : null}
+
+</div>
+
               </div>
 
 
