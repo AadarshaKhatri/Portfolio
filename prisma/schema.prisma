@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User_models {
+  id          Int            @id @default(autoincrement())
+  email       String         @unique
+  password    String
+  name        String?
+  title       String?
+  bio         String?
+  location    String?
+  degree      String?
+  profile     String?
+  born        DateTime?
+  description String?
+  post        Post[]
+  experience  Experience[]
+  tech_stack  Technologies[]
+  Languages   Languages[]
+  projects    Projects[]
+}
+
+model Post {
+  id        Int         @id @default(autoincrement())
+  caption   String
+  images    String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now())
+  pinned    Boolean
+  tags      Json
+  author    User_models @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model Projects {
+  id          Int         @id @default(autoincrement())
+  title       String
+  description String
+  liveLink    String
+  codelink    String
+  Images      String
+  Skills      Json
+  author      User_models @relation(fields: [authorId], references: [id])
+  authorId    Int
+}
+
+model Technologies {
+  id       Int         @id @default(autoincrement())
+  title    String
+  Images   String
+  author   User_models @relation(fields: [authorId], references: [id])
+  authorId Int
+}
+
+model Languages {
+  id       Int         @id @default(autoincrement())
+  lang     String
+  Images  String
+  author   User_models @relation(fields: [authorId], references: [id])
+  authorId Int
+}
+
+enum Types {
+  INTERNSHIP
+  COMMUNITY_HOURS
+  WORK
+}
+
+model Experience {
+  id          Int         @id @default(autoincrement())
+  type        Types       @default(INTERNSHIP)
+  title       String
+  description String
+  company     String
+  logo        String
+  skills      Json
+  author      User_models @relation(fields: [authorId], references: [id])
+  authorId    Int
+}

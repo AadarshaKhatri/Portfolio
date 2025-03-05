@@ -1,0 +1,73 @@
+"use server"
+import { createSession, deleteSession } from "../../sessions";
+import prisma from "@/app/lib/db"
+import { redirect } from "next/navigation"
+import { SignFormSchema } from "@/app/lib/definations";
+import { comparePassword } from "@/app/utils/hasher";
+export type SignInReturn = {
+  error?:string,
+  message?:string,
+  success?:boolean,
+  redirect?:string,
+}
+
+// UserLogout
+export async function logout() {
+  deleteSession()
+  
+  redirect('/admin/login')
+}
+
+// User Login
+export async function SignIn(
+  prevstate:SignInReturn,
+  formData: FormData
+){
+  const userEmail = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  if (!userEmail || !password) {
+    return { success: false, error:"User Not Found!" };
+  }
+
+  try {
+    const result = SignFormSchema.safeParse(Object.fromEntries(formData))
+
+    if(!result.success){
+      return{
+        success:false,
+        error:'Invalid Email or Password',
+      }
+    }
+
+    const{email,password} =  result.data
+    const user = await prisma.user_models.findUnique({
+      where: { email: userEmail },
+    });
+
+
+
+    if (user?.email !== email) {
+      return { 
+        success: false,
+        error:"Email or Password is incorrect",
+
+      }
+    }
+
+    const PasswrodMatched = await comparePassword(password,user?.password);
+
+    if(!PasswrodMatched){
+      return { success: false,error:"Email or Password is Incorrect" };
+    }
+    
+    await createSession(String(user.id),String(user.name));
+  
+    return { success: true, message: "User Logged In Successfully",redirect:"/admin/site-controller" };
+  } catch (err) {
+    // console.log("Error while signing in the user:", err);
+    return { success: false, error: "Something went wrong, please try again message form catch",message:err, };
+  }
+}
+
+
