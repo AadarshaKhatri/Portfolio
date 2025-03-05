@@ -1,15 +1,11 @@
 "use server";
 import prisma from "@/app/lib/db";
 import { uploadFile } from "../project/action";
+import { ResponseTypes } from "@/app/types/interfaces";
 
 
-interface UpdateUserTypes  {
-  error:string
-  message:string
-  success:boolean
-}
 
-export async function UpdateAccount(prevState:UpdateUserTypes,formData:FormData){
+export async function UpdateAccount(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes>{
   const id = formData.get("id") as string;
   const bio = formData.get("bio") as string;
   const date = new Date(formData.get("born") as string);
@@ -74,25 +70,14 @@ export async function UpdateAccount(prevState:UpdateUserTypes,formData:FormData)
     return({
       error:"Failed to update the user",
       success:false,
-      message:err,
+      message:String(err),
     })
   }
 }
 
 
 export async function getUniqueUser() {
-  return await prisma.user_models.findFirst({
-    select:{
-      id:true,
-      profile:true,
-      title:true,
-      bio:true,
-      degree:true,
-      description:true,
-      location:true,
-      born:true,
-    }
-  });
+  return await prisma.user_models.findFirst();
 }
 
 

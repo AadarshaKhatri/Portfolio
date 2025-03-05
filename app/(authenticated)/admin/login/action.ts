@@ -4,12 +4,13 @@ import prisma from "@/app/lib/db"
 import { redirect } from "next/navigation"
 import { SignFormSchema } from "@/app/lib/definations";
 import { comparePassword } from "@/app/utils/hasher";
+
 export type SignInReturn = {
-  error?:string,
-  message?:string,
+  error?:string | null,
+  message?:string | null,
   success?:boolean,
-  redirect?:string,
-}
+  redirect?:string | null,
+} | undefined
 
 // UserLogout
 export async function logout() {
@@ -22,7 +23,7 @@ export async function logout() {
 export async function SignIn(
   prevstate:SignInReturn,
   formData: FormData
-){
+): Promise<SignInReturn>{
   const userEmail = formData.get("email") as string;
   const password = formData.get("password") as string;
 
@@ -36,6 +37,8 @@ export async function SignIn(
     if(!result.success){
       return{
         success:false,
+        redirect:null,
+        message:null,
         error:'Invalid Email or Password',
       }
     }
@@ -49,6 +52,8 @@ export async function SignIn(
 
     if (user?.email !== email) {
       return { 
+        message:null,
+        redirect:null,
         success: false,
         error:"Email or Password is incorrect",
 
@@ -58,15 +63,17 @@ export async function SignIn(
     const PasswrodMatched = await comparePassword(password,user?.password);
 
     if(!PasswrodMatched){
-      return { success: false,error:"Email or Password is Incorrect" };
+      return { success: false,error:"Email or Password is Incorrect",message:null,
+        redirect:null,
+       };
     }
     
     await createSession(String(user.id),String(user.name));
   
-    return { success: true, message: "User Logged In Successfully",redirect:"/admin/site-controller" };
+    return { success: true, message: "User Logged In Successfully",redirect:"/admin/site-controller",error:null, };
   } catch (err) {
     // console.log("Error while signing in the user:", err);
-    return { success: false, error: "Something went wrong, please try again message form catch",message:err, };
+    return { success: false, error: "Something went wrong, please try again message form catch",message:String(err),redirect:null };
   }
 }
 

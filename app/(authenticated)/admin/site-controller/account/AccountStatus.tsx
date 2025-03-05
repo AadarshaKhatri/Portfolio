@@ -7,8 +7,12 @@ import Image from "next/image";
 import Status from "./components/Status";
 
 const AccountStatus = () => {
-  const [state, action] = useActionState(UpdateAccount, null);
-  const [user, setUser] = useState<UserModel>();
+  const [state, action] = useActionState(UpdateAccount, {
+    success:false,
+    error:null,
+    message:null,
+  });
+  const [user, setUser] = useState<UserModel | null>();
 
   useEffect(() => {
     async function fetchUser() {
@@ -67,7 +71,7 @@ const AccountStatus = () => {
                 type="text"
                 placeholder="Title Here"
                 className="text-white border-b-2 border-b-primary w-full py-3 px-4 bg-[#01071D] outline-none focus:border-white"
-                defaultValue={user?.title}
+                defaultValue={user?.title ?? ""}
               />
             </div>
 
@@ -89,14 +93,14 @@ const AccountStatus = () => {
                 type="text"
                 placeholder="Graduation"
                 className="text-white border-b-2 border-primary w-full md:w-1/3 py-3 px-4 bg-[#01071D] outline-none focus:border-white"
-                defaultValue={user?.degree}
+                defaultValue={user?.degree ?? ""}
               />
               <input
                 name="location"
                 type="text"
                 placeholder="Location"
                 className="text-white border-b-2 border-primary  w-full md:w-1/3 py-3 px-4 bg-[#01071D] outline-none focus:border-white"
-                defaultValue={user?.location}
+                defaultValue={user?.location ?? ""}
               />
             </div>
 
@@ -107,7 +111,7 @@ const AccountStatus = () => {
                 type="text"
                 placeholder="Bio"
                 className="text-white border-b-2 border-b-primary w-full py-3 px-4 bg-[#01071D] outline-none focus:border-white"
-                defaultValue={user?.bio}
+                defaultValue={user?.bio ?? ""}
               />
             </div>
 
@@ -117,7 +121,7 @@ const AccountStatus = () => {
                 name="description"
                 placeholder="Description of the About Us Page"
                 className="text-white min-h-52 border-b-2 border-b-primary w-full py-3 px-4 bg-[#01071D]  outline-none focus:border-white"
-                defaultValue={user?.description}
+                defaultValue={user?.description ?? ""}
               ></textarea>
             </div>
 

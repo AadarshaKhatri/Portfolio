@@ -8,13 +8,18 @@ import {toast} from "sonner"
 
 
 export default function LoginForm() {
-  const [state, action] = useActionState(SignIn, null);
+  const [state, action] = useActionState(SignIn, {
+    error:null,
+    message:null,
+    success:false,
+    redirect:null,
+  });
 
   useEffect(() => {
     if (state?.success === true && state.redirect) {
       setTimeout(() => {
         toast.success(`${state.message}`);
-        redirect(state.redirect);
+        redirect(String(state.redirect));
       }, 0);
     } else if (state?.success === false && state.error) {
       setTimeout(()=>{
