@@ -40,19 +40,23 @@ export interface PostModel{
   authorId:number
 } 
 
-
-
-
-export interface ExperinceModel{
-  id:number
-  type:Types
-  description:string,
-  company:string,
-  logo:string,
-  skills:JsonValue,
-  authorId:number
-  title:string
+export enum ExperienceType {
+  INTERNSHIP = 'INTERNSHIP',
+  COMMUNITY_HOURS = 'COMMUNITY_HOURS',
+  WORK = 'WORK',
 }
+
+export interface ExperienceModel {
+  id: number;
+  type: ExperienceType; // Now matches Prisma's Types enum
+  description: string;
+  company: string;
+  logo: string;
+  skills: JsonValue;
+  authorId: number;
+  title: string;
+}
+
 
 export interface TechnologiesModel {
   id:number
