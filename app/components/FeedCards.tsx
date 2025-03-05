@@ -45,7 +45,7 @@ const FeedCards = (props : FeedCardsProps) => {
       <h1 className="text-white text-lg font-bold pb-1">
                   {props.username }
                   <span className="font-normal text-gray-400 text-sm">
-                    - {new Date(props.createdAt).toLocaleDateString('en-GB', { 
+                    {" "}- {new Date(props.createdAt).toLocaleDateString('en-GB', { 
                       day: '2-digit', 
                       month: 'long', 
                       year: 'numeric' 

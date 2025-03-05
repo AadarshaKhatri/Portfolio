@@ -20,7 +20,8 @@ const UpperSection = () => {
         const UserData = await getProfile();
         setUser(UserData);
       } catch (error) {
-        console.log("Error fetching data:", error);
+        console.log("Error fetching data:");
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -83,13 +84,21 @@ const UpperSection = () => {
               </div>
 
               {/* Icons */}
-              <div className="flex flex-row justify-start gap-x-5 mt-4">
+              <div className="flex flex-row justify-start gap-x-2 md:gap-x-5 mt-4">
                 {BioInfo.map((ele, index) => (
-                  <div key={index} className="flex flex-row justify-between items-center gap-x-1">
+                  <div key={index} className="flex flex-row justify-between items-center gap-x-2">
                     <span>{ele.icon}</span>
-                    <SkeletonLoader height="24px" width="150px" />
+                    <SkeletonLoader height="16px" width="80px" className="md:w-[200px]" />
                   </div>
                 ))}
+              </div>
+
+              <div className="flex flex-row justify-between items-center gap-2 mt-5">
+                <SkeletonLoader height="42px" width="20%" />
+                <SkeletonLoader height="42px" width="20%" />
+                <SkeletonLoader height="42px" width="20%" />
+                <SkeletonLoader height="42px" width="20%" />
+
               </div>
             </div>
             <SkeletonLoader height="400px" width="100%" className="mt-10 rounded-md"/>
@@ -132,7 +141,7 @@ const UpperSection = () => {
                   width={100}
                   height={100}
                   quality={100}
-                  className="mt-[-80px] w-[120px] h-[120px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full object-cover"
+                  className="mt-[-50px] md:mt-[-80px] w-[100px] h-[100px] md:w-[150px] md:h-[150px] bg-red-300 rounded-full object-cover"
                 />
               )}
 

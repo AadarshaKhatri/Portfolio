@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    console.log("GET Technologies API Hit!");
     const technologies = await prisma.technologies.findMany();
     return NextResponse.json(technologies);
   } catch (error) {

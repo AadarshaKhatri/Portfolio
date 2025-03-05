@@ -69,7 +69,7 @@ const ProjectCard = (props :ProjectCardProps) => {
 
 {
                 Array.isArray(props.tags) && props.tags.every(tag => typeof tag === 'string') ? (
-                  <div className="w-full flex flex-row text-primary font-light pb-5 mt-2 gap-3">
+                  <div className="w-full flex flex-row flex-wrap text-primary font-light pb-5 mt-2 gap-3">
                     {props.tags.map((tag: string, index: number) => (
                       <div key={index}>
                         <h2 className="text-primary bg-primary/15 px-3 py-2 rounded-full">{tag}</h2>

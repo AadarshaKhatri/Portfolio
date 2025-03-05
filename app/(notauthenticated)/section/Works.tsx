@@ -11,11 +11,11 @@ const SkeletonProjectCard = () => (
 
         {/* Title and Action Links */}
         <div className="flex flex-row justify-between pb-6 mt-5">
-          <div className="bg-gray-500 h-6 w-3/4 rounded"></div>
+          <div className="bg-gray-500 h-6 w-2/4 rounded"></div>
 
           <div className="flex flex-row gap-5">
-            <div className="bg-gray-500 h-6 w-12 rounded"></div>
-            <div className="bg-gray-500 h-6 w-12 rounded"></div>
+            <div className="bg-gray-500 h-6 w-20 rounded"></div>
+            <div className="bg-gray-500 h-6 w-20 rounded"></div>
           </div>
         </div>
         
@@ -24,7 +24,7 @@ const SkeletonProjectCard = () => (
         <div className="h-4 bg-gray-500 w-5/6 rounded mb-4"></div>
 
         {/* Tags */}
-        <div className="mt-5 flex flex-shrink flex-row gap-x-5 gap-y-5 flex-wrap pb-10">
+        <div className="mt-5 flex flex-shrink flex-row gap-x-5 gap-y-5 flex-wrap pb-5">
           <div className="w-full flex flex-row text-primary font-light pb-5 mt-2 gap-3">
             {Array(3).fill(0).map((_, index) => (
               <div key={index}>
@@ -54,7 +54,6 @@ const Works = () => {
       try {
         const projectData = await getProjects();
         setProject(projectData);
-         // Set loading to false once data is fetched
       } catch (error) {
         console.log("Error fetching data:", error);
       }finally{

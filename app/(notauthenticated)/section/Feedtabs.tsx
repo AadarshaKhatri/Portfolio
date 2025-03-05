@@ -17,15 +17,15 @@ const Feedtabs = () => {
   };
 
   return (
-    <section>
-      <div className="w-full flex flex-col">
+    <section className="">
+      <div className="w-full flex flex-col ">
         {/* Tabs */}
         <div className="flex flex-row justify-between pb-5">
           {["Feeds", "About", "Experience", "Works"].map((tab) => (
             <div
               key={tab}
               onClick={() => handleTabs(tab)}
-              className={`font-semibold cursor-pointer py-2 px-4 text-lg transition-all duration-100 
+              className={`font-semibold cursor-pointer py-2 px-2 md:px-4 text-lg transition-all duration-100 
                 ${activeTabs === tab ? "text-white border-b-4 border-primary" : "text-gray-500"}`}
             >
               {tab}

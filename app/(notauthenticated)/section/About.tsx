@@ -12,7 +12,7 @@ const SkeletonBox = () => (
 const About = () => {
   const [tech, setTechs] = useState<TechnologiesModel[]>();
   const [lang, setLang] = useState<LanguagesModel[]>();
-  const [user, setUser] = useState<UserModel>();
+  const [user, setUser] = useState<UserModel | null>();
   
   const [loadingTech, setLoadingTech] = useState(true);
   const [loadingLang, setLoadingLang] = useState(true);

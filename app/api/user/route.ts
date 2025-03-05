@@ -1,6 +1,5 @@
 
 
-import { getUser } from "@/app/(authenticated)/sessions";
 import prisma from "@/app/lib/db";
 import { NextResponse } from "next/server";
 
@@ -8,18 +7,13 @@ import { NextResponse } from "next/server";
 export async function GET(){
   
   try{
-    const user = await getUser();
-    const User = await prisma.user_models.findUnique({
-      where:{
-        id:Number(user?.userId)
-      }
-    });
+    const User = await prisma.user_models.findFirst();
     return NextResponse.json(User);
 
-  }catch(error){
-    console.log("Error",error);
+  }catch (err){
     return NextResponse.json({
       error:"Failed to Fetch the data",
+      message:err,
     },{status:500});
   }
 }

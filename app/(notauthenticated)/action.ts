@@ -2,11 +2,14 @@ import { ExperinceModel, LanguagesModel, PostModel, ProjectModel, TechnologiesMo
 
 
 
-export async function getProfile(): Promise<UserModel> {
-
+export async function getProfile(): Promise<UserModel | null> {
+    try{
     const response = await fetch("/api/user");
     if (!response.ok) throw new Error("Failed to fetch User");
     return await response.json();
+    }catch {
+      return null ;
+    }
 
 }
 
