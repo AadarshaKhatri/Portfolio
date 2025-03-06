@@ -72,7 +72,8 @@ export async function SignIn(
   
     return { success: true, message: "User Logged In Successfully",redirect:"/admin/site-controller",error:null, };
   } catch (err) {
-    // console.log("Error while signing in the user:", err);
+    console.log("Error while signing in the user:");
+    console.log(`Error Message:${err}`);
     return { success: false, error: "Something went wrong",message:String(err),redirect:null };
   }
 }

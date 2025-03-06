@@ -28,9 +28,9 @@ export async function decrypt(session: string) {
     })
  
     return payload
-  } catch (error) {
-    console.log('Failed to verify session');
-    
+  } catch {
+    console.log(process.env.DATABASE_URL);
+    return     
   }
 }
 
