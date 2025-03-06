@@ -1,4 +1,4 @@
-import { ExperinceModel, LanguagesModel, PostModel, ProjectModel, TechnologiesModel, UserModel } from "../types/interfaces";
+import { ExperienceModel, LanguagesModel, PostModel, ProjectModel, TechnologiesModel, UserModel } from "../types/interfaces";
 
 
 
@@ -44,7 +44,7 @@ export async function getTechnologies(): Promise<TechnologiesModel[]> {
     return [];
   }
 }
-export async function getExperience(): Promise<ExperinceModel []> {
+export async function getExperience(): Promise<ExperienceModel []> {
   try {
     const response = await fetch("/api/experience");
     if (!response.ok) throw new Error("Failed to fetch Experience");
