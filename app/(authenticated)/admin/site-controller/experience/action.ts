@@ -4,7 +4,7 @@
 import { getUser } from "@/app/(authenticated)/sessions";
 import { deleteImages, uploadFile } from "../project/action";
 import prisma from "@/app/lib/db";
-import { ExperienceType, ResponseTypes } from "@/app/types/interfaces";
+import { ExperienceModel, ExperienceType, ResponseTypes } from "@/app/types/interfaces";
 
 
 
@@ -113,22 +113,18 @@ export async function updateExperience(prevState:ResponseTypes, formData:FormDat
    return {
     success:false,
     message:`Error Message: ${error}`,
-    error:`Faile to Update; ${error}`,
+    error:`Failed to Update; ${error}`,
    }
   }
 }
 
 
-export async function readExperiences(){
+export async function readExperiences() : Promise<ExperienceModel []>{
   try{
-    return await prisma.experience.findMany();
-
+    return await prisma.experience.findMany() as ExperienceModel[];
   }catch(error){
-    return {
-      success:false,
-      mesasge:`Error Message: ${error}`,
-      error:"Failed to read experiences"
-    }
+    console.log(error);
+    return []
   }
 }
 
@@ -269,7 +265,7 @@ export async function deleteTech(prevState:ResponseTypes,formData:FormData) : Pr
     return { 
       success:false,
       message:`Error Message : ${error}`,
-      error:"Failed to delete the Technolgoies"
+      error:"Failed to delete the Technologies"
     }
   }
 }
@@ -306,7 +302,7 @@ export async function createLang(prevState:ResponseTypes,formData:FormData) : Pr
       })
       return {
         success:true,
-        message:"Successfully Created Langauge!",
+        message:"Successfully Created Language!",
         error:null
       }
     }
@@ -314,7 +310,7 @@ export async function createLang(prevState:ResponseTypes,formData:FormData) : Pr
   }catch(error){
     return {
       success:false,
-      error:`Failed to create the Lanaguage`,
+      error:`Failed to create the Language`,
       message:`Error Message:${error}`,
     }
   }
@@ -356,7 +352,7 @@ export async function deleteLang(prevState:ResponseTypes,formData:FormData) : Pr
       })
       return {
         success:true,
-        message:"Langauge Deleted SuccessFully!",
+        message:"Language Deleted SuccessFully!",
         error:null,
       }
     }

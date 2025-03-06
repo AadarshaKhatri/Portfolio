@@ -4,7 +4,7 @@ import { readUniqueExperience, updateExperience } from "../../action";
 import { toast } from "sonner";
 import { useParams } from "next/navigation";
 import { Experience } from "@prisma/client";
-import { ExperinceModel } from "@/app/types/interfaces";
+import { ExperienceType } from "@/app/types/interfaces";
 import { MdCancel } from "react-icons/md";
 import Image from "next/image";
 
@@ -12,7 +12,7 @@ const EditExperience = () => {
   const params = useParams();
   const id = params.id;
 
-  const [experience, setExperience] = useState<ExperinceModel | null>();
+  const [experience, setExperience] = useState<Experience | null>();
   const [skills, setSkills] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [experienceType, setExperienceType] = useState<string>("");

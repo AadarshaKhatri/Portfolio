@@ -158,7 +158,7 @@ export async function getUniquePost(id:number) : Promise <PostModel | null>{
       id:id,
     }
   })
-}catch(error){
+}catch{
   return null;
 }
 

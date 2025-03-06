@@ -1,6 +1,6 @@
 "use client";
 
-import { ExperinceModel } from "@/app/types/interfaces";
+import { ExperienceModel } from "@/app/types/interfaces";
 import Image from "next/image";
 import { useActionState, useEffect, useState } from "react";
 import { deleteExperiences, readExperiences } from "../../action";
@@ -15,17 +15,17 @@ const ViewExperience = () => {
     message:null,
   });
 
-  const [experiences, setExperiences] = useState<ExperinceModel[]>([]);
+  const [experiences, setExperiences] = useState<ExperienceModel []>([]);
 
   useEffect(() => {
     async function FetchData() {
       const data = await readExperiences();
-      if(!Array.isArray(data)){
-        setTimeout(()=>{
-          toast.error(`${data.error}`);
-        })
-        return;
-      }
+      // if(!Array.isArray(data)){
+      //   setTimeout(()=>{
+      //     toast.error(`${data.error}`);
+      //   })
+      //   return;
+      // }
       setExperiences(data);
     }
     FetchData();
@@ -78,7 +78,7 @@ const ViewExperience = () => {
                     <h4 className="text-md text-primary font-semibold">Dev</h4>
                   ): null}
                   {experience.type === "COMMUNITY_HOURS" ? (
-                    <h4 className="text-md text-primary font-semibold">Volunter (Community Service)</h4>
+                    <h4 className="text-md text-primary font-semibold">Volunteer (Community Service)</h4>
                   ):null}
                   <h6 className="text-sm text-gray-400">{experience.company}</h6>
                 </div>
