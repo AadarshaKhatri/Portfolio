@@ -22,7 +22,9 @@ import Link from 'next/link';
         toast.error(`${state.error}`)
       }else if(state?.success && state.message){
         toast.success(`${state.message}`);
-        window.location.reload();
+        setTimeout(()=>(
+          window.location.reload()      
+        ),3000)
       }
     },0)
   },[state])
