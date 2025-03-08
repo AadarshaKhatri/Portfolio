@@ -1,21 +1,22 @@
 "use server";
 import prisma from "@/app/lib/db";
-import { uploadFile } from "../project/action";
+import { deleteImages, uploadFile } from "../project/action";
 import { ResponseTypes } from "@/app/types/interfaces";
 
 
 
 export async function UpdateAccount(prevState:ResponseTypes,formData:FormData) : Promise<ResponseTypes>{
-  const id = formData.get("id") as string;
-  const bio = formData.get("bio") as string;
-  const date = new Date(formData.get("born") as string);
-  const description = formData.get("description") as string;
-  const location =  formData.get("location") as string;
-  const title = formData.get("title") as string;
-  const degree = formData.get("degree") as string;
-  const image = formData.get("image") as File;
-  let url = null
   try{
+    const id = formData.get("id") as string;
+    const bio = formData.get("bio") as string;
+    const date = new Date(formData.get("born") as string);
+    const description = formData.get("description") as string;
+    const location =  formData.get("location") as string;
+    const title = formData.get("title") as string;
+    const degree = formData.get("degree") as string;
+    const image = formData.get("image") as File;
+    let url = null
+
     if(!formData){
       return{
         success:false,
@@ -23,19 +24,25 @@ export async function UpdateAccount(prevState:ResponseTypes,formData:FormData) :
         message:null,
       }
     }
-
-    const {fileUrl,success,error} = await uploadFile(image);
-
-    if(!success && error && !fileUrl){
-      return {
+    
+    
+    const FoundUser = await prisma.user_models.findUnique({
+      where:{
+        id:Number(id)
+      },
+    })
+    if(!FoundUser){
+      return { 
         success:false,
+        error:"User not Found!",
         message:null,
-        error:"File Url not generated",
       }
     }
-    url = fileUrl;
-
-
+    if(image && image.size>0){
+      await deleteImages(String(FoundUser?.profile))
+      const {fileUrl} = await uploadFile(image);
+      url = fileUrl;
+    }
     const updatedUser = await prisma.user_models.update({
       where:{
         id:Number(id)
@@ -47,7 +54,7 @@ export async function UpdateAccount(prevState:ResponseTypes,formData:FormData) :
         location:location,
         title:title,
         degree:degree,
-        profile:url,
+        profile:url ? url : FoundUser.profile,
       }
     })
     console.log(updatedUser)

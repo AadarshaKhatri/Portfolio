@@ -21,7 +21,7 @@ export default function LoginForm() {
         toast.success(`${state.message}`);
         redirect(String(state.redirect));
       }, 0);
-    } else if (state?.success === false && state.error) {
+    } else if (state?.success === false && state?.error) {
       setTimeout(()=>{
         toast.error(`${state?.error}`);
       },0)

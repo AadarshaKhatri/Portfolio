@@ -1,7 +1,7 @@
 import ExperienceTab from "@/app/components/ExperienceTab";
 import { useEffect, useState } from "react";
 import { getExperience } from "../action";
-import { ExperinceModel } from "@/app/types/interfaces";
+import { ExperienceModel } from "@/app/types/interfaces";
 
 // Skeleton Component for Button
 const SkeletonButton = () => (
@@ -39,7 +39,7 @@ const SkeletonExperienceCard = () => (
 );
 
 const Experience = () => {
-  const [experience, setExperience] = useState<ExperinceModel[]>();
+  const [experience, setExperience] = useState<ExperienceModel []>();
   const [positions, setPostions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);  // Add loading state
 
