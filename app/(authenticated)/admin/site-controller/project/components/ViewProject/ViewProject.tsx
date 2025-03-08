@@ -39,7 +39,6 @@ import Link from 'next/link';
      setProject(data);
     }
     fetchProject();
-    console.log(projects);
   },[])
 
   if(!projects){
